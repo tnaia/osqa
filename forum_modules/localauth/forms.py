@@ -1,5 +1,6 @@
 from forum.utils.forms import NextUrlField,  UserNameField,  UserEmailField, SetPasswordForm
 from forum.models import EmailFeedSetting, Question
+from forum.modules import call_all_handlers
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
 from django.contrib.auth import authenticate
@@ -12,8 +13,22 @@ class ClassicRegisterForm(SetPasswordForm):
     next = NextUrlField()
     username = UserNameField()
     email = UserEmailField()
-    #fields password1 and password2 are inherited
-    #recaptcha = ReCaptchaField()
+
+    def __init__(self, *args, **kwargs):
+        super(ClassicRegisterForm, self).__init__(*args, **kwargs)
+
+        spam_fields = call_all_handlers('create_anti_spam_field')
+        if spam_fields:
+            spam_fields = dict(spam_fields)
+            for name,field in spam_fields.items():
+                self.fields[name] = field
+
+            self._anti_spam_fields = spam_fields.keys()
+        else:
+            self._anti_spam_fields = []
+
+    def anti_spam_fields(self):
+        return [self[name] for name in self._anti_spam_fields]
 
 class ClassicLoginForm(forms.Form):
     """ legacy account signin form """

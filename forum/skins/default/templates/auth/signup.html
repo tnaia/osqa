@@ -22,8 +22,12 @@
     <p class="error">{% trans "please select one of the options above" %}</p>
     {% endif %}
     </div>
-    {% comment %}<p class="signup_p">{% trans "Please read and type in the two words below to help us prevent automated account creation." %}</p>
-    {{form.recaptcha}}{% endcomment %}
+    <div>
+    {% for field in form.anti_spam_fields %}
+        <div>{{ field }}</div>
+        <p class="error">{{ field.errors }}</p>
+    {% endfor %}
+    </div>
     <div class="submit-row"><input type="submit" class="submit" value="{% trans "Create Account" %}" /> 
     <strong>{% trans "or" %}
     <a href="{% url auth_signin %}">{% trans "return to login page" %}</a></strong></div>

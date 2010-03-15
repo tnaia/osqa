@@ -67,6 +67,16 @@ def get_all_handlers(name):
         if callable(h)
      ]
 
+def call_all_handlers(name, *args, **kwargs):
+    all = get_all_handlers(name)
+
+    ret = []
+
+    for handler in all:
+        ret.append(handler(*args, **kwargs))
+
+    return ret
+
 def get_handler(name, default):
     all = get_all_handlers(name)
     return len(all) and all[0] or default
