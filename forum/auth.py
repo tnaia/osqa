@@ -11,7 +11,6 @@ from django.db import transaction
 from models import Repute
 from models import Question
 from models import Answer
-from const import TYPE_REPUTATION
 import logging
 import settings
 

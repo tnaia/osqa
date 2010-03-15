@@ -29,7 +29,11 @@ class AbstractBadge(object):
         return cls._instance
 
     def install(self):
-        pass
+        try:
+            installed = Badge.objects.get(slug=self.badge)
+        except:
+            badge = Badge(name=self.name, description=self.description, slug=self.badge, type=self.type)
+            badge.save()
 
     def award_badge(self, user, obj=None, award_once=False):
         try:

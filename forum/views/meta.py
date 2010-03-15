@@ -9,6 +9,7 @@ from django.core.mail import mail_admins
 from django.utils.translation import ugettext as _
 from forum.utils.forms import get_next_url
 from forum.models import Badge, Award
+from forum.badges import ALL_BADGES
 from markdown2 import Markdown
 
 def about(request):
@@ -63,6 +64,14 @@ def logout(request):#refactor/change behavior?
 
 def badges(request):#user status/reputation system
     badges = Badge.objects.all().order_by('name')
+
+    badges_dict = dict([(badge.badge, badge.description) for badge in ALL_BADGES])
+
+    for badge in badges:
+        if badge.description != badges_dict.get(badge.slug, badge.description):
+            badge.description = badges_dict[badge.slug]
+            badge.save()
+    
     my_badges = []
     if request.user.is_authenticated():
         my_badges = Award.objects.filter(user=request.user).values('badge_id')

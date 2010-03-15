@@ -1,4 +1,5 @@
 import cPickle as pickle
+import django.dispatch
 
 class SettingSet(list):
     def __init__(self, name, title, description, weight=1000):
@@ -31,11 +32,15 @@ class BaseSetting():
 
         try:
             kv = KeyValue.objects.get(key=self.name)
+            old_value = kv.value
         except:
             kv = KeyValue(key=self.name)
+            old_value = self.default
 
         kv.value = pickle.dumps(new_value)
         kv.save()
+
+        setting_update.send(sender=self, old_value=old_value, new_value=new_value)
 
 
     def _parse(self, value):
@@ -103,4 +108,5 @@ class Setting(object):
 
         return instance
 
+setting_update = django.dispatch.Signal(providing_args=['old_value', 'new_value'])
 
