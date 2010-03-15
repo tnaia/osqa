@@ -14,9 +14,6 @@ from models import Answer
 import logging
 import settings
 
-question_type = ContentType.objects.get_for_model(Question)
-answer_type = ContentType.objects.get_for_model(Answer)
-
 def can_moderate_users(user):
     return user.is_superuser
 
@@ -166,7 +163,7 @@ def onFlaggedItem(item, post, user):
     post.author.save()
 
     question = post
-    if ContentType.objects.get_for_model(post) == answer_type:
+    if post.__class__ == Answer:
         question = post.question
 
     reputation = Repute(user=post.author,
@@ -285,7 +282,7 @@ def onUpVoted(vote, post, user):
             author.save()
 
             question = post
-            if ContentType.objects.get_for_model(post) == answer_type:
+            if post.__class__ == Answer:
                 question = post.question
 
             reputation = Repute(user=author,
@@ -313,7 +310,7 @@ def onUpVotedCanceled(vote, post, user):
         author.save()
 
         question = post
-        if ContentType.objects.get_for_model(post) == answer_type:
+        if post.__class__ == Answer:
             question = post.question
 
         reputation = Repute(user=author,
@@ -339,7 +336,7 @@ def onDownVoted(vote, post, user):
         author.save()
 
         question = post
-        if ContentType.objects.get_for_model(post) == answer_type:
+        if post.__class__ == Answer:
             question = post.question
 
         reputation = Repute(user=author,
@@ -379,7 +376,7 @@ def onDownVotedCanceled(vote, post, user):
         author.save()
 
         question = post
-        if ContentType.objects.get_for_model(post) == answer_type:
+        if post.__class__ == Answer:
             question = post.question
 
         reputation = Repute(user=author,
