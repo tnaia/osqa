@@ -42,6 +42,8 @@ DATABASE_PORT = ''
 CACHE_BACKEND = 'dummy://'
 #SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
+APP_URL = 'http://' #used by email notif system and RSS
+
 #email server settings
 SERVER_EMAIL = ''
 DEFAULT_FROM_EMAIL = ''
@@ -71,7 +73,6 @@ LANGUAGE_CODE = 'en'
 EMAIL_VALIDATION = 'off' #string - on|off
 MIN_USERNAME_LENGTH = 1
 EMAIL_UNIQUE = False
-APP_URL = 'http://' #used by email notif system and RSS
 
 WIKI_ON = True
 FEEDBACK_SITE_URL = None #None or url

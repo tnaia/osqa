@@ -9,7 +9,7 @@ MODULES_PACKAGE = 'forum_modules'
 
 MODULES_FOLDER = os.path.join(os.path.dirname(__file__), '../' + MODULES_PACKAGE)
 
-DISABLED_MODULES = getattr(settings, 'ENABLE_MODULES', [])
+DISABLED_MODULES = getattr(settings, 'DISABLED_MODULES', [])
 
 MODULE_LIST = filter(lambda m: getattr(m, 'CAN_USE', True), [
         __import__('forum_modules.%s' % f, globals(), locals(), ['forum_modules'])
