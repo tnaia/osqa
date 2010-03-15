@@ -132,7 +132,7 @@ help_text = """
 The minimum reputation an user must have to be allowed to lock posts.
 """))
 
-REP_TO_DELLETE_COMMENTS = Setting('REP_TO_DELLETE_COMMENTS', 2000, MIN_REP_SET, dict(
+REP_TO_DELETE_COMMENTS = Setting('REP_TO_DELETE_COMMENTS', 2000, MIN_REP_SET, dict(
 label = "Minimum reputation to delete comments",
 help_text = """
 The minimum reputation an user must have to be allowed to delete comments.
