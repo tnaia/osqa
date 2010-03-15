@@ -114,6 +114,7 @@ def vote(request, id):#refactor - pretty incomprehensible view used by various a
                             item.delete()
                             response_data['status'] = 1
                             response_data['count']  = len(fav_questions) - 1
+                            question.decrement_favourite_count()
                             if response_data['count'] < 0:
                                 response_data['count'] = 0
                             has_favorited = True
@@ -122,7 +123,7 @@ def vote(request, id):#refactor - pretty incomprehensible view used by various a
                     new_item = FavoriteQuestion(question=question, user=request.user)
                     new_item.save()
                     response_data['count']  = FavoriteQuestion.objects.filter(question=question).count()
-                Question.objects.update_favorite_count(question)
+                    question.increment_favourite_count()
 
             elif vote_type in ['1', '2', '5', '6']:
                 post_id = id
@@ -143,7 +144,7 @@ def vote(request, id):#refactor - pretty incomprehensible view used by various a
                 elif post.votes.filter(user=request.user).count() > 0:
                     vote = post.votes.filter(user=request.user)[0]
                     # unvote should be less than certain time
-                    if (datetime.datetime.now().day - vote.voted_at.day) >= auth.VOTE_RULES['scope_deny_unvote_days']:
+                    if (datetime.datetime.now().day - vote.voted_at.day) >= int(settings.DENY_UNVOTE_DAYS):
                         response_data['status'] = 2
                     else:
                         voted = vote.vote
@@ -157,7 +158,7 @@ def vote(request, id):#refactor - pretty incomprehensible view used by various a
 
                         response_data['status'] = 1
                         response_data['count'] = post.score
-                elif Vote.objects.get_votes_count_today_from_user(request.user) >= auth.VOTE_RULES['scope_votes_per_user_per_day']:
+                elif Vote.objects.get_votes_count_today_from_user(request.user) >= settings.MAX_VOTES_PER_DAY:
                     response_data['allowed'] = -3
                 else:
                     vote = Vote(user=request.user, content_object=post, vote=vote_score, voted_at=datetime.datetime.now())
@@ -168,8 +169,8 @@ def vote(request, id):#refactor - pretty incomprehensible view used by various a
                         # downvote
                         auth.onDownVoted(vote, post, request.user)
 
-                    votes_left = auth.VOTE_RULES['scope_votes_per_user_per_day'] - Vote.objects.get_votes_count_today_from_user(request.user)
-                    if votes_left <= auth.VOTE_RULES['scope_warn_votes_left']:
+                    votes_left = int(settings.MAX_VOTES_PER_DAY) - Vote.objects.get_votes_count_today_from_user(request.user)
+                    if votes_left <= settings.START_WARN_VOTES_LEFT:
                         response_data['message'] = u'%s votes left' % votes_left
                     response_data['count'] = post.score
             elif vote_type in ['7', '8']:
@@ -179,7 +180,7 @@ def vote(request, id):#refactor - pretty incomprehensible view used by various a
                     post_id = request.POST.get('postId')
                     post = get_object_or_404(Answer, id=post_id)
 
-                if FlaggedItem.objects.get_flagged_items_count_today(request.user) >= auth.VOTE_RULES['scope_flags_per_user_per_day']:
+                if FlaggedItem.objects.get_flagged_items_count_today(request.user) >= settings.MAX_FLAGS_PER_DAY:
                     response_data['allowed'] = -3
                 elif not auth.can_flag_offensive(request.user):
                     response_data['allowed'] = -2

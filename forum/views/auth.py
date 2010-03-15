@@ -42,6 +42,10 @@ def signin_page(request, action=None):
         context for context in all_providers if context.mode == 'SMALLICON' and can_show(context)
     ], sort)
 
+    top_stackitem_providers = sorted([
+        context for context in all_providers if context.mode == 'TOP_STACK_ITEM' and can_show(context)
+    ], sort)
+
     stackitem_providers = sorted([
         context for context in all_providers if context.mode == 'STACK_ITEM' and can_show(context)
     ], sort)
@@ -58,6 +62,7 @@ def signin_page(request, action=None):
                 'msg': msg,
                 'all_providers': all_providers,
                 'bigicon_providers': bigicon_providers,
+                'top_stackitem_providers': top_stackitem_providers,
                 'stackitem_providers': stackitem_providers,
                 'smallicon_providers': smallicon_providers,
             },
@@ -271,13 +276,13 @@ def auth_settings(request):
                 request.user.message_set.create(message=_("Your password was changed"))
             else:
                 request.user.message_set.create(message=_("New password set"))
-                form = ChangePasswordForm(user=user_)
+                FormClass = ChangePasswordForm
                 
             user_.set_password(form.cleaned_data['password1'])
             user_.save()
             return HttpResponseRedirect(reverse('user_authsettings'))
-    else:
-        form = FormClass(user=user_)
+    
+    form = FormClass(user=user_)
 
     auth_keys_list = []
 

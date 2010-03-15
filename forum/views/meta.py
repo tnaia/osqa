@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
+from django.conf import settings
 from forum.forms import FeedbackForm
 from django.core.urlresolvers import reverse
 from django.core.mail import mail_admins
@@ -10,7 +11,7 @@ from forum.utils.forms import get_next_url
 from forum.models import Badge, Award
 
 def about(request):
-    return render_to_response('about.html', context_instance=RequestContext(request))
+    return render_to_response('about.html', {'text': settings.ABOUT_PAGE_TEXT }, context_instance=RequestContext(request))
 
 def faq(request):
     data = {

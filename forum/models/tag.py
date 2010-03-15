@@ -1,6 +1,7 @@
 from base import *
 
 from django.utils.translation import ugettext as _
+import django.dispatch
 
 class TagManager(models.Manager):
     UPDATE_USED_COUNTS_QUERY = (
@@ -46,6 +47,7 @@ class TagManager(models.Manager):
         query = self.UPDATE_USED_COUNTS_QUERY % ','.join(['%s'] * len(tags))
         cursor.execute(query, [tag.id for tag in tags])
         transaction.commit_unless_managed()
+        tags_update_use_count.send(sender=Tag, tags=tags)
 
     def get_tags_by_questions(self, questions):
         question_ids = []
@@ -83,3 +85,5 @@ class MarkedTag(models.Model):
 
     class Meta:
         app_label = 'forum'
+
+tags_update_use_count = django.dispatch.Signal(providing_args=['tags'])

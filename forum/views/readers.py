@@ -503,7 +503,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
     request.session['question_view_times'][question.id] = datetime.datetime.now()
 
     if update_view_count:
-        question.view_count += 1
+        question.increment_view_count()
         question.save()
 
     #2) question view count per user

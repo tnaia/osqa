@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.humanize',
     'django.contrib.sitemaps',
+    'django.contrib.markup',
     'debug_toolbar',
     #'django_evolution',
     'forum',
@@ -75,9 +76,7 @@ INSTALLED_APPS = [
 
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',]
 
-#from forum.settings import setup_settings
-#import settings
-#setup_settings(settings)
 
-#print INSTALLED_APPS
+
+
 

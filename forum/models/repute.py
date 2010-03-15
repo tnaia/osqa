@@ -55,13 +55,9 @@ class AwardManager(models.Manager):
         ).values('badge_id', 'badge_name', 'badge_description', 'badge_type', 'user_id', 'user_name')
         return awards
 
-class Award(models.Model):
+class Award(MetaContent, UserContent):
     """The awarding of a Badge to a User."""
-    user       = models.ForeignKey(User, related_name='award_user')
     badge      = models.ForeignKey('Badge', related_name='award_badge')
-    content_type   = models.ForeignKey(ContentType)
-    object_id      = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
     awarded_at = models.DateTimeField(default=datetime.datetime.now)
     notified   = models.BooleanField(default=False)
 
@@ -71,6 +67,7 @@ class Award(models.Model):
         return u'[%s] is awarded a badge [%s] at %s' % (self.user.username, self.badge.name, self.awarded_at)
 
     class Meta:
+        unique_together = ('content_type', 'object_id', 'user', 'badge')
         app_label = 'forum'
         db_table = u'award'
 

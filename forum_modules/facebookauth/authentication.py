@@ -16,6 +16,8 @@ except:
         decoder = JSONDecoder()
         return decoder.decode(json.read())
 
+REST_SERVER = 'http://api.facebook.com/restserver.php'
+
 class FacebookAuthConsumer(AuthenticationConsumer):
     
     def process_authentication_request(self, request):
@@ -67,7 +69,7 @@ class FacebookAuthConsumer(AuthenticationConsumer):
         }
 
         request_data['sig'] = self.generate_signature(request_data)
-        fb_response = load_json(urlopen(settings.REST_SERVER, urlencode(request_data)))[0]
+        fb_response = load_json(urlopen(REST_SERVER, urlencode(request_data)))[0]
 
         return {
             'username': fb_response['first_name'] + ' ' + fb_response['last_name'],

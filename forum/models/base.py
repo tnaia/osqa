@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.template.defaultfilters import slugify
-from django.db.models.signals import post_delete, post_save, pre_save
+from django.db.models.signals import post_delete, post_save, pre_save, pre_delete
 from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
 from django.contrib.sitemaps import ping_google
@@ -18,6 +18,7 @@ from django.conf import settings
 import logging
 
 from forum.const import *
+from utils import CountableField
 
 class UserContent(models.Model):
     user = models.ForeignKey(User, related_name='%(class)ss')
@@ -98,7 +99,7 @@ class Content(models.Model):
     locked_at            = models.DateTimeField(null=True, blank=True)
 
     score                = models.IntegerField(default=0)
-    vote_up_count        = models.IntegerField(default=0)
+    vote_up_count        = CountableField(default=0)
     vote_down_count      = models.IntegerField(default=0)
 
     comment_count        = models.PositiveIntegerField(default=0)

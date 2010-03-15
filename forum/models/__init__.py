@@ -4,6 +4,7 @@ from tag import Tag, MarkedTag
 from meta import Vote, Comment, FlaggedItem
 from user import Activity, ValidationHash, EmailFeedSetting, AuthKeyUserAssociation
 from repute import Badge, Award, Repute
+from utils import KeyValue
 import re
 
 from base import *
@@ -248,7 +249,7 @@ def record_delete_question(instance, delete_by, **kwargs):
     """
     when user deleted the question
     """
-    if instance.__class__ == "Question":
+    if instance.__class__ is Question:
         activity_type = TYPE_ACTIVITY_DELETE_QUESTION
     else:
         activity_type = TYPE_ACTIVITY_DELETE_ANSWER
@@ -344,6 +345,8 @@ EmailFeedSetting = EmailFeedSetting
 ValidationHash = ValidationHash
 AuthKeyUserAssociation = AuthKeyUserAssociation
 
+KeyValue = KeyValue
+
 __all__ = [
         'Question',
         'QuestionRevision',
@@ -369,8 +372,15 @@ __all__ = [
         'EmailFeedSetting',
         'ValidationHash',
         'AuthKeyUserAssociation',
+        'KeyValue',
 
-        'User'
+        'User',
+        'tags_updated',
+        'edit_question_or_answer', 
+        'delete_post_or_answer',
+        'mark_offensive',
+        'user_updated',
+        'user_logged_in',
         ]
 
 

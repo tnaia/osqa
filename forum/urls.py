@@ -1,3 +1,5 @@
+import startup
+
 import os.path
 from django.conf.urls.defaults import *
 from django.contrib import admin
@@ -106,6 +108,9 @@ urlpatterns = patterns('',
     #url(r'^%s%s%s$' % (_('accounts/'), _('password/'), _('confirm/')), app.user.confirmchangepw, name='user_confirmchangepw'),
     #url(r'^%s$' % _('account/'), app.users.account_settings, name='user_account_settings'),
     #url(r'^%s$' % _('delete/'), app.users.delete, name='user_delete'),
+
+    url(r'^%s$' % _('admin/'), app.admin.index, name="admin_index"),
+    url(r'^%s(?P<set_name>\w+)/$' % _('admin/'), app.admin.settings_set, name="admin_set"),
 
     url(r'^feeds/rss/$', RssLastestQuestionsFeed, name="latest_questions_feed"),
 )

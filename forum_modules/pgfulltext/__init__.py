@@ -3,7 +3,8 @@ DESCRIPTION = "Enables PostgreSql full text search functionality."
 
 try:
     import psycopg2
-    CAN_ENABLE = True
+    from django.conf import settings
+    CAN_USE = settings.DATABASE_ENGINE in ('postgresql_psycopg2', 'postgresql', )
 except:
-    CAN_ENABLE = False
+    CAN_USE = False
     

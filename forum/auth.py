@@ -13,52 +13,10 @@ from models import Question
 from models import Answer
 from const import TYPE_REPUTATION
 import logging
+import settings
+
 question_type = ContentType.objects.get_for_model(Question)
 answer_type = ContentType.objects.get_for_model(Answer)
-
-VOTE_UP                   = 15
-FLAG_OFFENSIVE            = 15
-POST_IMAGES               = 15
-LEAVE_COMMENTS            = 50
-UPLOAD_FILES              = 60
-VOTE_DOWN                 = 100
-CLOSE_OWN_QUESTIONS       = 250
-RETAG_OTHER_QUESTIONS     = 500
-REOPEN_OWN_QUESTIONS      = 500
-EDIT_COMMUNITY_WIKI_POSTS = 750
-EDIT_OTHER_POSTS          = 2000
-DELETE_COMMENTS           = 2000
-VIEW_OFFENSIVE_FLAGS      = 2000
-DISABLE_URL_NOFOLLOW      = 2000
-CLOSE_OTHER_QUESTIONS     = 3000
-LOCK_POSTS                = 4000
-
-VOTE_RULES = {
-    'scope_votes_per_user_per_day' : 30, # how many votes of one user has everyday
-    'scope_flags_per_user_per_day' : 5,  # how many times user can flag posts everyday
-    'scope_warn_votes_left' : 10,        # start when to warn user how many votes left
-    'scope_deny_unvote_days' : 1,        # if 1 days passed, user can't cancel votes.
-    'scope_flags_invisible_main_page' : 3, # post doesn't show on main page if has more than 3 offensive flags
-    'scope_flags_delete_post' : 5,         # post will be deleted if it has more than 5 offensive flags
-}
-
-REPUTATION_RULES = {
-    'initial_score'                       : 1,
-    'scope_per_day_by_upvotes'            : 200,
-    'gain_by_upvoted'                     : 10,
-    'gain_by_answer_accepted'             : 15,
-    'gain_by_accepting_answer'            : 2,
-    'gain_by_downvote_canceled'           : 2,
-    'gain_by_canceling_downvote'          : 1,
-    'lose_by_canceling_accepted_answer'   : -2,
-    'lose_by_accepted_answer_cancled'     : -15,
-    'lose_by_downvoted'                   : -2,
-    'lose_by_flagged'                     : -2,
-    'lose_by_downvoting'                  : -1,
-    'lose_by_flagged_lastrevision_3_times': -30,
-    'lose_by_flagged_lastrevision_5_times': -100,
-    'lose_by_upvote_canceled'             : -10,
-}
 
 def can_moderate_users(user):
     return user.is_superuser
@@ -66,13 +24,13 @@ def can_moderate_users(user):
 def can_vote_up(user):
     """Determines if a User can vote Questions and Answers up."""
     return user.is_authenticated() and (
-        user.reputation >= VOTE_UP or
+        user.reputation >= settings.REP_TO_VOTE_UP or
         user.is_superuser)
 
 def can_flag_offensive(user):
     """Determines if a User can flag Questions and Answers as offensive."""
     return user.is_authenticated() and (
-        user.reputation >= FLAG_OFFENSIVE or
+        user.reputation >= settings.REP_TO_FLAG or
         user.is_superuser)
 
 def can_add_comments(user,subject):
@@ -80,7 +38,7 @@ def can_add_comments(user,subject):
     if user.is_authenticated():
         if user.id == subject.author.id:
             return True
-        if user.reputation >= LEAVE_COMMENTS:
+        if user.reputation >= settings.REP_TO_COMMENT:
             return True
         if user.is_superuser:
             return True
@@ -91,53 +49,53 @@ def can_add_comments(user,subject):
 def can_vote_down(user):
     """Determines if a User can vote Questions and Answers down."""
     return user.is_authenticated() and (
-        user.reputation >= VOTE_DOWN or
+        user.reputation >= settings.REP_TO_VOTE_DOWN or
         user.is_superuser)
 
 def can_retag_questions(user):
     """Determines if a User can retag Questions."""
     return user.is_authenticated() and (
-        RETAG_OTHER_QUESTIONS <= user.reputation < EDIT_OTHER_POSTS or
+        settings.REP_TO_RETAG <= user.reputation < settings.REP_TO_EDIT_OTHERS or
         user.is_superuser)
 
 def can_edit_post(user, post):
     """Determines if a User can edit the given Question or Answer."""
     return user.is_authenticated() and (
         user.id == post.author_id or
-        (post.wiki and user.reputation >= EDIT_COMMUNITY_WIKI_POSTS) or
-        user.reputation >= EDIT_OTHER_POSTS or
+        (post.wiki and user.reputation >= settings.REP_TO_EDIT_WIKI) or
+        user.reputation >= settings.REP_TO_EDIT_OTHERS or
         user.is_superuser)
 
 def can_delete_comment(user, comment):
     """Determines if a User can delete the given Comment."""
     return user.is_authenticated() and (
         user.id == comment.user_id or
-        user.reputation >= DELETE_COMMENTS or
+        user.reputation >= settings.REP_TO_DELETE_COMMENTS or
         user.is_superuser)
 
 def can_view_offensive_flags(user):
     """Determines if a User can view offensive flag counts."""
     return user.is_authenticated() and (
-        user.reputation >= VIEW_OFFENSIVE_FLAGS or
+        user.reputation >= settings.REP_TO_VIEW_FLAGS or
         user.is_superuser)
 
 def can_close_question(user, question):
     """Determines if a User can close the given Question."""
     return user.is_authenticated() and (
         (user.id == question.author_id and
-         user.reputation >= CLOSE_OWN_QUESTIONS) or
-        user.reputation >= CLOSE_OTHER_QUESTIONS or
+         user.reputation >= settings.REP_TO_CLOSE_OWN) or
+        user.reputation >= settings.REP_TO_CLOSE_OTHERS or
         user.is_superuser)
 
 def can_lock_posts(user):
     """Determines if a User can lock Questions or Answers."""
     return user.is_authenticated() and (
-        user.reputation >= LOCK_POSTS or
+        user.reputation >= settings.REP_TO_LOCK or
         user.is_superuser)
 
 def can_follow_url(user):
     """Determines if the URL link can be followed by Google search engine."""
-    return user.reputation >= DISABLE_URL_NOFOLLOW
+    return user.reputation >= settings.REP_TO_DISABLE_NOFOLLOW
 
 def can_accept_answer(user, question, answer):
     return (user.is_authenticated() and
@@ -148,7 +106,7 @@ def can_accept_answer(user, question, answer):
 def can_reopen_question(user, question):
     return (user.is_authenticated() and
         user.id == question.author_id and
-        user.reputation >= REOPEN_OWN_QUESTIONS) or user.is_superuser
+        user.reputation >= settings.REP_TO_REOPEN_OWN) or user.is_superuser
 
 def can_delete_post(user, post):
     if user.is_superuser:
@@ -184,7 +142,7 @@ def can_view_user_edit(request_user, target_user):
     return (request_user.is_authenticated() and request_user == target_user)
 
 def can_upload_files(request_user):
-    return (request_user.is_authenticated() and request_user.reputation >= UPLOAD_FILES) or \
+    return (request_user.is_authenticated() and request_user.reputation >= settings.REP_TO_UPLOAD) or \
            request_user.is_superuser
 
 ###########################################
@@ -205,7 +163,7 @@ def onFlaggedItem(item, post, user):
     post.save()
 
     post.author.reputation = calculate_reputation(post.author.reputation,
-                           int(REPUTATION_RULES['lose_by_flagged']))
+                           -int(settings.REP_LOST_BY_FLAGGED))
     post.author.save()
 
     question = post
@@ -213,33 +171,33 @@ def onFlaggedItem(item, post, user):
         question = post.question
 
     reputation = Repute(user=post.author,
-               negative=int(REPUTATION_RULES['lose_by_flagged']),
+               negative=-int(settings.REP_LOST_BY_FLAGGED),
                question=question, reputed_at=datetime.datetime.now(),
                reputation_type=-4,
                reputation=post.author.reputation)
     reputation.save()
 
     #todo: These should be updated to work on same revisions.
-    if post.offensive_flag_count ==  VOTE_RULES['scope_flags_invisible_main_page'] :
+    if post.offensive_flag_count == settings.FLAG_COUNT_TO_HIDE_POST :
         post.author.reputation = calculate_reputation(post.author.reputation,
-                               int(REPUTATION_RULES['lose_by_flagged_lastrevision_3_times']))
+                               -int(settings.REP_LOST_BY_FLAGGED_3_TIMES))
         post.author.save()
 
         reputation = Repute(user=post.author,
-                   negative=int(REPUTATION_RULES['lose_by_flagged_lastrevision_3_times']),
+                   negative=-int(settings.REP_LOST_BY_FLAGGED_3_TIMES),
                    question=question,
                    reputed_at=datetime.datetime.now(),
                    reputation_type=-6,
                    reputation=post.author.reputation)
         reputation.save()
 
-    elif post.offensive_flag_count == VOTE_RULES['scope_flags_delete_post']:
+    elif post.offensive_flag_count == settings.FLAG_COUNT_TO_DELETE_POST:
         post.author.reputation = calculate_reputation(post.author.reputation,
-                               int(REPUTATION_RULES['lose_by_flagged_lastrevision_5_times']))
+                               -int(settings.REP_LOST_BY_FLAGGED_5_TIMES))
         post.author.save()
 
         reputation = Repute(user=post.author,
-                   negative=int(REPUTATION_RULES['lose_by_flagged_lastrevision_5_times']),
+                   negative=-int(settings.REP_LOST_BY_FLAGGED_5_TIMES),
                    question=question,
                    reputed_at=datetime.datetime.now(),
                    reputation_type=-7,
@@ -261,10 +219,10 @@ def onAnswerAccept(answer, user):
     answer.question.save()
 
     answer.author.reputation = calculate_reputation(answer.author.reputation,
-                             int(REPUTATION_RULES['gain_by_answer_accepted']))
+                             int(settings.REP_GAIN_BY_ACCEPTED))
     answer.author.save()
     reputation = Repute(user=answer.author,
-               positive=int(REPUTATION_RULES['gain_by_answer_accepted']),
+               positive=int(settings.REP_GAIN_BY_ACCEPTED),
                question=answer.question,
                reputed_at=datetime.datetime.now(),
                reputation_type=2,
@@ -272,10 +230,10 @@ def onAnswerAccept(answer, user):
     reputation.save()
 
     user.reputation = calculate_reputation(user.reputation,
-                    int(REPUTATION_RULES['gain_by_accepting_answer']))
+                    int(settings.REP_GAIN_BY_ACCEPTING))
     user.save()
     reputation = Repute(user=user,
-               positive=int(REPUTATION_RULES['gain_by_accepting_answer']),
+               positive=int(settings.REP_GAIN_BY_ACCEPTING),
                question=answer.question,
                reputed_at=datetime.datetime.now(),
                reputation_type=3,
@@ -291,10 +249,10 @@ def onAnswerAcceptCanceled(answer, user):
     answer.question.save()
 
     answer.author.reputation = calculate_reputation(answer.author.reputation,
-                             int(REPUTATION_RULES['lose_by_accepted_answer_cancled']))
+                             -int(settings.REP_GAIN_BY_ACCEPTED_CANCELED))
     answer.author.save()
     reputation = Repute(user=answer.author,
-               negative=int(REPUTATION_RULES['lose_by_accepted_answer_cancled']),
+               negative=-int(settings.REP_GAIN_BY_ACCEPTED_CANCELED),
                question=answer.question,
                reputed_at=datetime.datetime.now(),
                reputation_type=-2,
@@ -302,10 +260,10 @@ def onAnswerAcceptCanceled(answer, user):
     reputation.save()
 
     user.reputation = calculate_reputation(user.reputation,
-                    int(REPUTATION_RULES['lose_by_canceling_accepted_answer']))
+                    -int(settings.REP_LOST_BY_CANCELING_ACCEPTED))
     user.save()
     reputation = Repute(user=user,
-               negative=int(REPUTATION_RULES['lose_by_canceling_accepted_answer']),
+               negative=-int(settings.REP_LOST_BY_CANCELING_ACCEPTED),
                question=answer.question,
                reputed_at=datetime.datetime.now(),
                reputation_type=-1,
@@ -316,15 +274,15 @@ def onAnswerAcceptCanceled(answer, user):
 def onUpVoted(vote, post, user):
     vote.save()
 
-    post.vote_up_count = int(post.vote_up_count) + 1
+    post.increment_vote_up_count()
     post.score = int(post.score) + 1
     post.save()
 
     if not post.wiki:
         author = post.author
-        if Repute.objects.get_reputation_by_upvoted_today(author) <  int(REPUTATION_RULES['scope_per_day_by_upvotes']):
+        if Repute.objects.get_reputation_by_upvoted_today(author) <  int(settings.MAX_REP_BY_UPVOTE_DAY):
             author.reputation = calculate_reputation(author.reputation,
-                              int(REPUTATION_RULES['gain_by_upvoted']))
+                              int(settings.REP_GAIN_BY_UPVOTED))
             author.save()
 
             question = post
@@ -332,7 +290,7 @@ def onUpVoted(vote, post, user):
                 question = post.question
 
             reputation = Repute(user=author,
-                       positive=int(REPUTATION_RULES['gain_by_upvoted']),
+                       positive=int(settings.REP_GAIN_BY_UPVOTED),
                        question=question,
                        reputed_at=datetime.datetime.now(),
                        reputation_type=1,
@@ -343,7 +301,7 @@ def onUpVoted(vote, post, user):
 def onUpVotedCanceled(vote, post, user):
     vote.delete()
 
-    post.vote_up_count = int(post.vote_up_count) - 1
+    post.decrement_vote_up_count()
     if post.vote_up_count < 0:
         post.vote_up_count  = 0
     post.score = int(post.score) - 1
@@ -352,7 +310,7 @@ def onUpVotedCanceled(vote, post, user):
     if not post.wiki:
         author = post.author
         author.reputation = calculate_reputation(author.reputation,
-                          int(REPUTATION_RULES['lose_by_upvote_canceled']))
+                          -int(settings.REP_LOST_BY_UPVOTE_CANCELED))
         author.save()
 
         question = post
@@ -360,7 +318,7 @@ def onUpVotedCanceled(vote, post, user):
             question = post.question
 
         reputation = Repute(user=author,
-                   negative=int(REPUTATION_RULES['lose_by_upvote_canceled']),
+                   negative=-int(settings.REP_LOST_BY_UPVOTE_CANCELED),
                    question=question,
                    reputed_at=datetime.datetime.now(),
                    reputation_type=-8,
@@ -378,7 +336,7 @@ def onDownVoted(vote, post, user):
     if not post.wiki:
         author = post.author
         author.reputation = calculate_reputation(author.reputation,
-                          int(REPUTATION_RULES['lose_by_downvoted']))
+                          -int(settings.REP_LOST_BY_DOWNVOTED))
         author.save()
 
         question = post
@@ -386,7 +344,7 @@ def onDownVoted(vote, post, user):
             question = post.question
 
         reputation = Repute(user=author,
-                   negative=int(REPUTATION_RULES['lose_by_downvoted']),
+                   negative=-int(settings.REP_LOST_BY_DOWNVOTED),
                    question=question,
                    reputed_at=datetime.datetime.now(),
                    reputation_type=-3,
@@ -394,11 +352,11 @@ def onDownVoted(vote, post, user):
         reputation.save()
 
         user.reputation = calculate_reputation(user.reputation,
-                        int(REPUTATION_RULES['lose_by_downvoting']))
+                        -int(settings.REP_LOST_BY_DOWNVOTING))
         user.save()
 
         reputation = Repute(user=user,
-                   negative=int(REPUTATION_RULES['lose_by_downvoting']),
+                   negative=-int(settings.REP_LOST_BY_DOWNVOTING),
                    question=question,
                    reputed_at=datetime.datetime.now(),
                    reputation_type=-5,
@@ -418,7 +376,7 @@ def onDownVotedCanceled(vote, post, user):
     if not post.wiki:
         author = post.author
         author.reputation = calculate_reputation(author.reputation,
-                          int(REPUTATION_RULES['gain_by_downvote_canceled']))
+                          int(settings.REP_GAIN_BY_DOWNVOTE_CANCELED))
         author.save()
 
         question = post
@@ -426,7 +384,7 @@ def onDownVotedCanceled(vote, post, user):
             question = post.question
 
         reputation = Repute(user=author,
-                   positive=int(REPUTATION_RULES['gain_by_downvote_canceled']),
+                   positive=int(settings.REP_GAIN_BY_DOWNVOTE_CANCELED),
                    question=question,
                    reputed_at=datetime.datetime.now(),
                    reputation_type=4,
@@ -434,11 +392,11 @@ def onDownVotedCanceled(vote, post, user):
         reputation.save()
 
         user.reputation = calculate_reputation(user.reputation,
-                        int(REPUTATION_RULES['gain_by_canceling_downvote']))
+                        int(settings.REP_GAIN_BY_CANCELING_DOWNVOTE))
         user.save()
 
         reputation = Repute(user=user,
-                   positive=int(REPUTATION_RULES['gain_by_canceling_downvote']),
+                   positive=int(settings.REP_GAIN_BY_CANCELING_DOWNVOTE),
                    question=question,
                    reputed_at=datetime.datetime.now(),
                    reputation_type=5,

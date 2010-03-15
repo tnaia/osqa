@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
-from django.views.generic.simple import direct_to_template
+from django.http import  HttpResponse
+import settings
 
 urlpatterns = patterns('',
-    (r'^robots.txt$',  direct_to_template,  {'template': 'modules/robotsdennyall/robots.txt'}),
+    (r'^robots.txt$',  lambda r: HttpResponse(settings.ROBOTS_FILE.value)),
 )

@@ -36,7 +36,7 @@ ANSWERS_PAGE_SIZE = 10
 
 markdowner = Markdown(html4tags=True)
 
-def upload(request):#ajax upload file to a question or answer 
+def upload(request):#ajax upload file to a question or answer
     class FileTypeNotAllow(Exception):
         pass
     class FileSizeNotAllow(Exception):
@@ -59,7 +59,11 @@ def upload(request):#ajax upload file to a question or answer
             raise FileTypeNotAllow
 
         # generate new file name
-        new_file_name = str(time.time()).replace('.', str(random.randint(0,100000))) + file_name_suffix
+        import uuid
+        new_file_name = str(uuid.uuid4()) + file_name_suffix
+        full_file_name = os.path.join(settings.SITE_SRC_ROOT, 'forum/upfiles', new_file_name)
+        #new_file_name = str(time.time()).replace('.', str(random.randint(0,100000))) + file_name_suffix
+
         # use default storage to store file
         default_storage.save(new_file_name, f)
         # check file size
@@ -69,14 +73,15 @@ def upload(request):#ajax upload file to a question or answer
             default_storage.delete(new_file_name)
             raise FileSizeNotAllow
 
-        result = xml_template % ('Good', '', default_storage.url(new_file_name))
-    except UploadPermissionNotAuthorized:
-        result = xml_template % ('', _('uploading images is limited to users with >60 reputation points'), '')
-    except FileTypeNotAllow:
-        result = xml_template % ('', _("allowed file types are 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'"), '')
-    except FileSizeNotAllow:
-        result = xml_template % ('', _("maximum upload file size is %sK") % settings.ALLOW_MAX_FILE_SIZE / 1024, '')
-    except Exception:
+        result = xml_template % ('Good', '', settings.MEDIA_URL + '/' + new_file_name)
+    #except UploadPermissionNotAuthorized:
+    #    result = xml_template % ('', _('uploading images is limited to users with >60 reputation points'), '')
+    #except FileTypeNotAllow:
+    #    result = xml_template % ('', _("allowed file types are 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'"), '')
+    #except FileSizeNotAllow:
+    #    result = xml_template % ('', _("maximum upload file size is %sK") % settings.ALLOW_MAX_FILE_SIZE / 1024, '')
+    except Exception, e:
+        logging.log(1, str(e))
         result = xml_template % ('', _('Error uploading file. Please contact the site administrator. Thank you. %s' % Exception), '')
 
     return HttpResponse(result, mimetype="application/xml")
@@ -246,7 +251,7 @@ def _edit_question(request, question):#non-url subview of edit_question - just e
                     # Update the Question's tag associations
                     if tags_changed:
                         Question.objects.update_tags(question, form.cleaned_data['tags'], request.user)
-                        tags_updated.send(sender=question.__class__, question=question)
+                        #tags_updated.send(sender=question.__class__, question=question)
                     # Create a new revision
                     revision = QuestionRevision(
                         question   = question,

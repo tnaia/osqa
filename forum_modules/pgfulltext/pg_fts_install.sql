@@ -25,7 +25,7 @@ begin
   new.tsv :=
      setweight(to_tsvector('english', coalesce(new.tagnames,'')), 'A') ||
      setweight(to_tsvector('english', coalesce(new.title,'')), 'B') ||
-     setweight(to_tsvector('english', coalesce(new.summary,'')), 'C');
+     setweight(to_tsvector('english', coalesce(new.html,'')), 'C');
   RETURN new;
 end
 $$ LANGUAGE plpgsql;

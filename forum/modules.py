@@ -3,18 +3,21 @@ import types
 import re
 
 from django.template import Template, TemplateDoesNotExist
+from django.conf import settings
 
 MODULES_PACKAGE = 'forum_modules'
 
 MODULES_FOLDER = os.path.join(os.path.dirname(__file__), '../' + MODULES_PACKAGE)
 
-MODULE_LIST = [
+DISABLED_MODULES = getattr(settings, 'ENABLE_MODULES', [])
+
+MODULE_LIST = filter(lambda m: getattr(m, 'CAN_USE', True), [
         __import__('forum_modules.%s' % f, globals(), locals(), ['forum_modules'])
         for f in os.listdir(MODULES_FOLDER)
         if os.path.isdir(os.path.join(MODULES_FOLDER, f)) and
            os.path.exists(os.path.join(MODULES_FOLDER, "%s/__init__.py" % f)) and
-           not os.path.exists(os.path.join(MODULES_FOLDER, "%s/DISABLED" % f))
-]
+           not f in DISABLED_MODULES
+])
 
 def get_modules_script(script_name):
     all = []
@@ -27,6 +30,18 @@ def get_modules_script(script_name):
             pass
 
     return all
+
+def get_modules_scipt_implementations(script_name, impl_class):
+    scripts = get_modules_script(script_name)
+    all_impls = {}
+
+    for script in scripts:
+        all_impls.update(dict([
+            (n, i) for (n, i) in [(n, getattr(script, n)) for n in dir(script)]
+            if isinstance(i, impl_class)
+        ]))
+
+    return all_impls
 
 def get_modules_script_classes(script_name, base_class):
     scripts = get_modules_script(script_name)

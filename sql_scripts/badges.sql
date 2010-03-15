@@ -27,7 +27,7 @@ INSERT INTO badge ( id, name, type, slug, description, multiple, awarded_count) 
 (26, 'Civic duty', 2, 'civic-duty', 'Voted 300 times', FALSE, 0),
 (27, 'Strunk & White', 2, 'strunk-and-white', 'Edited 100 entries', FALSE, 0),
 (28, 'Generalist', 2, 'generalist', 'Active in many different tags', FALSE, 0),
-(29, 'Expert', 2, 'export', 'Very active in one tag', FALSE, 0),
+(29, 'Expert', 2, 'export', 'Very active in one tag', FALSE, 0), 
 (30, 'Yearling', 2, 'yearling', 'Active member for a year', FALSE, 0),
 (31, 'Notable Question', 2, 'notable-question', 'Asked a question with 2,500 views', TRUE, 0),
 (32, 'Enlightened', 2, 'enlightened', 'First answer was accepted with at least 10 up votes', FALSE, 0),

@@ -132,8 +132,8 @@ class Question(Content, DeletableContent):
 
     # Denormalised data
     answer_count         = models.PositiveIntegerField(default=0)
-    view_count           = models.PositiveIntegerField(default=0)
-    favourite_count      = models.PositiveIntegerField(default=0)
+    view_count           = CountableField(default=0)
+    favourite_count      = CountableField(default=0)
     last_activity_at     = models.DateTimeField(default=datetime.datetime.now)
     last_activity_by     = models.ForeignKey(User, related_name='last_active_in_questions')
     tagnames             = models.CharField(max_length=125)
