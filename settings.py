@@ -68,7 +68,6 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.humanize',
     'django.contrib.sitemaps',
-    'django.contrib.markup',
     'debug_toolbar',
     #'django_evolution',
     'forum',
