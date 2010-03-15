@@ -2,7 +2,7 @@
 import datetime
 import logging
 from urllib import unquote
-from django.conf import settings
+from django.conf import settings as django_settings
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden, Http404
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
@@ -433,7 +433,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
 
     question = get_object_or_404(Question, id=id)
     try:
-        pattern = r'/%s%s%d/([\w-]+)' % (settings.FORUM_SCRIPT_ALIAS,_('question/'), question.id)
+        pattern = r'/%s%s%d/([\w-]+)' % (django_settings.FORUM_SCRIPT_ALIAS,_('question/'), question.id)
         path_re = re.compile(pattern)
         logging.debug(pattern)
         logging.debug(request.path)
@@ -444,7 +444,8 @@ def question(request, id):#refactor - long subroutine. display question body, an
             assert(slug == slugify(question.title))
         else:
             logging.debug('no match!')
-    except:
+    except Exception, e:
+        print e
         return HttpResponseRedirect(question.get_absolute_url())
 
     if question.deleted and not auth.can_view_deleted_post(request.user, question):
