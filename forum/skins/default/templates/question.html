@@ -469,7 +469,7 @@
 {% endblock %}
 
 {% block sidebar %}
-{% cache 600 questions_tags settings.APP_URL question.id %}
+{% cache 60 questions_tags settings.APP_URL question.id %}
 <div class="boxC">
     <p>
 		{% trans "Question tags" %}:
