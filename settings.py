@@ -30,7 +30,6 @@ MIDDLEWARE_CLASSES = [
     'forum.middleware.cancel.CancelActionMiddleware',
     #'recaptcha_django.middleware.ReCaptchaMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -68,10 +67,17 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.humanize',
     'django.contrib.sitemaps',
-    'debug_toolbar',
     #'django_evolution',
     'forum',
 ]
+
+if DEBUG:
+    try:
+        import debug_toolbar
+        MIDDLEWARE_CLASSES.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+        INSTALLED_APPS.append('debug_toolbar')
+    except:
+        pass
 
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',]
 
