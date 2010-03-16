@@ -8,7 +8,6 @@ B. INSTALLATION
    4. Installation under Apache/WSGI
    5. Email subscriptions
    6. Sitemap
-   7. Miscellaneous
 C. CONFIGURATION PARAMETERS (settings_local.py)
 D. CUSTOMIZATION
 
@@ -222,12 +221,6 @@ comment is saved or a question deleted
 
 for this to be useful - do register you sitemap with Google at
 https://www.google.com/webmasters/tools/
-
-7. Miscellaneous
-
-There are some demo scripts under sql_scripts folder,
-including badges and test accounts for CNProg.com. You
-don't need them to run your sample.
 
 C. CONFIGURATION PARAMETERS
 

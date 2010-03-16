@@ -21,7 +21,7 @@ REST_SERVER = 'http://api.facebook.com/restserver.php'
 class FacebookAuthConsumer(AuthenticationConsumer):
     
     def process_authentication_request(self, request):
-        API_KEY = settings.FB_API_KEY
+        API_KEY = str(settings.FB_API_KEY)
 
         if API_KEY in request.COOKIES:
             if self.check_cookies_signature(request.COOKIES):
@@ -40,14 +40,14 @@ class FacebookAuthConsumer(AuthenticationConsumer):
         for key in sorted(values.keys()):
             keys.append(key)
 
-        signature = ''.join(['%s=%s' % (key,  values[key]) for key in keys]) + settings.FB_APP_SECRET
+        signature = ''.join(['%s=%s' % (key,  values[key]) for key in keys]) + str(settings.FB_APP_SECRET)
         return hashlib.md5(signature).hexdigest()
 
     def check_session_expiry(self, cookies):
         return datetime.fromtimestamp(float(cookies[settings.FB_API_KEY+'_expires'])) > datetime.now()
 
     def check_cookies_signature(self, cookies):
-        API_KEY = settings.FB_API_KEY
+        API_KEY = str(settings.FB_API_KEY)
 
         values = {}
 

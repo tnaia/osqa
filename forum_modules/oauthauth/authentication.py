@@ -12,8 +12,8 @@ import settings
 class TwitterAuthConsumer(OAuthAbstractAuthConsumer):
     def __init__(self):
         OAuthAbstractAuthConsumer.__init__(self,
-                settings.TWITTER_CONSUMER_KEY,
-                settings.TWITTER_CONSUMER_SECRET,
+                str(settings.TWITTER_CONSUMER_KEY),
+                str(settings.TWITTER_CONSUMER_SECRET),
                 "twitter.com",
                 "https://twitter.com/oauth/request_token",
                 "https://twitter.com/oauth/access_token",

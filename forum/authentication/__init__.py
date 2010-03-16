@@ -5,10 +5,14 @@ from forum.authentication.base import AuthenticationConsumer, ConsumerTemplateCo
 class ConsumerAndContext():
     def __init__(self, id, consumer, context):
         self.id = id
-        self.consumer = consumer()
+        self._consumer = consumer
 
         context.id = id
         self.context = context
+
+    @property
+    def consumer(self):
+        return self._consumer()
 
 consumers = dict([
             (re.sub('AuthConsumer$', '', name).lower(), cls) for name, cls
