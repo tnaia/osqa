@@ -6,10 +6,9 @@ B. INSTALLATION
    2. Database
    3. Running OSQA in the development server
    4. Installation under Apache/WSGI
-   5. Full text search
-   6. Email subscriptions
-   7. Sitemap
-   8. Miscellaneous
+   5. Email subscriptions
+   6. Sitemap
+   7. Miscellaneous
 C. CONFIGURATION PARAMETERS (settings_local.py)
 D. CUSTOMIZATION
 
@@ -20,45 +19,36 @@ A. PREREQUISITES
 If you haven't installed it, please try to install it first.
 e.g, sudo apt-get install python-setuptools
 
-1. Python2.5/2.6, MySQL, Django v1.0/1.1
+1. Python2.5/2.6, a rdbm (such as MySql or PostgreSql), Django v1.0/1.1
 Note: email subscription sender job requires Django 1.1, everything else works with 1.0
-Make sure mysql for python provider has been installed.
-sudo easy_install mysql-python
+Make sure you have the necessary support for python to communicate with your rdbm.
+sudo easy_install mysql-python (for MySql)
+sudo easy_install postgresql_psycopg2 (for PostgreSql)
 
-2. Python-openid v2.2
-http://openidenabled.com/python-openid/
-sudo easy_install python-openid
-
-4. html5lib
+2. html5lib
 http://code.google.com/p/html5lib/
 Used for HTML sanitizer
 sudo easy_install html5lib
 
-5. Markdown2
+3. Markdown2
 http://code.google.com/p/python-markdown2/
 sudo easy_install markdown2
 
-6. Django Debug Toolbar
+4. Optionally you may want to install Django Debug Toolbar for debugging.
+This is not required and OSQA will just ignore it if you don't have it.
 http://github.com/robhudson/django-debug-toolbar/tree/master
 
-7. djangosphinx (optional - for full text questions+answer+tag)
-http://github.com/dcramer/django-sphinx/tree/master/djangosphinx
+5. Depending on which modules you decide to enable (see bellow for more info on modules),
+you may need to install some aditional dependencies. Here's a list of the dependencies of each bundled module if any:
 
-8. sphinx search engine (optional, works together with djangosphinx)
-http://sphinxsearch.com/downloads.html
+    a) openidauth, depends on Python-openid
+       http://openidenabled.com/python-openid/
 
-9. recaptcha_django
-http://code.google.com/p/recaptcha-django/
+    b) sphinxfulltext, depends on djangosphinx, and obviously you'll have to install the sphinx search engine
+       http://sphinxsearch.com/downloads.html
+       http://github.com/dcramer/django-sphinx/tree/master/djangosphinx
 
-10. python recaptcha module
-http://code.google.com/p/recaptcha/
-Notice that you will need to register with recaptcha.net and receive
-recaptcha public and private keys that need to be saved in your
-settings_local.py file
 
-NOTES: django_authopenid is included into OSQA code
-and is significantly modified.  http://code.google.com/p/django-authopenid/
-no need to install this library
 
 B. INSTALLATION
 -----------------------------------------------
@@ -81,6 +71,36 @@ Copy settings_local.py.dist to settings_local.py and
 update all your settings. Check settings.py and update
 it as well if necessory.
 Section C explains configuration paramaters.
+
+1b. Modules
+
+Decide which modules you want to DISABLE. Each module adds a specific piece of functionality to OSQA, and
+by default, all are enabled, you have to disable the ones you want. If any module doesn't meet the required dependencies it just
+won't load.
+Currently bundled modules are:
+
+    localauth - provides local authentication and registration on your site, disable this if you want only external login
+                through any external provider
+
+    openidauth - adds support for open id on osqa and adds some openid providers to the signin page
+
+    oauthauth - adds support for oauth authentication on osqa and adds twitter as a signin provider on the signin page
+
+    facebookauth - adds facebook as an authentication provider
+
+    pgfulltext - adds support to full text search functionality through postgresql if you're useing it as your rdbm
+
+    sphinxfulltext - adds support for full text search with the sphinx search engine
+                     (detailed instructions are in the module root folder)
+
+    robotstxt - adds a robots file editable throug the admin interface
+
+    recaptcha - adds support for recaptcha in the registration form
+
+    default_badges - the default set of badges, others can be added or used instead
+
+    books - don't really does anything, it's disabled by default, and you should keep it that way, you can delete it if you want to
+
 
 2. Database
 
@@ -184,44 +204,7 @@ WSGIPythonEggs /var/python/eggs #must be readable and writable by apache
 </VirtualHost>
 -------------
 
-5. Full text search (using sphinx search)
-
-   Currently full text search works only with sphinx search engine
-   And builtin PostgreSQL (postgres only >= 8.3???)
-
-   5.1 Instructions for Sphinx search setup
-   Sphinx at this time supports only MySQL and PostgreSQL databases
-   to enable this, install sphinx search engine and djangosphinx
-
-   configure sphinx, sample configuration can be found in
-   sphinx/sphinx.conf file usually goes somewhere in /etc tree
-
-   build osqa index first time manually
-
-   % indexer --config /path/to/sphinx.conf --index osqa
-
-   setup cron job to rebuild index periodically with command
-   your crontab entry may be something like
-
-   0 9,15,21 * * * /usr/local/bin/indexer --config /etc/sphinx/sphinx.conf --all --rotate >/dev/null 2>&1
-   adjust it as necessary this one will reindex three times a day at 9am 3pm and 9pm
-
-   if your forum grows very big ( good luck with that :) you'll
-   need to two search indices one diff index and one main
-   please refer to online sphinx search documentation for the information
-   on the subject http://sphinxsearch.com/docs/
-
-   in settings_local.py set
-   USE_SPHINX_SEARCH=True
-   adjust other settings that have SPHINX_* prefix accordingly
-   remember that there must be trailing comma in parentheses for
-   SHPINX_SEARCH_INDICES tuple - particlarly with just one item!
-
-   in settings.py look for INSTALLED_APPS
-   and uncomment #'djangosphinx',
-
-
-6. Email subscriptions
+5. Email subscriptions
 
    This function at the moment requires Django 1.1
 
@@ -230,7 +213,7 @@ WSGIPythonEggs /var/python/eggs #must be readable and writable by apache
    subscription sender may be tested manually in shell
    by calling cron/send_email_alerts
 
-7. Sitemap
+6. Sitemap
 Sitemap will be available at /<settings_local.FORUM_SCRIPT_ALIAS>sitemap.xml
 e.g yoursite.com/forum/sitemap.xml
 
@@ -240,7 +223,7 @@ comment is saved or a question deleted
 for this to be useful - do register you sitemap with Google at
 https://www.google.com/webmasters/tools/
 
-8. Miscellaneous
+7. Miscellaneous
 
 There are some demo scripts under sql_scripts folder,
 including badges and test accounts for CNProg.com. You
@@ -248,11 +231,11 @@ don't need them to run your sample.
 
 C. CONFIGURATION PARAMETERS
 
-#the only parameter that needs to be touched in settings.py is
-DEBUG=False #set to True to enable debug mode
+Most stuff can be configured through the admin interface,
+but there are some important settings that need to live in the settings files:
 
 #all forum parameters are set in file settings_local.py
-
+DEBUG=False #set to True to enable debug mode
 LOG_FILENAME = 'osqa.log' #where logging messages should go
 DATABASE_NAME = 'osqa'    # Or path to database file if using sqlite3.
 DATABASE_USER = ''          # Not used with sqlite3.
@@ -267,11 +250,6 @@ EMAIL_HOST='osqa.com'
 EMAIL_PORT='25'
 EMAIL_USE_TLS=False
 TIME_ZONE = 'America/Tijuana'
-APP_TITLE = u'OSQA Q&A Forum' #title of your forum
-APP_KEYWORDS = u'OSQA,forum,community' #keywords for search engines
-APP_DESCRIPTION = u'Ask and answer questions.' #site description for searche engines
-APP_INTRO = u'<p>Ask and answer questions, make the world better!</p>' #slogan that goes to front page in logged out mode
-APP_COPYRIGHT = '' #copyright message
 
 #if you set FORUM_SCRIPT_ALIAS= 'forum/'
 #then OSQA will run at url http://example.com/forum
@@ -283,18 +261,7 @@ EMAIL_VALIDATION = 'off' #string - on|off
 MIN_USERNAME_LENGTH = 1
 EMAIL_UNIQUE = False    #if True, email addresses must be unique in all accounts
 APP_URL = 'http://osqa.com' #used by email notif system and RSS
-GOOGLE_SITEMAP_CODE = '' #code for google site crawler (look up google webmaster tools)
-GOOGLE_ANALYTICS_KEY = '' #key to enable google analytics on this site
-BOOKS_ON = False  #if True - books tab will be on
 WIKI_ON = True  #if False - community wiki feature is disabled
-
-#experimental - allow password login through external site
-#must implement django_authopenid/external_login.py
-#included prototype external_login works with Mediawiki
-USE_EXTERNAL_LEGACY_LOGIN = True #if false OSQA uses it's own login/password
-EXTERNAL_LEGACY_LOGIN_HOST = 'login.osqa.com'
-EXTERNAL_LEGACY_LOGIN_PORT = 80
-EXTERNAL_LEGACY_LOGIN_PROVIDER_NAME = '<span class="orange">OSQA</span>'
 
 FEEDBACK_SITE_URL = None #None or url
 LOGIN_URL = '/%s%s%s' % (FORUM_SCRIPT_ALIAS,'account/','signin/')
@@ -309,6 +276,5 @@ Other than settings_local.py the following will most likely need customization:
   if you want to start with english messages file - look for words like "forum" and
   "OSQA" in the msgstr lines
 * templates/header.html and templates/footer.html may contain extra links
-* templates/about.html - a place to explain for is your forum for
 * templates/faq.html - put answers to users frequent questions
 * templates/content/style/style.css - modify style sheet to add disctinctive look to your forum
