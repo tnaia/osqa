@@ -210,7 +210,7 @@ class StrunkAndWhiteBadge(ActivityCountAbstractBadge):
         super(StrunkAndWhiteBadge, self).__init__((const.TYPE_ACTIVITY_UPDATE_ANSWER, const.TYPE_ACTIVITY_UPDATE_QUESTION), settings.STRUNK_AND_WHITE_EDITS)
 
 
-def is_user_first(self, post):
+def is_user_first(post):
     return post.__class__.objects.filter(author=post.author).order_by('added_at')[0].id == post.id
 
 class StudentBadge(CountableAbstractBadge):
