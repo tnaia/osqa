@@ -445,7 +445,6 @@ def question(request, id):#refactor - long subroutine. display question body, an
         else:
             logging.debug('no match!')
     except Exception, e:
-        print e
         return HttpResponseRedirect(question.get_absolute_url())
 
     if question.deleted and not auth.can_view_deleted_post(request.user, question):
