@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.utils.safestring import mark_safe
 from forum.utils.forms import NextUrlField, UserNameField, SetPasswordForm
-from recaptcha_django import ReCaptchaField
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 import logging
@@ -114,9 +113,6 @@ class ModerateUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('is_approved',)
-
-class NotARobotForm(forms.Form):
-    recaptcha = ReCaptchaField()
 
 class FeedbackForm(forms.Form):
     name = forms.CharField(label=_('Your name:'), required=False)
