@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     #'django_evolution',
     'forum',
+    'stackexchange',
 ]
 
 if DEBUG:
@@ -80,8 +81,3 @@ if DEBUG:
         pass
 
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',]
-
-
-
-
-

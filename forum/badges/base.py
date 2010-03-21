@@ -105,5 +105,3 @@ class FirstActivityAbstractBadge(ActivityCountAbstractBadge):
 
     def __init__(self, activity_type):
         super(FirstActivityAbstractBadge, self).__init__(activity_type, 1)
-
-

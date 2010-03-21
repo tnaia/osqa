@@ -282,6 +282,22 @@ How many days an user can cancel a vote after he originaly casted it.
 
 BADGES_SET = SettingSet('badges', 'Badges config', "Configure badges on your OSQA site.", 500)
 
+EMAIL_SET = SettingSet('email', 'Email alert settings', 'Configure email alert settings', 600)
+
+MAX_ALERTS_PER_EMAIL = Setting(
+                                'MAX_ALERTS_PER_EMAIL', 
+                                7, 
+                                EMAIL_SET, 
+                                dict(label='Max number of news items per email alert',
+                                    help_text='The limit is soft - i.e. news in all '
+                                            'individually selected'
+                                            ' questions and tags will be reported anyway '
+                                            'but in more broad categories '
+                                            'like "all questions" and "answered by me" '
+                                            'this limit applies'
+                                    )
+                                )
+
 from pages import *
 
 __all__ = locals().keys()
