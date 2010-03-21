@@ -6,7 +6,9 @@ from django.core.mail import EmailMessage
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 import datetime
-from django.conf import settings
+from forum import const
+from forum import settings
+from django.conf import settings as django_settings
 import logging
 from forum.utils.odict import OrderedDict
 from django.contrib.contenttypes.models import ContentType
@@ -146,7 +148,7 @@ class Command(NoArgsCommand):
             extend_question_list(q_all_B, q_list, limit=True)
 
         ctype = ContentType.objects.get_for_model(Question)
-        EMAIL_UPDATE_ACTIVITY = settings.TYPE_ACTIVITY_QUESTION_EMAIL_UPDATE_SENT
+        EMAIL_UPDATE_ACTIVITY = const.TYPE_ACTIVITY_QUESTION_EMAIL_UPDATE_SENT
         for q, meta_data in q_list.items():
             #this loop edits meta_data for each question
             #so that user will receive counts on new edits new answers, etc
@@ -230,7 +232,7 @@ class Command(NoArgsCommand):
                 else:
                     num_q += 1
             if num_q > 0:
-                url_prefix = settings.APP_URL
+                url_prefix = django_settings.APP_URL
                 subject = _('email update message subject')
                 print 'have %d updated questions for %s' % (num_q, user.username)
                 text = ungettext('%(name)s, this is an update message header for a question', 
@@ -307,10 +309,10 @@ class Command(NoArgsCommand):
 
                 link = url_prefix + user.get_profile_url() + '?sort=email_subscriptions'
                 text += _('go to %(link)s to change frequency of email updates or %(email)s administrator') \
-                                % {'link':link, 'email':settings.ADMINS[0][1]}
-                msg = EmailMessage(subject, text, settings.DEFAULT_FROM_EMAIL, [user.email])
+                                % {'link':link, 'email':django_settings.ADMINS[0][1]}
+                msg = EmailMessage(subject, text, django_settings.DEFAULT_FROM_EMAIL, [user.email])
                 msg.content_subtype = 'html'
-                #msg.send()
+                msg.send()
                 #uncomment lines below to get copies of emails sent to others
                 #todo: maybe some debug setting would be appropriate here
                 #msg2 = EmailMessage(subject, text, settings.DEFAULT_FROM_EMAIL, ['your@email.com'])

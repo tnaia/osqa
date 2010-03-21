@@ -69,7 +69,6 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     #'django_evolution',
     'forum',
-    'stackexchange',
 ]
 
 if DEBUG:
