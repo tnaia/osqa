@@ -279,8 +279,8 @@ class GuruBadge(AcceptedAndVotedAnswerAbstractBadge):
 
 class NecromancerBadge(AbstractBadge):
     type = const.SILVER_BADGE
-    description = _('Answered a question more than %s days later with at least %s votes') % \
-                        (str(settings.NECROMANCER_DIF_DAYS), str(settings.NECROMANCER_UP_VOTES))
+    description = _('Answered a question more than `%(dif_days)s` days later with at least `%(up_votes)s` votes') % \
+            {'diff_days': str(settings.NECROMANCER_DIF_DAYS), 'up_votes': str(settings.NECROMANCER_UP_VOTES)}
 
     def __init__(self):
         def handler(sender, **kwargs):
