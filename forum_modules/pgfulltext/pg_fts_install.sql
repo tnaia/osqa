@@ -37,8 +37,6 @@
 
 	    CREATE INDEX question_tsv ON question USING gin(tsv);
 
-	  UPDATE question SET title = title;
-
           SELECT 'tsv column created'::TEXT;
       $$
   LANGUAGE 'sql';
