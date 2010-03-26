@@ -74,11 +74,14 @@ def create_msg(subject, sender, recipient, html, text, images):
     msgAlternative.attach(MIMEText(html, 'html', _charset='utf-8'))
 
     for img in images:
-        fp = open(img[0], 'rb')
-        msgImage = MIMEImage(fp.read())
-        fp.close()
-        msgImage.add_header('Content-ID', '<'+img[1]+'>')
-        msgRoot.attach(msgImage)
+        try:
+            fp = open(img[0], 'rb')
+            msgImage = MIMEImage(fp.read())
+            fp.close()
+            msgImage.add_header('Content-ID', '<'+img[1]+'>')
+            msgRoot.attach(msgImage)
+        except:
+            pass
 
     return msgRoot.as_string()
 
