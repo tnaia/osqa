@@ -1,192 +1,179 @@
+from datetime import datetime, timedelta
 from django.core.management.base import NoArgsCommand
-from django.db import connection
-from django.db.models import Q, F
-from forum.models import *
-from forum import const 
-from django.core.mail import EmailMessage
 from django.utils.translation import ugettext as _
-from django.utils.translation import ungettext
-import datetime
+from django.template import loader, Context, Template
+from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
-import logging
-from forum.utils.odict import OrderedDict
-from django.contrib.contenttypes.models import ContentType
+from forum.models import KeyValue, Activity, User, QuestionSubscription
+from forum.utils.mail import send_msg_list
+from forum import const
+
+class QuestionRecord:
+    def __init__(self, question):
+        self.question = question
+        self.records = []
+
+    def log_activity(self, activity):
+        self.records.append(activity)
+
+    def get_activity_since(self, since):
+        activity = [r for r in self.records if r.active_at > since]
+        answers = [a for a in activity if a.activity_type == const.TYPE_ACTIVITY_ANSWER]
+        comments = [a for a in activity if a.activity_type in (const.TYPE_ACTIVITY_COMMENT_QUESTION, const.TYPE_ACTIVITY_COMMENT_ANSWER)]
+
+        accepted = [a for a in activity if a.activity_type == const.TYPE_ACTIVITY_MARK_ANSWER]
+
+        if len(accepted):
+            accepted = accepted[-1:][0]
+        else:
+            accepted = None
+
+        return {
+            'answers': answers,
+            'comments': comments,
+            'accepted': accepted,
+        }
+
 
 class Command(NoArgsCommand):
-    def handle_noargs(self,**options):
-        try:
-            try:
-                self.send_email_alerts()
-            except Exception, e:
-                print e
-        finally:
-            connection.close()
+    def handle_noargs(self, **options):
+        digest_control = self.get_digest_control()
 
-    def get_updated_questions_for_user(self,user):
-        q_sel = None 
-        q_ask = None 
-        q_ans = None 
-        q_all = None 
-        now = datetime.datetime.now()
-        Q_set1 = Question.objects.exclude(
-                                        last_activity_by=user,
-                                  ).exclude(
-                                        last_activity_at__lt=user.date_joined
-                                  ).filter(
-                                        Q(viewed__who=user,viewed__when__lt=F('last_activity_at')) | \
-                                        ~Q(viewed__who=user)
-                                  ).exclude(
-                                        deleted=True
-                                  ).exclude(
-                                        closed=True
-                                  )
+        self.send_digest('daily', 'd', digest_control.value['LAST_DAILY'])
+        digest_control.value['LAST_DAILY'] = datetime.now()
+
+        if digest_control.value['LAST_WEEKLY'] + timedelta(days=7) <= datetime.now():
+            self.send_digest('weekly', 'w', digest_control.value['LAST_WEEKLY'])
+            digest_control.value['LAST_WEEKLY'] = datetime.now()
+
+        digest_control.save()
             
-        user_feeds = EmailFeedSetting.objects.filter(subscriber=user).exclude(frequency='n')
-        for feed in user_feeds:
-            cutoff_time = now - EmailFeedSetting.DELTA_TABLE[feed.frequency]
-            if feed.reported_at == None or feed.reported_at <= cutoff_time:
-                Q_set = Q_set1.exclude(last_activity_at__gt=cutoff_time)#report these excluded later
-                feed.reported_at = now
-                feed.save()#may not actually report anything, depending on filters below
-                if feed.feed_type == 'q_sel':
-                    q_sel = Q_set.filter(followed_by=user)
-                    q_sel.cutoff_time = cutoff_time #store cutoff time per query set
-                elif feed.feed_type == 'q_ask':
-                    q_ask = Q_set.filter(author=user)
-                    q_ask.cutoff_time = cutoff_time
-                elif feed.feed_type == 'q_ans':
-                    q_ans = Q_set.filter(answers__author=user)
-                    q_ans.cutoff_time = cutoff_time
-                elif feed.feed_type == 'q_all':
-                    if user.tag_filter_setting == 'ignored':
-                        ignored_tags = Tag.objects.filter(user_selections__reason='bad',user_selections__user=user)
-                        q_all = Q_set.exclude( tags__in=ignored_tags )
-                    else:
-                        selected_tags = Tag.objects.filter(user_selections__reason='good',user_selections__user=user)
-                        q_all = Q_set.filter( tags__in=selected_tags )
-                    q_all.cutoff_time = cutoff_time
-        #build list in this order
-        q_list = OrderedDict()
-        def extend_question_list(src, dst):
-            """src is a query set with questions
-               or an empty list
-                dst - is an ordered dictionary
-            """
-            if src is None:
-                return #will not do anything if subscription of this type is not used
-            cutoff_time = src.cutoff_time
-            for q in src:
-                if q in dst:
-                    if cutoff_time < dst[q]['cutoff_time']:
-                        dst[q]['cutoff_time'] = cutoff_time
-                else:
-                    #initialise a questions metadata dictionary to use for email reporting
-                    dst[q] = {'cutoff_time':cutoff_time}
 
-        extend_question_list(q_sel, q_list)
-        extend_question_list(q_ask, q_list)
-        extend_question_list(q_ans, q_list)
-        extend_question_list(q_all, q_list)
+    def send_digest(self, name, char_in_db, control_date):
+        new_questions, question_records = self.prepare_activity(control_date)
+        new_users = User.objects.filter(date_joined__gt=control_date)
 
-        ctype = ContentType.objects.get_for_model(Question)
-        EMAIL_UPDATE_ACTIVITY = const.TYPE_ACTIVITY_QUESTION_EMAIL_UPDATE_SENT
-        for q, meta_data in q_list.items():
-            #todo use Activity, but first start keeping more Activity records
-            #act = Activity.objects.filter(content_type=ctype, object_id=q.id)
-            #because currently activity is not fully recorded to through
-            #revision records to see what kind modifications were done on
-            #the questions and answers
+        digest_template = loader.get_template("notifications/digest.html")
+        digest_subject = settings.EMAIL_SUBJECT_PREFIX + _('Daily digest')
+
+        users = User.objects.filter(subscription_settings__enable_notifications=True)
+
+        msgs = []
+
+        for u in users:
+            context = {
+                'user': u,
+                'digest_type': name,
+            }
+
+            if u.subscription_settings.member_joins == char_in_db:
+                context['new_users'] = new_users
+            else:
+                context['new_users'] = False
+
+            if u.subscription_settings.subscribed_questions == char_in_db:
+                activity_in_subscriptions = []
+
+                for id, r in question_records.items():
+                    try:
+                        subscription = QuestionSubscription.objects.get(question=r.question, user=u)
+
+                        record = r.get_activity_since(subscription.last_view)
+
+                        if not u.subscription_settings.notify_answers:
+                            del record['answers']
+
+                        if not u.subscription_settings.notify_comments:
+                            if u.subscription_settings.notify_comments_own_post:
+                                record.comments = [a for a in record.comments if a.content_object.content_object.author == u]
+                                record['own_comments_only'] = True
+                            else:
+                                del record['comments']
+
+                        if not u.subscription_settings.notify_accepted:
+                            del record['accepted']
+
+                        if record.get('answers', False) or record.get('comments', False) or record.get('accepted', False):
+                            activity_in_subscriptions.append({'question': r.question, 'activity': record})
+                    except:
+                        pass
+
+                context['activity_in_subscriptions'] = activity_in_subscriptions
+            else:
+                context['activity_in_subscriptions'] = False
+
+
+            if u.subscription_settings.new_question == char_in_db:
+                context['new_questions'] = new_questions
+                context['watched_tags_only'] = False
+            elif u.subscription_settings.new_question_watched_tags == char_in_db:
+                context['new_questions'] = [q for q in new_questions if
+                                            q.tags.filter(id__in=u.marked_tags.filter(user_selections__reason='good')).count() > 0]
+                context['watched_tags_only'] = True
+            else:
+                context['new_questions'] = False
+
+            if context['new_users'] or context['activity_in_subscriptions'] or context['new_questions']:
+                message_body = digest_template.render(Context(context))
+
+                msg = EmailMultiAlternatives(digest_subject, message_body, settings.DEFAULT_FROM_EMAIL, [u.email])
+                msg.attach_alternative(message_body, "text/html")
+
+                msgs.append(msg)
+        
+        send_msg_list(msgs)
+
+
+    def get_digest_control(self):
+        try:
+            digest_control = KeyValue.objects.get(key='DIGEST_CONTROL')
+        except:
+            digest_control = KeyValue(key='DIGEST_CONTROL', value={
+                'LAST_DAILY': datetime.now() - timedelta(days=1),
+                'LAST_WEEKLY': datetime.now() - timedelta(days=1),
+            })
+
+        return digest_control
+
+    def prepare_activity(self, since):
+        all_activity = Activity.objects.filter(active_at__gt=since, activity_type__in=(
+            const.TYPE_ACTIVITY_ASK_QUESTION, const.TYPE_ACTIVITY_ANSWER,
+            const.TYPE_ACTIVITY_COMMENT_QUESTION, const.TYPE_ACTIVITY_COMMENT_ANSWER,
+            const.TYPE_ACTIVITY_MARK_ANSWER
+        )).order_by('active_at')
+
+        question_records = {}
+        new_questions = []
+
+
+        for activity in all_activity:
             try:
-                update_info = Activity.objects.get(content_type=ctype, 
-                                                    object_id=q.id,
-                                                    activity_type=EMAIL_UPDATE_ACTIVITY)
-                emailed_at = update_info.active_at
-            except Activity.DoesNotExist:
-                update_info = Activity(user=user, content_object=q, activity_type=EMAIL_UPDATE_ACTIVITY)
-                emailed_at = datetime.datetime(1970,1,1)#long time ago
-            except Activity.MultipleObjectsReturned:
-                raise Exception('server error - multiple question email activities found per user-question pair')
+                question = self.get_question_for_activity(activity)
 
-            q_rev = QuestionRevision.objects.filter(question=q,\
-                                                    revised_at__lt=cutoff_time,\
-                                                    revised_at__gt=emailed_at)
-            q_rev = q_rev.exclude(author=user)
-            meta_data['q_rev'] = len(q_rev)
-            if len(q_rev) > 0 and q.added_at == q_rev[0].revised_at:
-                meta_data['q_rev'] = 0
-                meta_data['new_q'] = True
-            else:
-                meta_data['new_q'] = False
-                
-            new_ans = Answer.objects.filter(question=q,\
-                                            added_at__lt=cutoff_time,\
-                                            added_at__gt=emailed_at)
-            new_ans = new_ans.exclude(author=user)
-            meta_data['new_ans'] = len(new_ans)
-            ans_rev = AnswerRevision.objects.filter(answer__question=q,\
-                                            revised_at__lt=cutoff_time,\
-                                            revised_at__gt=emailed_at)
-            ans_rev = ans_rev.exclude(author=user)
-            meta_data['ans_rev'] = len(ans_rev)
-            if len(q_rev) == 0 and len(new_ans) == 0 and len(ans_rev) == 0:
-                meta_data['nothing_new'] = True
-            else:
-                meta_data['nothing_new'] = False
-                update_info.active_at = now
-                update_info.save() #save question email update activity 
-        return q_list 
+                if not question.id in question_records:
+                    question_records[question.id] = QuestionRecord(question)
 
-    def __action_count(self,string,number,output):
-        if number > 0:
-            output.append(_(string) % {'num':number})
+                question_records[question.id].log_activity(activity)
 
-    def send_email_alerts(self):
-        #todo: move this to template
-        for user in User.objects.all():
-            q_list = self.get_updated_questions_for_user(user)
-            num_q = 0
-            num_moot = 0
-            for meta_data in q_list.values():
-                if meta_data['nothing_new'] == False:
-                    num_q += 1
-                else:
-                    num_moot += 1
-            if num_q > 0:
-                url_prefix = settings.APP_URL
-                subject = _('email update message subject')
-                print 'have %d updated questions for %s' % (num_q, user.username)
-                text = ungettext('%(name)s, this is an update message header for a question', 
-                            '%(name)s, this is an update message header for %(num)d questions',num_q) \
-                                % {'num':num_q, 'name':user.username}
+                if activity.activity_type == const.TYPE_ACTIVITY_ASK_QUESTION:
+                    new_questions.append(question)
+            except:
+                pass
 
-                text += '<ul>'
-                for q, meta_data in q_list.items():
-                    act_list = []
-                    if meta_data['nothing_new']:
-                        continue
-                    else:
-                        if meta_data['new_q']:
-                            act_list.append(_('new question'))
-                        self.__action_count('%(num)d rev', meta_data['q_rev'],act_list)
-                        self.__action_count('%(num)d ans', meta_data['new_ans'],act_list)
-                        self.__action_count('%(num)d ans rev',meta_data['ans_rev'],act_list)
-                        act_token = ', '.join(act_list)
-                        text += '<li><a href="%s?sort=latest">%s</a> <font color="#777777">(%s)</font></li>' \
-                                    % (url_prefix + q.get_absolute_url(), q.title, act_token)
-                text += '</ul>'
-                if num_moot > 0:
-                    text += '<p></p>'
-                    text += ungettext('There is also one question which was recently '\
-                                +'updated but you might not have seen its latest version.',
-                            'There are also %(num)d more questions which were recently updated '\
-                            +'but you might not have seen their latest version.',num_moot) \
-                                % {'num':num_moot,}
-                    text += _('Perhaps you could look up previously sent forum reminders in your mailbox.')
-                    text += '</p>'
+        return new_questions, question_records
 
-                link = url_prefix + user.get_profile_url() + '?sort=email_subscriptions'
-                text += _('go to %(link)s to change frequency of email updates or %(email)s administrator') \
-                                % {'link':link, 'email':settings.ADMINS[0][1]}
-                msg = EmailMessage(subject, text, settings.DEFAULT_FROM_EMAIL, [user.email])
-                msg.content_subtype = 'html'
-                msg.send()
+    def get_question_for_activity(self, activity):
+        if activity.activity_type == const.TYPE_ACTIVITY_ASK_QUESTION:
+            question = activity.content_object
+        elif activity.activity_type == const.TYPE_ACTIVITY_ANSWER:
+            question = activity.content_object.question
+        elif activity.activity_type == const.TYPE_ACTIVITY_COMMENT_QUESTION:
+            question = activity.content_object.content_object
+        elif activity.activity_type == const.TYPE_ACTIVITY_COMMENT_ANSWER:
+            question = activity.content_object.content_object.question
+        elif activity.activity_type == const.TYPE_ACTIVITY_MARK_ANSWER:
+            question = activity.content_object.question
+        else:
+            raise Exception
+
+        return question
