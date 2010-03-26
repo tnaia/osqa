@@ -111,9 +111,7 @@
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/out" />
-  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 2.6.4 (C:/Python26/python.exe)" project-jdk-type="Python SDK" />
   <component name="Regex">
     <option name="pos1" value="218" />
     <option name="pos2" value="218" />

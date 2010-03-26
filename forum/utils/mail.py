@@ -63,7 +63,7 @@ def named(data):
 def create_msg(subject, sender, recipient, html, text, images):
     msgRoot = MIMEMultipart('related')
     msgRoot['Subject'] = subject
-    #msgRoot['From'] = named(sender)
+    msgRoot['From'] = named(sender)
     msgRoot['To'] =  named(recipient)
     msgRoot.preamble = 'This is a multi-part message from %s.' % str(settings.APP_SHORT_NAME)
 
