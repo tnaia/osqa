@@ -1,5 +1,5 @@
-import cPickle as pickle
 import django.dispatch
+from django.utils.encoding import force_unicode
 
 class SettingSet(list):
     def __init__(self, name, title, description, weight=1000):
@@ -8,7 +8,7 @@ class SettingSet(list):
         self.description = description
         self.weight = weight
 
-class BaseSetting():
+class BaseSetting(object):
     def __init__(self, name, default, field_context):
         self.name = name
         self.default = default
@@ -21,10 +21,10 @@ class BaseSetting():
         try:
             kv = KeyValue.objects.get(key=self.name)
         except:
-            kv = KeyValue(key=self.name, value=pickle.dumps(self.default))
+            kv = KeyValue(key=self.name, value=self._parse(self.default))
             kv.save()
 
-        return pickle.loads(kv.value.encode('utf-8'))
+        return kv.value
 
     def set_value(self, new_value):
         new_value = self._parse(new_value)
@@ -37,11 +37,13 @@ class BaseSetting():
             kv = KeyValue(key=self.name)
             old_value = self.default
 
-        kv.value = pickle.dumps(new_value)
+        kv.value = new_value
         kv.save()
 
         setting_update.send(sender=self, old_value=old_value, new_value=new_value)
 
+    def to_default(self):
+        self.set_value(self.default)
 
     def _parse(self, value):
         return value
@@ -58,10 +60,16 @@ class BaseSetting():
 
 class StringSetting(BaseSetting):
     def _parse(self, value):
-        return str(value)
+        if isinstance(value, unicode):
+            return value.encode('utf8')
+        else:
+            return str(value)
+
+    def __unicode__(self):
+        return unicode(self.value.decode('utf8'))
 
     def __add__(self, other):
-        return str(self) + str(other)
+        return "%s%s" % (unicode(self), other)
 
     def __cmp__(self, other):
         return cmp(str(self), str(other))
@@ -82,10 +90,28 @@ class IntegerSetting(BaseSetting):
     def __cmp__(self, other):
         return int(self) - int(other)
 
+class FloatSetting(BaseSetting):
+    def _parse(self, value):
+        return float(value)
+
+    def __int__(self):
+        return int(self.value)
+
+    def __float__(self):
+        return float(self.value)
+
+    def __add__(self, other):
+        return float(self) + float(other)
+
+    def __sub__(self, other):
+        return float(self) - float(other)
+
+    def __cmp__(self, other):
+        return float(self) - float(other)
+
 class BoolSetting(BaseSetting):
     def _parse(self, value):
         return bool(value)
-
 
 class Setting(object):
     sets = {}
@@ -95,6 +121,8 @@ class Setting(object):
             instance = BoolSetting(name, default, field_context)
         elif isinstance(default, str):
             instance = StringSetting(name, default, field_context)
+        elif isinstance(default, float):
+            instance = FloatSetting(name, default, field_context)
         elif isinstance(default, int):
             instance = IntegerSetting(name, default, field_context)
         else:

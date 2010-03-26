@@ -26,6 +26,7 @@ from forum.auth import *
 from forum.const import *
 from forum import auth
 from forum.utils.forms import get_next_url
+import django.dispatch
 
 # used in index page
 #refactor - move these numbers somewhere?
@@ -402,6 +403,8 @@ def tags(request):#view showing a listing of available tags - plain list
                                             }
                                 }, context_instance=RequestContext(request))
 
+question_view = django.dispatch.Signal(providing_args=['instance', 'user'])
+
 def question(request, id):#refactor - long subroutine. display question body, answers and comments
     """view that displays body of the question and 
     all answers to it
@@ -508,12 +511,22 @@ def question(request, id):#refactor - long subroutine. display question body, an
 
     #2) question view count per user
     if request.user.is_authenticated():
+        question_view.send(sender=question, user=request.user)
+
         try:
-            question_view = QuestionView.objects.get(who=request.user, question=question)
-        except QuestionView.DoesNotExist:
-            question_view = QuestionView(who=request.user, question=question)
-        question_view.when = datetime.datetime.now()
-        question_view.save()
+            subscription = QuestionSubscription.objects.get(question=question, user=request.user)
+        except:
+            subscription = False
+
+        #try:
+        #    question_view_ = QuestionView.objects.get(who=request.user, question=question)
+        #except QuestionView.DoesNotExist:
+        #    question_view_ = QuestionView(who=request.user, question=question)
+        #question_view_.when = datetime.datetime.now()
+        #question_view_.save()
+
+    else:
+        subscription = False
 
     return render_to_response('question.html', {
         "question" : question,
@@ -526,6 +539,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
         "tab_id" : view_id,
         "favorited" : favorited,
         "similar_questions" : Question.objects.get_similar_questions(question),
+        "subscription": subscription,
         "context" : {
             'is_paginated' : True,
             'pages': objects_list.num_pages,

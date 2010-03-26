@@ -45,15 +45,6 @@ class SimpleEmailSubscribeForm(forms.Form):
                                 error_messages={'required':_('please choose one of the options above')},
                                 choices=SIMPLE_SUBSCRIBE_CHOICES)
 
-    def save(self,user=None):
-        EFF = EditUserEmailFeedsForm
-        if self.cleaned_data['subscribe'] == 'y':
-            email_settings_form = EFF()
-            logging.debug('%s wants to subscribe' % user.username)
-        else:
-            email_settings_form = EFF(initial=EFF.NO_EMAIL_INITIAL)
-        email_settings_form.save(user,save_unbound=True)
-
 class ChangePasswordForm(SetPasswordForm):
     """ change password form """
     oldpw = forms.CharField(widget=forms.PasswordInput(attrs={'class':'required'}),

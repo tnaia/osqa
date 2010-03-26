@@ -19,7 +19,10 @@ def register(request):
 
             user_ = User.objects.create_user( username,email,password )
             send_validation_email(user_)
-            email_feeds_form.save(user_)
+            if email_feeds_form.cleaned_data['subscribe'] == 'n':
+                user_.subscription_settings.enable_notifications = False
+                user_.subscription_settings.save()
+
             return login_and_forward(request, user_, None, _("A validation email has been sent to your email address. "))
     else:
         form = ClassicRegisterForm(initial={'next':'/'})

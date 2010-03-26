@@ -75,6 +75,8 @@ urlpatterns = patterns('',
                                 kwargs={'action':'remove'}, \
                                 name='mark_ignored_tag'),
 
+    url(r'^%s(?P<id>\d+)/$' % _('switch_subscription/'), app.commands.switch_subscription, name="switch_subscription"),
+
     url(r'^%s$' % _('users/'),app.users.users, name='users'),
     url(r'^%s(?P<id>\d+)/$' % _('moderate-user/'), app.users.moderate_user, name='moderate_user'),
     url(r'^%s(?P<id>\d+)/%s$' % (_('users/'), _('edit/')), app.users.edit_user, name='edit_user'),
@@ -110,6 +112,8 @@ urlpatterns = patterns('',
     #url(r'^%s$' % _('delete/'), app.users.delete, name='user_delete'),
 
     url(r'^%s$' % _('admin/'), app.admin.index, name="admin_index"),
+    url(r'^%s%s$' % (_('admin/'), _('go_bootstrap/')), app.admin.go_bootstrap, name="admin_go_bootstrap"),
+    url(r'^%s%s$' % (_('admin/'), _('go_defaults/')), app.admin.go_defaults, name="admin_go_defaults"),
     url(r'^%s(?P<set_name>\w+)/$' % _('admin/'), app.admin.settings_set, name="admin_set"),
 
     url(r'^feeds/rss/$', RssLastestQuestionsFeed, name="latest_questions_feed"),

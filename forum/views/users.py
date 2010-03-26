@@ -838,6 +838,41 @@ def user_favorites(request, user_id, user_view):
         "view_user" : user
     }, context_instance=RequestContext(request))
 
+def user_subscription_settings(request, user_id, user_view):
+    user = get_object_or_404(User, id=user_id)
+
+    if request.method == 'POST':
+        form = SubscriptionSettingsForm(request.POST)
+
+        if 'notswitch' in request.POST:
+            user.subscription_settings.enable_notifications = not user.subscription_settings.enable_notifications
+            user.subscription_settings.save()
+
+            if user.subscription_settings.enable_notifications:
+                request.user.message_set.create(message=_('Notifications are now enabled'))
+            else:
+                request.user.message_set.create(message=_('Notifications are now disabled'))
+        else:
+            form.is_valid()
+            for k,v in form.cleaned_data.items():
+                setattr(user.subscription_settings, k, v)
+
+            user.subscription_settings.save()
+            request.user.message_set.create(message=_('New subscription settings are now saved'))
+    else:
+        form = SubscriptionSettingsForm(user.subscription_settings.__dict__)
+
+    notificatons_on = user.subscription_settings.enable_notifications
+
+    return render_to_response(user_view.template_file,{
+        'tab_name':user_view.id,
+        'tab_description':user_view.tab_description,
+        'page_title':user_view.page_title,
+        'view_user':user,
+        'notificatons_on': notificatons_on,
+        'form':form,
+    }, context_instance=RequestContext(request))
+
 def user_email_subscriptions(request, user_id, user_view):
     user = get_object_or_404(User, id=user_id)
     if request.method == 'POST':
@@ -938,12 +973,12 @@ USER_TEMPLATE_VIEWS = (
         data_size = 50
     ),
     UserView(
-        id = 'email_subscriptions',
-        tab_title = _('email subscriptions'),
-        tab_description = _('email subscription settings'),
-        page_title = _('profile - email subscriptions'),
-        view_func = user_email_subscriptions,
-        template_file = 'user_email_subscriptions.html'
+        id = 'subscriptions',
+        tab_title = _('subscriptions'),
+        tab_description = _('subscription settings'),
+        page_title = _('profile - subscriptions'),
+        view_func = user_subscription_settings,
+        template_file = 'user_subscriptions.html'
     )
 )
 

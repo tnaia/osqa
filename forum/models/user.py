@@ -22,6 +22,10 @@ class Activity(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     is_auditted    = models.BooleanField(default=False)
 
+    class Meta:
+        app_label = 'forum'
+        db_table = u'activity'
+
     def __unicode__(self):
         return u'[%s] was active at %s' % (self.user.username, self.active_at)
 
@@ -29,11 +33,73 @@ class Activity(models.Model):
         super(Activity, self).save()
         activity_record.send(sender=self.activity_type, instance=self)
 
-    class Meta:
-        app_label = 'forum'
-        db_table = u'activity'
+    @property
+    def question(self):
+        if self.activity_type == const.TYPE_ACTIVITY_ASK_QUESTION:
+            return self.content_object
+        elif self.activity_type in (const.TYPE_ACTIVITY_ANSWER,
+                const.TYPE_ACTIVITY_MARK_ANSWER, const.TYPE_ACTIVITY_UPDATE_QUESTION):
+            return self.content_object.question
+        elif self.activity_type == const.TYPE_ACTIVITY_COMMENT_QUESTION:
+            return self.content_object.content_object
+        elif self.activity_type == const.TYPE_ACTIVITY_COMMENT_ANSWER:
+            return self.content_object.content_object.question
+        elif self.activity_type == const.TYPE_ACTIVITY_UPDATE_ANSWER:
+            return self.content_object.content_object.answer.question
+        else:
+            raise NotImplementedError()
+
+    @property
+    def type_as_string(self):
+        if self.activity_type == const.TYPE_ACTIVITY_ASK_QUESTION:
+            return _("asked")
+        elif self.activity_type  == const.TYPE_ACTIVITY_ANSWER:
+            return _("answered")
+        elif self.activity_type  == const.TYPE_ACTIVITY_MARK_ANSWER:
+            return _("marked an answer")
+        elif self.activity_type  == const.TYPE_ACTIVITY_UPDATE_QUESTION:
+            return _("edited")
+        elif self.activity_type == const.TYPE_ACTIVITY_COMMENT_QUESTION:
+            return _("commented")
+        elif self.activity_type == const.TYPE_ACTIVITY_COMMENT_ANSWER:
+            return _("commented an answer")
+        elif self.activity_type == const.TYPE_ACTIVITY_UPDATE_ANSWER:
+            return _("edited an answer")
+        else:
+            raise NotImplementedError()
+
 
 activity_record = django.dispatch.Signal(providing_args=['instance'])
+
+class SubscriptionSettings(models.Model):
+    user = models.OneToOneField(User, related_name='subscription_settings')
+
+    enable_notifications = models.BooleanField(default=True)
+
+    #notify if
+    member_joins = models.CharField(max_length=1, default='n', choices=const.NOTIFICATION_CHOICES)
+    new_question = models.CharField(max_length=1, default='d', choices=const.NOTIFICATION_CHOICES)
+    new_question_watched_tags = models.CharField(max_length=1, default='i', choices=const.NOTIFICATION_CHOICES)
+    subscribed_questions = models.CharField(max_length=1, default='i', choices=const.NOTIFICATION_CHOICES)
+    
+    #auto_subscribe_to
+    all_questions = models.BooleanField(default=False)
+    all_questions_watched_tags = models.BooleanField(default=False)
+    questions_asked = models.BooleanField(default=True)
+    questions_answered = models.BooleanField(default=True)
+    questions_commented = models.BooleanField(default=False)
+    questions_viewed = models.BooleanField(default=False)
+
+    #notify activity on subscribed
+    notify_answers = models.BooleanField(default=True)
+    notify_reply_to_comments = models.BooleanField(default=True)
+    notify_comments_own_post = models.BooleanField(default=True)
+    notify_comments = models.BooleanField(default=False)
+    notify_accepted = models.BooleanField(default=False)
+
+    class Meta:
+        app_label = 'forum'
+    
 
 class EmailFeedSetting(models.Model):
     DELTA_TABLE = {

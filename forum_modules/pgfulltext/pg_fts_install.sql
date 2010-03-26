@@ -28,16 +28,15 @@
   end
   $$ LANGUAGE plpgsql;
 
-     CREATE OR REPLACE FUNCTION public.create_tsv_question_column ()
+  CREATE OR REPLACE FUNCTION public.create_tsv_question_column ()
       RETURNS TEXT
       AS $$
           ALTER TABLE question ADD COLUMN tsv tsvector;
-          	  CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE
-	  ON question FOR EACH ROW EXECUTE PROCEDURE set_question_tsv();
+          
+          CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE
+	        ON question FOR EACH ROW EXECUTE PROCEDURE set_question_tsv();
 
-	    CREATE INDEX question_tsv ON question USING gin(tsv);
-
-	  UPDATE question SET title = title;
+	      CREATE INDEX question_tsv ON question USING gin(tsv);
 
           SELECT 'tsv column created'::TEXT;
       $$
@@ -51,3 +50,5 @@
      (SELECT public.create_tsv_question_column())
 
   END;
+
+  DROP FUNCTION public.create_tsv_question_column ();

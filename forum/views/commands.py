@@ -2,7 +2,7 @@ import datetime
 from django.conf import settings
 from django.utils import simplejson
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render_to_response
 from django.utils.translation import ugettext as _
 from django.template import RequestContext
 from forum.models import *
@@ -334,3 +334,20 @@ def read_message(request):#marks message a read
             if request.user.is_authenticated():
                 request.user.delete_messages()
     return HttpResponse('')
+
+@login_required
+def switch_subscription(request, id):
+    question = get_object_or_404(Question, id=id)
+
+    try:
+        subscription = QuestionSubscription.objects.get(question=question, user=request.user)
+        subscription.delete()
+        subscription = False
+    except:
+        subscription = QuestionSubscription(question=question, user=request.user, auto_subscription=False)
+        subscription.save()
+
+    return render_to_response('subscription_status.html', {
+        'subscription': subscription,
+        'question': question,
+    }, context_instance=RequestContext(request))

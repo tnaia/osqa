@@ -369,32 +369,6 @@
                 </div>
             {% endif %}
         <form id="fmanswer" action="{% url answer question.id %}" method="post">
-            {% if request.user.is_authenticated %}
-                <p style="padding-left:3px">
-                {{ answer.email_notify }} 
-                <label for="question-subscribe-updates">
-                {% ifequal request.user.get_q_sel_email_feed_frequency 'n' %}
-                    {% trans "Notify me once a day when there are any new answers" %}
-                {% else %}
-                    {% ifequal request.user.get_q_sel_email_feed_frequency 'd' %}
-                        {% trans "Notify me once a day when there are any new answers" %}
-                    {% else %}
-                        {% ifequal request.user.get_q_sel_email_feed_frequency 'w' %}
-                            {% trans "Notify me weekly when there are any new answers" %}
-                        {% endifequal %}
-                    {% endifequal %}
-                {% endifequal %}
-                </label>
-                {% blocktrans with request.user.get_profile_url as profile_url %}
-                You can always adjust frequency of email updates from your {{profile_url}}
-                {% endblocktrans %}
-                </p>
-            {% else %}
-                <p style="padding-left:3px">
-                    <input class="nomargin" type="checkbox" disabled="disabled" />
-                    <label>{% trans "once you sign in you will be able to subscribe for any updates here" %}</label>
-                </p>
-            {% endif %}
             <div style="clear:both">
             </div>
             
@@ -469,6 +443,9 @@
 {% endblock %}
 
 {% block sidebar %}
+<div class="boxC" id="subscription_box">
+    {% include "subscription_status.html" %}
+</div>
 {% cache 60 questions_tags settings.APP_URL question.id %}
 <div class="boxC">
     <p>

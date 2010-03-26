@@ -119,7 +119,6 @@ class QuestionManager(models.Manager):
         return LazyList(get_data)
 
 
-
 class Question(Content, DeletableContent):
     title    = models.CharField(max_length=300)
     tags     = models.ManyToManyField('Tag', related_name='questions')
@@ -129,6 +128,7 @@ class Question(Content, DeletableContent):
     closed_at       = models.DateTimeField(null=True, blank=True)
     close_reason    = models.SmallIntegerField(choices=CLOSE_REASONS, null=True, blank=True)
     followed_by     = models.ManyToManyField(User, related_name='followed_questions')
+    subscribers     = models.ManyToManyField(User, related_name='subscriptions', through='QuestionSubscription')
 
     # Denormalised data
     answer_count         = models.PositiveIntegerField(default=0)
@@ -282,11 +282,11 @@ class Question(Content, DeletableContent):
     def __unicode__(self):
         return self.title
 
-        
-class QuestionView(models.Model):
-    question = models.ForeignKey(Question, related_name='viewed')
-    who = models.ForeignKey(User, related_name='question_views')
-    when = models.DateTimeField()
+class QuestionSubscription(models.Model):
+    user = models.ForeignKey(User)
+    question = models.ForeignKey(Question)
+    auto_subscription = models.BooleanField(default=True)
+    last_view = models.DateTimeField(default=datetime.datetime.now())
 
     class Meta:
         app_label = 'forum'

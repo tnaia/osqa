@@ -2,7 +2,7 @@
 import os.path
 import time, datetime, random
 import logging
-from django.core.files.storage import default_storage
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden, Http404
@@ -55,34 +55,29 @@ def upload(request):#ajax upload file to a question or answer
 
         # check file type
         file_name_suffix = os.path.splitext(f.name)[1].lower()
-        if not file_name_suffix in settings.ALLOW_FILE_TYPES:
+
+        if not file_name_suffix in ('.jpg', '.jpeg', '.gif', '.png', '.bmp', '.tiff'):
             raise FileTypeNotAllow
 
-        # generate new file name
-        import uuid
-        new_file_name = str(uuid.uuid4()) + file_name_suffix
-        full_file_name = os.path.join(settings.SITE_SRC_ROOT, 'forum/upfiles', new_file_name)
-        #new_file_name = str(time.time()).replace('.', str(random.randint(0,100000))) + file_name_suffix
-
-        # use default storage to store file
-        default_storage.save(new_file_name, f)
+        storage = FileSystemStorage(str(settings.UPFILES_FOLDER), str(settings.UPFILES_ALIAS))
+        new_file_name = storage.save(f.name, f)
         # check file size
         # byte
-        size = default_storage.size(new_file_name)
-        if size > settings.ALLOW_MAX_FILE_SIZE:
-            default_storage.delete(new_file_name)
+        size = storage.size(new_file_name)
+
+        if size > float(settings.ALLOW_MAX_FILE_SIZE) * 1024 * 1024:
+            storage.delete(new_file_name)
             raise FileSizeNotAllow
 
-        result = xml_template % ('Good', '', settings.MEDIA_URL + '/' + new_file_name)
-    #except UploadPermissionNotAuthorized:
-    #    result = xml_template % ('', _('uploading images is limited to users with >60 reputation points'), '')
-    #except FileTypeNotAllow:
-    #    result = xml_template % ('', _("allowed file types are 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'"), '')
-    #except FileSizeNotAllow:
-    #    result = xml_template % ('', _("maximum upload file size is %sK") % settings.ALLOW_MAX_FILE_SIZE / 1024, '')
+        result = xml_template % ('Good', '', str(settings.UPFILES_ALIAS) + new_file_name)
+    except UploadPermissionNotAuthorized:
+        result = xml_template % ('', _('uploading images is limited to users with >60 reputation points'), '')
+    except FileTypeNotAllow:
+        result = xml_template % ('', _("allowed file types are 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'"), '')
+    except FileSizeNotAllow:
+        result = xml_template % ('', _("maximum upload file size is %sM") % settings.ALLOW_MAX_FILE_SIZE, '')
     except Exception, e:
-        logging.log(1, str(e))
-        result = xml_template % ('', _('Error uploading file. Please contact the site administrator. Thank you. %s' % Exception), '')
+        result = xml_template % ('', _('Error uploading file. Please contact the site administrator. Thank you. %s' % e), '')
 
     return HttpResponse(result, mimetype="application/xml")
 

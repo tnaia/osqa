@@ -1386,13 +1386,17 @@ table.form-as-table li {
     display: inline;
 }
 
-table.form-as-table td {
-    text-align: right;
-}
-
 table.form-as-table th {
     text-align: left;
     font-weight: normal;
+}
+
+table.form-as-table pre {
+    display: inline;
+}
+
+table.check-table td {
+    padding-right: 50px;
 }
 
 /*.form-row li label {
@@ -2453,4 +2457,18 @@ p.signup_p {
     list-style: none;
     list-style-position: outside;
     margin: 0;
+}
+
+a.sidebar_button {
+    color: black;
+    font-size: 11px;
+    background: #eeeeee;
+    padding: 3px;
+    cursor: pointer;
+}
+
+a.sidebar_button:hover {
+    background-color: #777777;
+    color: white;
+    text-decoration: none;
 }

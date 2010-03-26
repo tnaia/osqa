@@ -379,4 +379,16 @@ def fullmedia(url):
     path = media(url)
     return "%s%s" % (domain, path)
 
+class UserVarNode(template.Node):
+    def __init__(self, tokens):
+        self.tokens = tokens
+
+    def render(self, context):
+        return "{{ %s }}" % self.tokens
+
+@register.tag(name='user_var')
+def user_var(parser, token):
+    tokens = " ".join(token.split_contents()[1:])
+    return UserVarNode(tokens)
+
 

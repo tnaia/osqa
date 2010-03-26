@@ -1,6 +1,10 @@
 from django.db import models
 from django.core.cache import cache
 from django.conf import settings
+try:
+	import cPickle as pickle
+except ImportError:
+	import pickle
 import django.dispatch
 
 class CountableField(models.IntegerField):
@@ -33,6 +37,34 @@ class CountableField(models.IntegerField):
 
 countable_update = django.dispatch.Signal(providing_args=['instance', 'old_value', 'new_value'])
 
+class PickledObject(str):
+	pass
+
+class PickledObjectField(models.Field):
+    __metaclass__ = models.SubfieldBase
+
+    def to_python(self, value):
+        if isinstance (value, PickledObject):
+            return value
+
+        try:
+            return pickle.loads(value.encode('utf-8'))
+        except:
+            return value
+    
+    def get_db_prep_save(self, value):
+        if value is not None:
+            if isinstance(value, PickledObject):
+                return str(value)
+            else:
+			    value = pickle.dumps(value)
+
+        return value
+
+    def get_internal_type(self):
+        return 'TextField'
+
+
 class KeyValueManager(models.Manager):
 
     def create_cache_key(self, key):
@@ -59,7 +91,7 @@ class KeyValueManager(models.Manager):
 
 class KeyValue(models.Model):
     key = models.CharField(max_length=255, unique=True)
-    value = models.TextField()
+    value = PickledObjectField()
 
     objects = KeyValueManager()
 
@@ -73,7 +105,5 @@ class KeyValue(models.Model):
     def delete(self):
         KeyValue.objects.remove_from_cache(self)
         super(KeyValue, self).delete()
-
-
 
 

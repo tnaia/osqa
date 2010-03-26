@@ -94,3 +94,10 @@ TAG_EMAIL_FILTER_CHOICES = (('ignored', _('exclude ignored tags')),('interesting
 BRONZE_BADGE = 3
 SILVER_BADGE = 2
 GOLD_BADGE = 1
+
+NOTIFICATION_CHOICES = (
+    ('i', 'Instantly'),
+    ('d', 'Daily'),
+    ('w', 'Weekly'),
+    ('n', 'No notifications'),
+)

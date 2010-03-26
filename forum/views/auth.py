@@ -15,7 +15,7 @@ import datetime
 from forum.models import AuthKeyUserAssociation, ValidationHash
 from forum.authentication.forms import SimpleRegistrationForm, SimpleEmailSubscribeForm, \
         TemporaryLoginRequestForm, ChangePasswordForm, SetPasswordForm
-from forum.utils.email import send_email
+from forum.utils.mail import send_email
 
 from forum.authentication.base import InvalidAuthentication
 from forum.authentication import AUTH_PROVIDERS
@@ -212,7 +212,7 @@ def request_temp_login(request):
             except:
                 hash = ValidationHash.objects.create_new(user, 'templogin', [user.id])
 
-            send_email(_("Temporary login link"), [user.email], "auth/temp_login_email.html", {
+            send_email(_("Temporary login link"), [(user.username, user.email)], "auth/temp_login_email.html", {
                 'temp_login_code': hash,
                 'user': user
             })
@@ -238,7 +238,7 @@ def temp_signin(request, user, code):
 
 def send_validation_email(user):
     hash = ValidationHash.objects.create_new(user, 'email', [user.email])
-    send_email(_("Email Validation"), [user.email], "auth/email_validation.html", {
+    send_email(_("Email Validation"), [(user.username, user.email)], "auth/email_validation.html", {
         'validation_code': hash,
         'user': user
     })

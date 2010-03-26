@@ -7,6 +7,7 @@ def application_settings(context):
         'APP_KEYWORDS' : settings.APP_KEYWORDS,
         'APP_DESCRIPTION' : settings.APP_DESCRIPTION,
         'APP_INTRO' : settings.APP_INTRO,
+        'APP_LOGO' : settings.APP_LOGO,
         'EMAIL_VALIDATION': settings.EMAIL_VALIDATION,
         'FEEDBACK_SITE_URL': settings.FEEDBACK_SITE_URL,
         'FORUM_SCRIPT_ALIAS': settings.FORUM_SCRIPT_ALIAS,

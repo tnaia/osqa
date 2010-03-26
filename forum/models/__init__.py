@@ -1,8 +1,8 @@
-from question import Question ,QuestionRevision, QuestionView, AnonymousQuestion, FavoriteQuestion
+from question import Question ,QuestionRevision, AnonymousQuestion, FavoriteQuestion, QuestionSubscription
 from answer import Answer, AnonymousAnswer, AnswerRevision
 from tag import Tag, MarkedTag
 from meta import Vote, Comment, FlaggedItem
-from user import Activity, ValidationHash, EmailFeedSetting, AuthKeyUserAssociation
+from user import Activity, ValidationHash, EmailFeedSetting, AuthKeyUserAssociation, SubscriptionSettings
 from repute import Badge, Award, Repute
 from utils import KeyValue
 import re
@@ -298,7 +298,14 @@ def post_stored_anonymous_content(sender,user,session_key,signal,*args,**kwargs)
         for aa in aa_list:
             aa.publish(user)
 
+def is_new(sender, instance, **kwargs):
+    try:
+        instance._is_new = not bool(instance.id)
+    except:
+        pass
+
 #signal for User modle save changes
+pre_save.connect(is_new)
 pre_save.connect(calculate_gravatar_hash, sender=User)
 post_save.connect(record_ask_event, sender=Question)
 post_save.connect(record_answer_event, sender=Answer)
@@ -320,39 +327,12 @@ post_save.connect(record_favorite_question, sender=FavoriteQuestion)
 user_updated.connect(record_user_full_updated, sender=User)
 user_logged_in.connect(post_stored_anonymous_content)
 
-Question = Question
-QuestionRevision = QuestionRevision
-QuestionView = QuestionView
-FavoriteQuestion = FavoriteQuestion
-AnonymousQuestion = AnonymousQuestion
-
-Answer = Answer
-AnswerRevision = AnswerRevision
-AnonymousAnswer = AnonymousAnswer
-
-Tag = Tag
-Comment = Comment
-Vote = Vote
-FlaggedItem = FlaggedItem
-MarkedTag = MarkedTag
-
-Badge = Badge
-Award = Award
-Repute = Repute
-
-Activity = Activity
-EmailFeedSetting = EmailFeedSetting
-ValidationHash = ValidationHash
-AuthKeyUserAssociation = AuthKeyUserAssociation
-
-KeyValue = KeyValue
-
 __all__ = [
         'Question',
         'QuestionRevision',
-        'QuestionView',
         'FavoriteQuestion',
         'AnonymousQuestion',
+        'QuestionSubscription',
 
         'Answer',
         'AnswerRevision',
@@ -372,6 +352,7 @@ __all__ = [
         'EmailFeedSetting',
         'ValidationHash',
         'AuthKeyUserAssociation',
+        'SubscriptionSettings',
         'KeyValue',
 
         'User',

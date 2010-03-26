@@ -4,11 +4,27 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <link href="{% fullmedia  "/media/style/style.css" %}" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            body {
+                background: #FFF;
+                font-size: 12px;
+                line-height: 150%;
+                margin: 0;
+                padding: 0;
+                color: #000;
+                font-family: sans-serif;
+            }
+
+            #wrapper {
+                width: 600px;
+                margin: auto;
+                padding: 0;
+            }
+        </style>
     </head>
     <body>
         <a href="{% fullurl index %}">
-            <img src="{% fullmedia  "/media/images/logo.png" %}" title="{% trans "home" %}" alt="{{settings.APP_TITLE}} logo"/>
+            <img src="cid:logo" title="{% trans "home" %}" alt="{{settings.APP_TITLE}} logo"/>
         </a>
         <br />
         <p>{{ settings.APP_TITLE }}</p>
