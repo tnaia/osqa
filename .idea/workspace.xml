@@ -21,6 +21,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/settings/__init__.py" afterPath="$PROJECT_DIR$/forum/settings/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/settings/forms.py" afterPath="$PROJECT_DIR$/forum/settings/forms.py" />
+      <change type="DELETED" beforePath="D:\osqa\dev\osqa\forum\utils\email.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/management/commands/send_email_alerts.py" afterPath="$PROJECT_DIR$/forum/management/commands/send_email_alerts.py" />
     </list>
     <ignored path=".idea/workspace.xml" />
@@ -137,10 +138,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pg_fts_install.sql" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="pg_fts_install.sql" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/forum_modules/pgfulltext/pg_fts_install.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="57" selection-start="841" selection-end="841" vertical-scroll-proportion="0.6759941">
+            <state line="27" column="57" selection-start="841" selection-end="841" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mail.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/forum/utils/mail.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="38" selection-start="196" selection-end="196" vertical-scroll-proportion="0.19596542">
               <folding />
             </state>
           </provider>
@@ -158,7 +168,6 @@
       <list>
         <option value="$PROJECT_DIR$/forum/subscriptions.py" />
         <option value="$PROJECT_DIR$/forum/skins/default/templates/email_base.html" />
-        <option value="$PROJECT_DIR$/forum/utils/mail.py" />
         <option value="$PROJECT_DIR$/forum/skins/default/templates/base.html" />
         <option value="$PROJECT_DIR$/forum/models/utils.py" />
         <option value="$PROJECT_DIR$/forum/views/admin.py" />
@@ -172,6 +181,7 @@
         <option value="$PROJECT_DIR$/forum/management/commands/send_email_alerts.py" />
         <option value="$PROJECT_DIR$/forum_modules/default_badges/settings.py" />
         <option value="$PROJECT_DIR$/forum_modules/pgfulltext/pg_fts_install.sql" />
+        <option value="$PROJECT_DIR$/forum/utils/mail.py" />
       </list>
     </option>
   </component>
@@ -273,6 +283,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osqa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osqa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="forum" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -572,7 +600,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -586,7 +614,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27925342" sideWeight="0.66158116" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27925342" sideWeight="0.66158116" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Archetypes" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32981315" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -662,16 +690,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/forum/utils/mail.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="41" selection-start="157" selection-end="157" vertical-scroll-proportion="0.15863141" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/forum/models/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/forum/startup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -755,7 +773,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/forum_modules/pgfulltext/pg_fts_install.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="57" selection-start="841" selection-end="841" vertical-scroll-proportion="0.6759941">
+        <state line="27" column="57" selection-start="841" selection-end="841" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forum/utils/mail.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="38" selection-start="196" selection-end="196" vertical-scroll-proportion="0.19596542">
           <folding />
         </state>
       </provider>
