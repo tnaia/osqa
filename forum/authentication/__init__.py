@@ -2,7 +2,7 @@ import re
 from forum.modules import get_modules_script_classes
 from forum.authentication.base import AuthenticationConsumer, ConsumerTemplateContext
 
-class ConsumerAndContext():
+class ConsumerAndContext:
     def __init__(self, id, consumer, context):
         self.id = id
         self._consumer = consumer
