@@ -154,3 +154,4 @@ def go_defaults(request):
 
     request.user.message_set.create(message=_('All values reverted to defaults'))
     return HttpResponseRedirect(reverse('admin_index'))
+
