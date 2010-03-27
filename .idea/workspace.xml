@@ -15,15 +15,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="df1b69cf-9c35-4a78-9890-c59b542399e8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/notifications/newanswer.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/notifications/newanswer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/osqa.iml" afterPath="$PROJECT_DIR$/osqa.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/utils/mail.py" afterPath="$PROJECT_DIR$/forum/utils/mail.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/management/commands/send_email_alerts.py" afterPath="$PROJECT_DIR$/forum/management/commands/send_email_alerts.py" />
     </list>
     <ignored path="$USER_HOME_GRAILS$/" />
-    <ignored path=".idea/workspace.xml" />
     <ignored path="$USER_HOME_GRIFFON$/" />
+    <ignored path=".idea/workspace.xml" />
     <ignored path="osqa.iws" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,8 +78,17 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="send_email_alerts.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="send_email_alerts.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/forum/management/commands/send_email_alerts.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="115" column="119" selection-start="4841" selection-end="4841" vertical-scroll-proportion="2.879234">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="subscriptions.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/forum/subscriptions.py">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
@@ -90,10 +96,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mail.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="mail.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/forum/utils/mail.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="17" selection-start="1961" selection-end="1961" vertical-scroll-proportion="0.6613833">
+            <state line="93" column="43" selection-start="3066" selection-end="3066" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -119,12 +125,12 @@
         <option value="$PROJECT_DIR$/forum/settings/__init__.py" />
         <option value="$PROJECT_DIR$/forum/settings/forms.py" />
         <option value="$PROJECT_DIR$/osqa-requirements.txt" />
-        <option value="$PROJECT_DIR$/forum/management/commands/send_email_alerts.py" />
         <option value="$PROJECT_DIR$/forum_modules/default_badges/settings.py" />
         <option value="$PROJECT_DIR$/forum_modules/pgfulltext/pg_fts_install.sql" />
         <option value="$PROJECT_DIR$/forum/skins/default/templates/email_base.html" />
         <option value="$PROJECT_DIR$/forum/skins/default/templates/notifications/newanswer.html" />
         <option value="$PROJECT_DIR$/forum/utils/mail.py" />
+        <option value="$PROJECT_DIR$/forum/management/commands/send_email_alerts.py" />
       </list>
     </option>
   </component>
@@ -176,6 +182,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -336,8 +344,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -355,8 +361,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -423,6 +429,13 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
+    <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
+      <module name="" />
+      <option name="port" value="8080" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <method />
+    </configuration>
     <configuration default="true" type="py.test" factoryName="py.test">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -439,13 +452,6 @@
         <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
-    </configuration>
-    <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
-      <module name="" />
-      <option name="port" value="8080" />
-      <option name="host" value="" />
-      <option name="additionalOptions" value="" />
-      <method />
     </configuration>
     <configuration default="false" name="osqa" type="Python.DjangoServer" factoryName="Django server">
       <module name="osqa" />
@@ -614,16 +620,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/osqa-requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="143" selection-end="143" vertical-scroll-proportion="0.09798271" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/forum/settings/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="3" selection-start="489" selection-end="489" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/forum_modules/pgfulltext/pg_fts_install.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="57" selection-start="841" selection-end="841" vertical-scroll-proportion="0.0" />
@@ -681,12 +677,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/notifications/newanswer.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="71" selection-start="541" selection-end="541" vertical-scroll-proportion="0.2672956">
+        <state line="10" column="71" selection-start="541" selection-end="541" vertical-scroll-proportion="0.2672956" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forum/views/commands.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.2768778">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/forum/management/commands/send_email_alerts.py">
+    <entry file="file://$PROJECT_DIR$/forum/subscriptions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
@@ -695,7 +696,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/forum/utils/mail.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="17" selection-start="1961" selection-end="1961" vertical-scroll-proportion="0.6613833">
+        <state line="93" column="43" selection-start="3066" selection-end="3066" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forum/management/commands/send_email_alerts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="115" column="119" selection-start="4841" selection-end="4841" vertical-scroll-proportion="2.879234">
           <folding />
         </state>
       </provider>

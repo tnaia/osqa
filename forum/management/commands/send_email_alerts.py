@@ -5,7 +5,7 @@ from django.template import loader, Context, Template
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from forum.models import KeyValue, Activity, User, QuestionSubscription
-from forum.utils.mail import send_msg_list
+from forum.utils.mail import send_email
 from forum import const
 
 class QuestionRecord:
@@ -53,7 +53,6 @@ class Command(NoArgsCommand):
         new_questions, question_records = self.prepare_activity(control_date)
         new_users = User.objects.filter(date_joined__gt=control_date)
 
-        digest_template = loader.get_template("notifications/digest.html")
         digest_subject = settings.EMAIL_SUBJECT_PREFIX + _('Daily digest')
 
         users = User.objects.filter(subscription_settings__enable_notifications=True)
@@ -114,14 +113,7 @@ class Command(NoArgsCommand):
                 context['new_questions'] = False
 
             if context['new_users'] or context['activity_in_subscriptions'] or context['new_questions']:
-                message_body = digest_template.render(Context(context))
-
-                msg = EmailMultiAlternatives(digest_subject, message_body, settings.DEFAULT_FROM_EMAIL, [u.email])
-                msg.attach_alternative(message_body, "text/html")
-
-                msgs.append(msg)
-        
-        send_msg_list(msgs)
+                send_email(digest_subject, (u.username, u.email), "notifications/digest.html", context, threaded=False)
 
 
     def get_digest_control(self):
