@@ -89,7 +89,8 @@ def ask(request):#view used to ask a new question
     user can start posting a question anonymously but then
     must login/register in order for the question go be shown
     """
-    if request.method == "POST":
+    print request.POST
+    if request.method == "POST" and "text" in request.POST:
         form = AskForm(request.POST)
         if form.is_valid():
 
@@ -130,6 +131,8 @@ def ask(request):#view used to ask a new question
                 )
                 question.save()
                 return HttpResponseRedirect(reverse('auth_action_signin', kwargs={'action': 'newquestion'}))
+    elif request.method == "POST" and "go" in request.POST:
+        form = AskForm({'title': request.POST['q']})
     else:
         form = AskForm()
 

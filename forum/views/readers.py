@@ -257,7 +257,7 @@ def search(request): #generates listing of questions matching a search query - i
     falls back on simple partial string matching approach if
     full text search function is not available
     """
-    if request.method == "GET":
+    if request.method == "GET" and "q" in request.GET:
         keywords = request.GET.get("q")
         search_type = request.GET.get("t")
         try:
@@ -357,7 +357,8 @@ def search(request): #generates listing of questions matching a search query - i
                 }}, context_instance=RequestContext(request))
  
     else:
-        raise Http404
+        return render_to_response("search.html", context_instance=RequestContext(request))
+
 
 def tag(request, tag):#stub generates listing of questions tagged with a single tag
     return questions(request, tagname=tag)

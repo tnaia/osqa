@@ -116,9 +116,9 @@
 				{{ form.tags.help_text }}
 			</p>
             {% if not request.user.is_authenticated %}
-            <input type="submit" value="{% trans "Login/signup to post your question" %}" class="submit" />
+            <input name="ask" type="submit" value="{% trans "Login/signup to post your question" %}" class="submit" />
 			{% else %}
-            <input type="submit" value="{% trans "Ask your question" %}" class="submit" />
+            <input name="ask" type="submit" value="{% trans "Ask your question" %}" class="submit" />
             {% endif %}
         </form>
     </div>
