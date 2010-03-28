@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
+from forum.models import User
 from django.http import HttpResponseRedirect, Http404
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
@@ -158,7 +158,9 @@ def external_register(request):
             uassoc = AuthKeyUserAssociation(user=user_, key=request.session['assoc_key'], provider=request.session['auth_provider'])
             uassoc.save()
 
-            email_feeds_form.save(user_)
+            if email_feeds_form.cleaned_data['subscribe'] == 'n':
+                user_.subscription_settings.enable_notifications = False
+                user_.subscription_settings.save()
 
             del request.session['assoc_key']
             del request.session['auth_provider']
