@@ -44,16 +44,6 @@ CACHE_BACKEND = 'dummy://'
 
 APP_URL = 'http://' #used by email notif system and RSS
 
-#email server settings
-SERVER_EMAIL = ''
-DEFAULT_FROM_EMAIL = ''
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_SUBJECT_PREFIX = '[OSQA] '
-EMAIL_HOST='localhost'
-EMAIL_PORT='1025'
-EMAIL_USE_TLS=False
-
 #LOCALIZATIONS
 TIME_ZONE = 'America/New_York'
 
@@ -83,6 +73,6 @@ RESOURCE_REVISION=4
 
 OSQA_DEFAULT_SKIN = 'default'
 
-DISABLED_MODULES = ['books']
+DISABLED_MODULES = ['books', 'recaptcha', 'project_badges']
 
 from forum.settings import *

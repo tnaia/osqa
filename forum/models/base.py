@@ -5,7 +5,6 @@ from django.db import models, IntegrityError, connection, transaction
 from django.utils.http import urlquote  as django_urlquote
 from django.utils.html import strip_tags
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.template.defaultfilters import slugify
@@ -19,6 +18,8 @@ import logging
 
 from forum.const import *
 from utils import CountableField
+
+from user import User
 
 class UserContent(models.Model):
     user = models.ForeignKey(User, related_name='%(class)ss')

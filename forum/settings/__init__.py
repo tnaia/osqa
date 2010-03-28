@@ -5,6 +5,8 @@ from forms import ImageFormWidget
 from django.forms.widgets import Textarea
 from django.utils.translation import ugettext_lazy as _
 
+INTERNAL_VERSION = Setting('INTERNAL_VERSION', "201003270")
+
 BASIC_SET = SettingSet('basic', _('Basic Settings'), _("The basic settings for your application"), 1)
 
 APP_LOGO = Setting('APP_LOGO', '/m/default/media/images/logo.png', BASIC_SET, dict(

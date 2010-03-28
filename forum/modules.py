@@ -26,7 +26,7 @@ def get_modules_script(script_name):
         try:
             all.append(__import__('%s.%s' % (m.__name__, script_name), globals(), locals(), [m.__name__]))
         except Exception, e:
-            #print script_name + ":" + str(e)
+            #print m.__name__ + ":" + str(e)
             pass
 
     return all

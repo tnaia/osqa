@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from forum.models import User
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
@@ -17,7 +17,14 @@ def register(request):
             password = form.cleaned_data['password1']
             email = form.cleaned_data['email']
 
-            user_ = User.objects.create_user( username,email,password )
+            user_ = User(username=username, email=email)
+            user_.set_password(password)
+
+            if User.objects.all().count() == 0:
+                user_.is_superuser = True
+
+            user_.save()
+            
             send_validation_email(user_)
             if email_feeds_form.cleaned_data['subscribe'] == 'n':
                 user_.subscription_settings.enable_notifications = False

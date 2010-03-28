@@ -1,7 +1,7 @@
 from base import *
 from forum import const
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User as DjangoUser
 from hashlib import md5
 import string
 from random import Random
@@ -9,6 +9,68 @@ from random import Random
 from django.utils.translation import ugettext as _
 import django.dispatch
 
+
+QUESTIONS_PER_PAGE_CHOICES = (
+   (10, u'10'),
+   (30, u'30'),
+   (50, u'50'),
+)
+
+class User(DjangoUser):
+    is_approved = models.BooleanField(default=False)
+    email_isvalid = models.BooleanField(default=False)
+    email_key = models.CharField(max_length=32, null=True)
+    reputation = models.PositiveIntegerField(default=1)
+    gravatar = models.CharField(max_length=32)
+
+    gold = models.SmallIntegerField(default=0)
+    silver = models.SmallIntegerField(default=0)
+    bronze = models.SmallIntegerField(default=0)
+
+    questions_per_page = models.SmallIntegerField(choices=QUESTIONS_PER_PAGE_CHOICES, default=10)
+    last_seen = models.DateTimeField(default=datetime.datetime.now)
+    real_name = models.CharField(max_length=100, blank=True)
+    website = models.URLField(max_length=200, blank=True)
+    location = models.CharField(max_length=100, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
+    about = models.TextField(blank=True)
+
+    hide_ignored_questions = models.BooleanField(default=False)
+    tag_filter_setting = models.CharField(max_length=16, choices=TAG_EMAIL_FILTER_CHOICES, default='ignored')
+
+    @classmethod
+    def user_is_username_taken(cls,username):
+        try:
+            cls.objects.get(username=username)
+            return True
+        except cls.MultipleObjectsReturned:
+            return True
+        except cls.DoesNotExist:
+            return False
+
+    def user_get_absolute_url(self):
+        return "/users/%d/%s/" % (self.id, (self.username))
+
+    def get_messages(self):
+        messages = []
+        for m in self.message_set.all():
+            messages.append(m.message)
+        return messages
+
+    def delete_messages(self):
+        self.message_set.all().delete()
+
+    def get_profile_url(self):
+        """Returns the URL for this User's profile."""
+        return "/users/%d/%s" % (self.id, slugify(self.username))
+
+    def get_profile_link(self):
+        profile_link = u'<a href="%s">%s</a>' % (self.get_profile_url(),self.username)
+        logging.debug('in get profile link %s' % profile_link)
+        return mark_safe(profile_link)
+
+    class Meta:
+        app_label = 'forum'
 
 class Activity(models.Model):
     """
@@ -96,41 +158,6 @@ class SubscriptionSettings(models.Model):
     notify_comments_own_post = models.BooleanField(default=True)
     notify_comments = models.BooleanField(default=False)
     notify_accepted = models.BooleanField(default=False)
-
-    class Meta:
-        app_label = 'forum'
-    
-
-class EmailFeedSetting(models.Model):
-    DELTA_TABLE = {
-        'w':datetime.timedelta(7),
-        'd':datetime.timedelta(1),
-        'n':datetime.timedelta(-1),
-    }
-    FEED_TYPES = (
-                    ('q_all',_('Entire forum')),
-                    ('q_ask',_('Questions that I asked')),
-                    ('q_ans',_('Questions that I answered')),
-                    ('q_sel',_('Individually selected questions')),
-                    )
-    UPDATE_FREQUENCY = (
-                    ('w',_('Weekly')),
-                    ('d',_('Daily')),
-                    ('n',_('No email')),
-                   )
-    subscriber = models.ForeignKey(User)
-    feed_type = models.CharField(max_length=16,choices=FEED_TYPES)
-    frequency = models.CharField(max_length=8,choices=UPDATE_FREQUENCY,default='n')
-    added_at = models.DateTimeField(auto_now_add=True)
-    reported_at = models.DateTimeField(null=True)
-
-    def save(self,*args,**kwargs):
-        type = self.feed_type
-        subscriber = self.subscriber
-        similar = self.__class__.objects.filter(feed_type=type,subscriber=subscriber).exclude(pk=self.id)
-        if len(similar) > 0:
-            raise IntegrityError('email feed setting already exists')
-        super(EmailFeedSetting,self).save(*args,**kwargs)
 
     class Meta:
         app_label = 'forum'

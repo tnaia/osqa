@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from forum.models import User
 from forum.models import Question
 from django.core.urlresolvers import reverse
 from django.utils.http import urlquote  as django_urlquote

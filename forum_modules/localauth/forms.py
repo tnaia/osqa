@@ -1,5 +1,5 @@
 from forum.utils.forms import NextUrlField,  UserNameField,  UserEmailField, SetPasswordForm
-from forum.models import EmailFeedSetting, Question
+from forum.models import Question
 from forum.modules import call_all_handlers
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _

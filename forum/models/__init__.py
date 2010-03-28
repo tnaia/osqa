@@ -2,77 +2,12 @@ from question import Question ,QuestionRevision, AnonymousQuestion, FavoriteQues
 from answer import Answer, AnonymousAnswer, AnswerRevision
 from tag import Tag, MarkedTag
 from meta import Vote, Comment, FlaggedItem
-from user import Activity, ValidationHash, EmailFeedSetting, AuthKeyUserAssociation, SubscriptionSettings
+from user import User, Activity, ValidationHash, AuthKeyUserAssociation, SubscriptionSettings
 from repute import Badge, Award, Repute
 from utils import KeyValue
 import re
 
 from base import *
-
-# User extend properties
-QUESTIONS_PER_PAGE_CHOICES = (
-   (10, u'10'),
-   (30, u'30'),
-   (50, u'50'),
-)
-
-def user_is_username_taken(cls,username):
-    try:
-        cls.objects.get(username=username)
-        return True
-    except cls.MultipleObjectsReturned:
-        return True
-    except cls.DoesNotExist:
-        return False
-
-def user_get_q_sel_email_feed_frequency(self):
-    #print 'looking for frequency for user %s' % self
-    try:
-        feed_setting = EmailFeedSetting.objects.get(subscriber=self,feed_type='q_sel')
-    except Exception, e:
-        #print 'have error %s' % e.message
-        raise e
-    #print 'have freq=%s' % feed_setting.frequency
-    return feed_setting.frequency
-
-def user_get_absolute_url(self):
-    return "/users/%d/%s/" % (self.id, (self.username))
-
-User.add_to_class('is_approved', models.BooleanField(default=False))
-User.add_to_class('email_isvalid', models.BooleanField(default=False))
-User.add_to_class('email_key', models.CharField(max_length=32, null=True))
-User.add_to_class('reputation', models.PositiveIntegerField(default=1))
-User.add_to_class('gravatar', models.CharField(max_length=32))
-
-#User.add_to_class('favorite_questions',
-#                  models.ManyToManyField(Question, through=FavoriteQuestion,
-#                                         related_name='favorited_by'))
-
-#User.add_to_class('badges', models.ManyToManyField(Badge, through=Award,
-#                                                   related_name='awarded_to'))
-User.add_to_class('gold', models.SmallIntegerField(default=0))
-User.add_to_class('silver', models.SmallIntegerField(default=0))
-User.add_to_class('bronze', models.SmallIntegerField(default=0))
-User.add_to_class('questions_per_page',
-                  models.SmallIntegerField(choices=QUESTIONS_PER_PAGE_CHOICES, default=10))
-User.add_to_class('last_seen',
-                  models.DateTimeField(default=datetime.datetime.now))
-User.add_to_class('real_name', models.CharField(max_length=100, blank=True))
-User.add_to_class('website', models.URLField(max_length=200, blank=True))
-User.add_to_class('location', models.CharField(max_length=100, blank=True))
-User.add_to_class('date_of_birth', models.DateField(null=True, blank=True))
-User.add_to_class('about', models.TextField(blank=True))
-User.add_to_class('is_username_taken',classmethod(user_is_username_taken))
-User.add_to_class('get_q_sel_email_feed_frequency',user_get_q_sel_email_feed_frequency)
-User.add_to_class('hide_ignored_questions', models.BooleanField(default=False))
-User.add_to_class('tag_filter_setting',
-                    models.CharField(
-                                        max_length=16,
-                                        choices=TAG_EMAIL_FILTER_CHOICES,
-                                        default='ignored'
-                                     )
-                 )
-User.add_to_class('get_absolute_url', user_get_absolute_url)
 
 # custom signal
 tags_updated = django.dispatch.Signal(providing_args=["question"])
@@ -81,30 +16,6 @@ delete_post_or_answer = django.dispatch.Signal(providing_args=["instance", "dele
 mark_offensive = django.dispatch.Signal(providing_args=["instance", "mark_by"])
 user_updated = django.dispatch.Signal(providing_args=["instance", "updated_by"])
 user_logged_in = django.dispatch.Signal(providing_args=["session"])
-
-
-def get_messages(self):
-    messages = []
-    for m in self.message_set.all():
-        messages.append(m.message)
-    return messages
-
-def delete_messages(self):
-    self.message_set.all().delete()
-
-def get_profile_url(self):
-    """Returns the URL for this User's profile."""
-    return "/users/%d/%s" % (self.id, slugify(self.username))
-
-def get_profile_link(self):
-    profile_link = u'<a href="%s">%s</a>' % (self.get_profile_url(),self.username)
-    logging.debug('in get profile link %s' % profile_link)
-    return mark_safe(profile_link)
-
-User.add_to_class('get_profile_url', get_profile_url)
-User.add_to_class('get_profile_link', get_profile_link)
-User.add_to_class('get_messages', get_messages)
-User.add_to_class('delete_messages', delete_messages)
 
 def calculate_gravatar_hash(instance, **kwargs):
     """Calculates a User's gravatar hash from their email address."""
@@ -349,7 +260,6 @@ __all__ = [
         'Repute',
 
         'Activity',
-        'EmailFeedSetting',
         'ValidationHash',
         'AuthKeyUserAssociation',
         'SubscriptionSettings',

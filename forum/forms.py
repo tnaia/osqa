@@ -4,7 +4,7 @@ from django import forms
 from models import *
 from const import *
 from django.utils.translation import ugettext as _
-from django.contrib.auth.models import User
+from forum.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.utils.safestring import mark_safe
 from forum.utils.forms import NextUrlField, UserNameField, SetPasswordForm
@@ -277,82 +277,4 @@ class SubscriptionSettingsForm(forms.Form):
     notify_comments_own_post = forms.BooleanField(required=False, initial=False)
     notify_comments = forms.BooleanField(required=False, initial=False)
     notify_accepted = forms.BooleanField(required=False, initial=False)
-    
-
-class EditUserEmailFeedsForm(forms.Form):
-    WN = (('w',_('weekly')),('n',_('no email')))
-    DWN = (('d',_('daily')),('w',_('weekly')),('n',_('no email')))
-    FORM_TO_MODEL_MAP = {
-                'all_questions':'q_all',
-                'asked_by_me':'q_ask',
-                'answered_by_me':'q_ans',
-                'individually_selected':'q_sel',
-                }
-    NO_EMAIL_INITIAL = {
-                'all_questions':'n',
-                'asked_by_me':'n',
-                'answered_by_me':'n',
-                'individually_selected':'n',
-                }
-    asked_by_me = forms.ChoiceField(choices=DWN,initial='w',
-                            widget=forms.RadioSelect,
-                            label=_('Asked by me'))
-    answered_by_me = forms.ChoiceField(choices=DWN,initial='w',
-                            widget=forms.RadioSelect,
-                            label=_('Answered by me'))
-    individually_selected = forms.ChoiceField(choices=DWN,initial='w',
-                            widget=forms.RadioSelect,
-                            label=_('Individually selected'))
-    all_questions = forms.ChoiceField(choices=DWN,initial='w',
-                            widget=forms.RadioSelect,
-                            label=_('Entire forum (tag filtered)'),)
-
-    def set_initial_values(self,user=None):
-        KEY_MAP = dict([(v,k) for k,v in self.FORM_TO_MODEL_MAP.iteritems()])
-        if user != None:
-            settings = EmailFeedSetting.objects.filter(subscriber=user)
-            initial_values = {}
-            for setting in settings:
-                feed_type = setting.feed_type
-                form_field = KEY_MAP[feed_type]
-                frequency = setting.frequency
-                initial_values[form_field] = frequency
-            self.initial = initial_values
-        return self
-
-    def reset(self):
-        self.cleaned_data['all_questions'] = 'n'
-        self.cleaned_data['asked_by_me'] = 'n'
-        self.cleaned_data['answered_by_me'] = 'n'
-        self.cleaned_data['individually_selected'] = 'n'
-        self.initial = self.NO_EMAIL_INITIAL
-        return self
-
-    def save(self,user,save_unbound=False):
-        """
-            with save_unbound==True will bypass form validation and save initial values
-        """
-        changed = False
-        for form_field, feed_type in self.FORM_TO_MODEL_MAP.items():
-            s, created = EmailFeedSetting.objects.get_or_create(subscriber=user,\
-                                                    feed_type=feed_type)
-            if save_unbound:
-                #just save initial values instead
-                if form_field in self.initial:
-                    new_value = self.initial[form_field]
-                else:
-                    new_value = self.fields[form_field].initial
-            else:
-                new_value = self.cleaned_data[form_field]
-            if s.frequency != new_value:
-                s.frequency = new_value
-                s.save()
-                changed = True
-            else:
-                if created:
-                    s.save()
-            if form_field == 'individually_selected':
-                feed_type = ContentType.objects.get_for_model(Question)
-                user.followed_questions.clear()
-        return changed
 

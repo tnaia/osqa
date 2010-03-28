@@ -1,10 +1,9 @@
 from forum.utils.forms import NextUrlField,  UserNameField,  UserEmailField, SetPasswordForm
-from forum.models import EmailFeedSetting, Question, User
+from forum.models import Question, User
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
 from django import forms
-from forum.forms import EditUserEmailFeedsForm
 import logging
 
 class SimpleRegistrationForm(forms.Form):
@@ -44,6 +43,7 @@ class SimpleEmailSubscribeForm(forms.Form):
     subscribe = forms.ChoiceField(widget=forms.widgets.RadioSelect(), \
                                 error_messages={'required':_('please choose one of the options above')},
                                 choices=SIMPLE_SUBSCRIBE_CHOICES)
+
 
 class ChangePasswordForm(SetPasswordForm):
     """ change password form """

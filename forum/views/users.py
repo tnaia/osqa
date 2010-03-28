@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from forum.models import User
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.template.defaultfilters import slugify
 from django.contrib.contenttypes.models import ContentType
@@ -871,42 +871,6 @@ def user_subscription_settings(request, user_id, user_view):
         'view_user':user,
         'notificatons_on': notificatons_on,
         'form':form,
-    }, context_instance=RequestContext(request))
-
-def user_email_subscriptions(request, user_id, user_view):
-    user = get_object_or_404(User, id=user_id)
-    if request.method == 'POST':
-        email_feeds_form = EditUserEmailFeedsForm(request.POST)
-        tag_filter_form = TagFilterSelectionForm(request.POST, instance=user)
-        if email_feeds_form.is_valid() and tag_filter_form.is_valid():
-
-            action_status = None
-            tag_filter_saved = tag_filter_form.save()
-            if tag_filter_saved:
-                action_status = _('changes saved')
-            if 'save' in request.POST:
-                feeds_saved = email_feeds_form.save(user)
-                if feeds_saved:
-                    action_status = _('changes saved')
-            elif 'stop_email' in request.POST:
-                email_stopped = email_feeds_form.reset().save(user)
-                initial_values = EditUserEmailFeedsForm.NO_EMAIL_INITIAL
-                email_feeds_form = EditUserEmailFeedsForm(initial=initial_values)
-                if email_stopped:
-                    action_status = _('email updates canceled')
-    else:
-        email_feeds_form = EditUserEmailFeedsForm()
-        email_feeds_form.set_initial_values(user)
-        tag_filter_form = TagFilterSelectionForm(instance=user)
-        action_status = None
-    return render_to_response(user_view.template_file,{
-        'tab_name':user_view.id,
-        'tab_description':user_view.tab_description,
-        'page_title':user_view.page_title,
-        'view_user':user,
-        'email_feeds_form':email_feeds_form,
-        'tag_filter_selection_form':tag_filter_form,
-        'action_status':action_status,
     }, context_instance=RequestContext(request))
 
 class UserView:

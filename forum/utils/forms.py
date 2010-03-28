@@ -4,7 +4,7 @@ from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
 from django.conf import settings
 from django.http import str_to_unicode
-from django.contrib.auth.models import User
+from forum.models import User
 import urllib
 
 DEFAULT_NEXT = '/' + getattr(settings, 'FORUM_SCRIPT_ALIAS')

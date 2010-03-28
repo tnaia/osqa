@@ -24,6 +24,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     #'django.middleware.cache.FetchFromCacheMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'forum.middleware.extended_user.ExtendedUser',
     #'django.middleware.sqlprint.SqlPrintingMiddleware',
     'forum.middleware.anon_user.ConnectToSessionMessagesMiddleware',
     'forum.middleware.pagesize.QuestionsPageSizeMiddleware',

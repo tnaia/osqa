@@ -143,6 +143,9 @@ def external_register(request):
             user_.email_isvalid = request.session.get('auth_validated_email', '') == form1.cleaned_data['email']
             user_.set_unusable_password()
 
+            if User.objects.all().count() == 0:
+                user_.is_superuser = True
+            
             user_.save()
 
             if not user_.email_isvalid:
