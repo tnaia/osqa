@@ -89,7 +89,6 @@ def ask(request):#view used to ask a new question
     user can start posting a question anonymously but then
     must login/register in order for the question go be shown
     """
-    print request.POST
     if request.method == "POST" and "text" in request.POST:
         form = AskForm(request.POST)
         if form.is_valid():
