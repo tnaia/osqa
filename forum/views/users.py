@@ -150,14 +150,14 @@ def user_stats(request, user_id, user_view):
             'favorited_myself' : 'SELECT count(*) FROM favorite_question f WHERE f.user_id = %s AND f.question_id = question.id',
             'la_user_id' : 'auth_user.id',
             'la_username' : 'auth_user.username',
-            'la_user_gold' : 'auth_user.gold',
-            'la_user_silver' : 'auth_user.silver',
-            'la_user_bronze' : 'auth_user.bronze',
-            'la_user_reputation' : 'auth_user.reputation'
+            'la_user_gold' : 'forum_user.gold',
+            'la_user_silver' : 'forum_user.silver',
+            'la_user_bronze' : 'forum_user.bronze',
+            'la_user_reputation' : 'forum_user.reputation'
             },
         select_params=[user_id],
-        tables=['question', 'auth_user'],
-        where=['question.deleted=False AND question.author_id=%s AND question.last_activity_by_id = auth_user.id'],
+        tables=['question', 'auth_user', 'forum_user'],
+        where=['question.deleted=False AND question.author_id=%s AND question.last_activity_by_id = auth_user.id AND forum_user.user_ptr_id = auth_user.id'],
         params=[user_id],
         order_by=['-vote_count', '-last_activity_at']
     ).values('vote_count',
@@ -736,6 +736,7 @@ def user_votes(request, user_id, user_view):
             'voted_at',
             'vote',
             )
+
     if(len(answer_votes) > 0):
         votes.extend(answer_votes)
     votes.sort(lambda x,y: cmp(y['voted_at'], x['voted_at']))
@@ -797,15 +798,15 @@ def user_favorites(request, user_id, user_view):
                 'AND f.question_id = question.id',
             'la_user_id' : 'auth_user.id',
             'la_username' : 'auth_user.username',
-            'la_user_gold' : 'auth_user.gold',
-            'la_user_silver' : 'auth_user.silver',
-            'la_user_bronze' : 'auth_user.bronze',
-            'la_user_reputation' : 'auth_user.reputation'
+            'la_user_gold' : 'forum_user.gold',
+            'la_user_silver' : 'forum_user.silver',
+            'la_user_bronze' : 'forum_user.bronze',
+            'la_user_reputation' : 'forum_user.reputation'
             },
         select_params=[user_id],
-        tables=['question', 'auth_user', 'favorite_question'],
+        tables=['question', 'auth_user', 'favorite_question', 'forum_user'],
         where=['question.deleted=True AND question.last_activity_by_id = auth_user.id '+
-            'AND favorite_question.question_id = question.id AND favorite_question.user_id = %s'],
+            'AND favorite_question.question_id = question.id AND favorite_question.user_id = %s AND forum_user.user_ptr_id = auth_user.id'],
         params=[user_id],
         order_by=['-vote_count', '-question.id']
     ).values('vote_count',
