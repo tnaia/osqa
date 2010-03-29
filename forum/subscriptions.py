@@ -94,13 +94,13 @@ def comment_posted(sender, instance, **kwargs):
 
     q_filter = Q(subscription_settings__notify_comments=True) | Q(subscription_settings__notify_comments_own_post=True, id=post.author.id)
 
-    inreply = re.search('@\w+', comment.comment)
-    if inreply is not None:
-        q_filter = q_filter | Q(subscription_settings__notify_reply_to_comments=True,
-                                username__istartswith=inreply.group(0)[1:],
-                                comments__object_id=post.id,
-                                comments__content_type=ContentType.objects.get_for_model(post.__class__)
-                                )
+    #inreply = re.search('@\w+', comment.comment)
+    #if inreply is not None:
+    #    q_filter = q_filter | Q(subscription_settings__notify_reply_to_comments=True,
+    #                            username__istartswith=inreply.group(0)[1:],
+    #                            comments__object_id=post.id,
+    #                            comments__content_type=ContentType.objects.get_for_model(post.__class__)
+    #                            )
 
     subscribers = subscribers.filter(
             q_filter, subscription_settings__subscribed_questions='i', subscription_settings__enable_notifications=True 
