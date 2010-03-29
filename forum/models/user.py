@@ -93,7 +93,8 @@ class Activity(models.Model):
 
     def save(self):
         super(Activity, self).save()
-        activity_record.send(sender=self.activity_type, instance=self)
+        if self._is_new:
+            activity_record.send(sender=self.activity_type, instance=self)
 
     @property
     def question(self):
