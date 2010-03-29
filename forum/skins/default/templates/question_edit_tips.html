@@ -4,7 +4,12 @@
     <p class="subtitle darkred">{% trans "question tips" %}</p>
     <div>
         <ul class="list-item">
-            <li> <b>{% trans "please ask a relevant question" %}</b>
+            <li>
+            <b>
+                {% blocktrans with settings.APP_SHORT_NAME as app_title %}
+                ask a question relevant to the {{ app_title }} community 
+                {% endblocktrans %}
+            </b>
             </li>
             <li>
                 {% trans "please try provide enough details" %}
