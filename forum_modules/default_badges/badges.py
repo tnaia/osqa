@@ -287,7 +287,7 @@ class NecromancerBadge(AbstractBadge):
             if kwargs['new_value'] == settings.NECROMANCER_UP_VOTES:
                 answer = kwargs['instance']
 
-                if answer.added_at >= (answer.question.added_at + timedelta(days=settings.NECROMANCER_DIF_DAYS)):
+                if answer.added_at >= (answer.question.added_at + timedelta(days=int(settings.NECROMANCER_DIF_DAYS))):
                     self.award_badge(answer.author, answer)
 
         countable_update.connect(handler, sender=getattr(Answer, "vote_up_count_sender"), weak=False)
