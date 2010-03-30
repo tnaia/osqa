@@ -66,17 +66,24 @@ class ClassicLoginForm(forms.Form):
 
         self.user_cache = None
         if username and password:
-            self.user_cache = authenticate(username=username, password=password)
+            user_ = authenticate(username=username, password=password)
 
-            if self.user_cache is None:
+            if user_ is None:
                 del self.cleaned_data['username']
                 del self.cleaned_data['password']
+
                 error_list.insert(0,(_("Please enter valid username and password "
                                     "(both are case-sensitive).")))
-            elif self.user_cache.is_active == False:
+
+            elif not user_.is_active:
                 error_list.append(_("This account is inactive."))
             if len(error_list) > 0:
                 error_list.insert(0,_('Login failed.'))
+            try:
+                self.user_cache = user_.user
+            except:
+                error_list.append(_('This user is not a valid user'))
+
         elif password == None and username == None:
             error_list.append(_('Please enter username and password'))
         elif password == None:
@@ -85,6 +92,7 @@ class ClassicLoginForm(forms.Form):
             error_list.append(_('Please enter user name'))
         if len(error_list) > 0:
             self._errors['__all__'] = forms.util.ErrorList(error_list)
+            
         return self.cleaned_data
 
     def get_user(self):
