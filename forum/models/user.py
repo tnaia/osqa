@@ -62,7 +62,7 @@ class User(DjangoUser):
 
     def get_profile_url(self):
         """Returns the URL for this User's profile."""
-        return "/users/%d/%s" % (self.id, slugify(self.username))
+        return "/%s%d/%s" % (_('users/'), self.id, slugify(self.username))
 
     def get_profile_link(self):
         profile_link = u'<a href="%s">%s</a>' % (self.get_profile_url(),self.username)
