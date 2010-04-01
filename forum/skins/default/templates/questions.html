@@ -83,13 +83,13 @@
                 {% endif %}
 			{% else %}
                 {% if is_unanswered %}
-                    {% blocktrans count questions as cnt with questions_count|intcomma as q_num %}
+                   {% blocktrans count questions_count as cnt with questions_count|intcomma as q_num %}
                     have total {{q_num}} unanswered questions
                     {% plural %}
                     have total {{q_num}} unanswered questions
                     {% endblocktrans %}
                 {% else %}
-                    {% blocktrans count questions as cnt with questions_count|intcomma as q_num %}
+                    {% blocktrans count questions_count as cnt with questions_count|intcomma as q_num %}
                     have total {{q_num}} question
                     {% plural %}
                     have total {{q_num}} questions
