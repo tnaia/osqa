@@ -9,6 +9,12 @@ import re
 
 from base import *
 
+try:
+    from south.modelsinspector import add_introspection_rules
+    add_introspection_rules([], [r"^forum\.models\.utils\.\w+"])
+except:
+    pass
+
 # custom signal
 tags_updated = django.dispatch.Signal(providing_args=["question"])
 edit_question_or_answer = django.dispatch.Signal(providing_args=["instance", "modified_by"])
