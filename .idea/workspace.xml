@@ -17,96 +17,64 @@
     <list default="true" readonly="true" id="df1b69cf-9c35-4a78-9890-c59b542399e8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/models/__init__.py" afterPath="$PROJECT_DIR$/forum/models/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/authentication/__init__.py" afterPath="$PROJECT_DIR$/forum/authentication/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/user_reputation.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/user_reputation.html" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\update_2009_01_25_001.sql" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/user_info.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/user_info.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/UPGRADE" afterPath="$PROJECT_DIR$/UPGRADE" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\update_2009_12_24_001.sql" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/media/style/style.css" afterPath="$PROJECT_DIR$/forum/skins/default/media/style/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/views/writers.py" afterPath="$PROJECT_DIR$/forum/views/writers.py" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\100108_upgrade_ef.sql" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/revisions_question.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/revisions_question.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/user_votes.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/user_votes.html" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\forum\skins\default\media\js\com.cnprog.editor.js" afterPath="" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\forum\skins\default\media\js\com.cnprog.admin.js" afterPath="" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\091111_upgrade_evgeny.sql" afterPath="" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\cnprog_new_install_2009_03_31.sql" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/views/auth.py" afterPath="$PROJECT_DIR$/forum/views/auth.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/models/repute.py" afterPath="$PROJECT_DIR$/forum/models/repute.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/models/base.py" afterPath="$PROJECT_DIR$/forum/models/base.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/base.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/base.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/models/user.py" afterPath="$PROJECT_DIR$/forum/models/user.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/middleware/pagesize.py" afterPath="$PROJECT_DIR$/forum/middleware/pagesize.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/subscription_status.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/subscription_status.html" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\drop-all-tables.sh" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/question_list.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/question_list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum_modules/default_badges/badges.py" afterPath="$PROJECT_DIR$/forum_modules/default_badges/badges.py" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\cnprog_new_install_2009_04_07.sql" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/questions.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/questions.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/user_tabs.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/user_tabs.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/forms.py" afterPath="$PROJECT_DIR$/forum/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/INSTALL" afterPath="$PROJECT_DIR$/INSTALL" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\update_2009_02_26_001.sql" afterPath="" />
-      <change type="DELETED" beforePath="D:\osqa\dev\osqa\forum\skins\default\templates\index_.html" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/models/answer.py" afterPath="$PROJECT_DIR$/forum/models/answer.py" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\update_2009_12_27_001.sql" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum_modules/pgfulltext/handlers.py" afterPath="$PROJECT_DIR$/forum_modules/pgfulltext/handlers.py" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\pg_fts_install.sql" afterPath="" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\forum\skins\default\media\js\com.cnprog.i18n.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/revisions_answer.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/revisions_answer.html" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\cnprog_new_install_2009_02_28.sql" afterPath="" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\forum\skins\default\media\js\excanvas.pack.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/views/readers.py" afterPath="$PROJECT_DIR$/forum/views/readers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/models/tag.py" afterPath="$PROJECT_DIR$/forum/models/tag.py" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\update_2009_01_13_001.sql" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/question_retag.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/question_retag.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/templatetags/extra_filters.py" afterPath="$PROJECT_DIR$/forum/templatetags/extra_filters.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/middleware/extended_user.py" afterPath="$PROJECT_DIR$/forum/middleware/extended_user.py" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\update_2009_07_05_EF.sql" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/users_questions.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/users_questions.html" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\cnprog_new_install_2009_04_09.sql" afterPath="" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\update_2010_01_23.sql" afterPath="" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\forum\skins\default\media\js\com.cnprog.post.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.py" afterPath="$PROJECT_DIR$/settings.py" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\forum\skins\default\media\js\com.cnprog.utils.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/user_stats.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/user_stats.html" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\cnprog.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/views/users.py" afterPath="$PROJECT_DIR$/forum/views/users.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/utils/lists.py" afterPath="$PROJECT_DIR$/forum/utils/lists.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/models/meta.py" afterPath="$PROJECT_DIR$/forum/models/meta.py" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\update_2009_12_27_002.sql" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/auth.py" afterPath="$PROJECT_DIR$/forum/auth.py" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\forum\skins\default\media\js\com.cnprog.tag_selector.js" afterPath="" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\091208_upgrade_evgeny.sql" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/subscriptions.py" afterPath="$PROJECT_DIR$/forum/subscriptions.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/question_edit.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/question_edit.html" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\update_2009_01_18_001.sql" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/urls.py" afterPath="$PROJECT_DIR$/forum/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/models/question.py" afterPath="$PROJECT_DIR$/forum/models/question.py" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\update_2009_04_10_001.sql" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/answer_edit.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/answer_edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/ask.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/ask.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/views/commands.py" afterPath="$PROJECT_DIR$/forum/views/commands.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/const.py" afterPath="$PROJECT_DIR$/forum/const.py" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\drop-auth.sql" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/index.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/settings/__init__.py" afterPath="$PROJECT_DIR$/forum/settings/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/badges/base.py" afterPath="$PROJECT_DIR$/forum/badges/base.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/question.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/question.html" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\cnprog_new_install.sql" afterPath="" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\update_2009_01_24.sql" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/media/js/wmd/wmd.js" afterPath="$PROJECT_DIR$/forum/skins/default/media/js/wmd/wmd.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/media/js/osqa.main.js" afterPath="$PROJECT_DIR$/forum/skins/default/media/js/osqa.main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/templatetags/extra_tags.py" afterPath="$PROJECT_DIR$/forum/templatetags/extra_tags.py" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\091208_upgrade_evgeny_1.sql" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/user.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/user.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/media/js/compress.bat" afterPath="$PROJECT_DIR$/forum/skins/default/media/js/compress.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/models/utils.py" afterPath="$PROJECT_DIR$/forum/models/utils.py" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\update_2009_01_13_002.sql" afterPath="" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\forum\skins\default\media\js\jquery.flot.pack.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/base_content.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/base_content.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/views/admin.py" afterPath="$PROJECT_DIR$/forum/views/admin.py" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\badges.sql" afterPath="" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\sql_scripts\update_2010_02_22.sql" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/startup.py" afterPath="$PROJECT_DIR$/forum/startup.py" />
@@ -198,19 +166,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="base.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="24" selection-start="1910" selection-end="1910" vertical-scroll-proportion="-23.8">
+            <state line="44" column="24" selection-start="1910" selection-end="1910" vertical-scroll-proportion="0.9097859">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/forum/models/__init__.py">
+      <file leaf-file-name="user.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/forum/models/user.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="374" column="53" selection-start="13368" selection-end="13368" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -226,8 +194,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/forum/models/utils.py" />
-        <option value="$PROJECT_DIR$/forum/models/base.py" />
         <option value="$PROJECT_DIR$/forum/views/commands.py" />
         <option value="$PROJECT_DIR$/forum/authentication/__init__.py" />
         <option value="$PROJECT_DIR$/forum/models/repute.py" />
@@ -242,6 +208,8 @@
         <option value="$PROJECT_DIR$/forum/reputation.py" />
         <option value="$PROJECT_DIR$/forum/skins/default/media/js/osqa.main.js" />
         <option value="$PROJECT_DIR$/forum/skins/default/templates/base.html" />
+        <option value="$PROJECT_DIR$/forum/models/__init__.py" />
+        <option value="$PROJECT_DIR$/forum/skins/default/templates/questions.html" />
       </list>
     </option>
   </component>
@@ -972,27 +940,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/forum/authentication/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="0" selection-start="1312" selection-end="1583" vertical-scroll-proportion="0.38760808">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/forum/views/auth.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-8.013255">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/forum/models/repute.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="121" column="27" selection-start="4184" selection-end="4184" vertical-scroll-proportion="0.87752163">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/forum/migrations/0001_initial.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="445" column="0" selection-start="29148" selection-end="29148" vertical-scroll-proportion="0.0">
@@ -1070,16 +1017,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/base.html">
+    <entry file="file://$PROJECT_DIR$/forum/models/user.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="24" selection-start="1910" selection-end="1910" vertical-scroll-proportion="-23.8">
+        <state line="374" column="53" selection-start="13368" selection-end="13368" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forum/views/users.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="752" column="4" selection-start="32298" selection-end="32298" vertical-scroll-proportion="0.25773194">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/questions.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="114" column="21" selection-start="5145" selection-end="5145" vertical-scroll-proportion="0.9357798">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/forum/models/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="38" column="0" selection-start="1338" selection-end="1338" vertical-scroll-proportion="0.9308357">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="24" selection-start="1910" selection-end="1910" vertical-scroll-proportion="0.9097859">
           <folding />
         </state>
       </provider>

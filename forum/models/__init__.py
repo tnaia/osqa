@@ -12,7 +12,6 @@ try:
 except:
     pass
 
-
 from base import *
 
 def is_new(sender, instance, **kwargs):
