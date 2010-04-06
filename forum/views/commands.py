@@ -1,241 +1,358 @@
 import datetime
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils import simplejson
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render_to_response
-from django.utils.translation import ugettext as _
+from django.utils.translation import ungettext, ugettext as _
 from django.template import RequestContext
 from forum.models import *
 from forum.forms import CloseForm
-from forum import auth
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from forum.utils.decorators import ajax_method, ajax_login_required
 import logging
 
-def vote(request, id):#refactor - pretty incomprehensible view used by various ajax calls
-#issues: this subroutine is too long, contains many magic numbers and other issues
-#it's called "vote" but many actions processed here have nothing to do with voting
-    """
-    vote_type:
-        acceptAnswer : 0,
-        questionUpVote : 1,
-        questionDownVote : 2,
-        favorite : 4,
-        answerUpVote: 5,
-        answerDownVote:6,
-        offensiveQuestion : 7,
-        offensiveAnswer:8,
-        removeQuestion: 9,
-        removeAnswer:10
-        questionSubscribeUpdates:11
-        questionUnSubscribeUpdates:12
+class NotEnoughRepPointsException(Exception):
+    def __init__(self, action):
+        super(NotEnoughRepPointsException, self).__init__(
+            _("""
+            Sorry, but you don't have enough reputation points to %(action)s.<br />
+            Please check the <a href'%(faq_url)s'>faq</a>
+            """ % {'action': action, 'faq_url': reverse('faq')})
+        )
 
-    accept answer code:
-        response_data['allowed'] = -1, Accept his own answer   0, no allowed - Anonymous    1, Allowed - by default
-        response_data['success'] =  0, failed                                               1, Success - by default
-        response_data['status']  =  0, By default                                           1, Answer has been accepted already(Cancel)
+class CannotDoOnOwnException(Exception):
+    def __init__(self, action):
+        super(CannotDoOnOwnException, self).__init__(
+            _("""
+            Sorry but you cannot %(action)s your own post.<br />
+            Please check the <a href'%(faq_url)s'>faq</a>
+            """ % {'action': action, 'faq_url': reverse('faq')})
+        )
 
-    vote code:
-        allowed = -3, Don't have enough votes left
-                  -2, Don't have enough reputation score
-                  -1, Vote his own post
-                   0, no allowed - Anonymous
-                   1, Allowed - by default
-        status  =  0, By default
-                   1, Cancel
-                   2, Vote is too old to be canceled
+class AnonymousNotAllowedException(Exception):
+    def __init__(self, action):
+        super(AnonymousNotAllowedException, self).__init__(
+            _("""
+            Sorry but anonymous users cannot %(action)s.<br />
+            Please login or create an account <a href'%(signin_url)s'>here</a>.
+            """ % {'action': action, 'signin_url': reverse('auth_signin')})
+        )
 
-    offensive code:
-        allowed = -3, Don't have enough flags left
-                  -2, Don't have enough reputation score to do this
-                   0, not allowed
-                   1, allowed
-        status  =  0, by default
-                   1, can't do it again
-    """
-    response_data = {
-        "allowed": 1,
-        "success": 1,
-        "status" : 0,
-        "count"  : 0,
-        "message" : ''
-    }
+class NotEnoughLeftException(Exception):
+    def __init__(self, action, limit):
+        super(NotEnoughRepPointsException, self).__init__(
+            _("""
+            Sorry, but you don't have enough %(action)s left for today..<br />
+            The limit is %(limit)s per day..<br />
+            Please check the <a href'%(faq_url)s'>faq</a>
+            """ % {'action': action, 'limit': limit, 'faq_url': reverse('faq')})
+        )
 
-    def __can_vote(vote_score, user):#refactor - belongs to auth.py
-        if vote_score == 1:#refactor magic number
-            return auth.can_vote_up(request.user)
+class CannotDoubleActionException(Exception):
+    def __init__(self, action):
+        super(CannotDoubleActionException, self).__init__(
+            _("""
+            Sorry, but you cannot %(action)s twice the same post.<br />
+            Please check the <a href'%(faq_url)s'>faq</a>
+            """ % {'action': action, 'faq_url': reverse('faq')})
+        )
+
+
+def command(func):
+    def decorated(request, *args, **kwargs):
+        try:
+            response = func(request, *args, **kwargs)
+            response['success'] = True
+        except Exception, e:
+            #import sys, traceback
+            #traceback.print_exc(file=sys.stdout)
+
+            response = {
+                'success': False,
+                'error_message': str(e)
+            }
+
+        if request.is_ajax():
+            return HttpResponse(simplejson.dumps(response), mimetype="application/json")
         else:
-            return auth.can_vote_down(request.user)
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    return decorated
+
+@command
+def vote_post(request, post_type, id, vote_type):
+    post = get_object_or_404(post_type == "question" and Question or Answer, id=id)
+    vote_score = vote_type == 'up' and 1 or -1
+    user = request.user
+
+    if not user.is_authenticated():
+        raise AnonymousNotAllowedException(_('vote'))
+
+    if user == post.author:
+        raise CannotDoOnOwnException(_('vote'))
+
+    if not (vote_type == 'up' and user.can_vote_up() or user.can_vote_down()):
+        raise NotEnoughRepPointsException(vote_type == 'up' and _('upvote') or _('downvote'))
+
+    user_vote_count_today = user.get_vote_count_today()
+
+    if user_vote_count_today >= int(settings.MAX_VOTES_PER_DAY):
+        raise NotEnoughLeftException(_('votes'), str(settings.MAX_VOTES_PER_DAY))
 
     try:
-        if not request.user.is_authenticated():
-            response_data['allowed'] = 0
-            response_data['success'] = 0
+        vote = post.votes.get(canceled=False, user=user)
 
-        elif request.is_ajax() and request.method == 'POST':
-            question = get_object_or_404(Question, id=id)
-            vote_type = request.POST.get('type')
+        if vote.voted_at < datetime.datetime.now() - datetime.timedelta(days=int(settings.DENY_UNVOTE_DAYS)):
+            raise Exception(
+                    _("Sorry but you cannot cancel a vote after %(ndays)d %(tdays)s from the original vote") %
+                    {'ndays': int(settings.DENY_UNVOTE_DAYS), 'tdays': ungettext('day', 'days', int(settings.DENY_UNVOTE_DAYS))}
+            )
 
-            #accept answer
-            if vote_type == '0':
-                answer_id = request.POST.get('postId')
-                answer = get_object_or_404(Answer, id=answer_id)
-                # make sure question author is current user
-                if question.author == request.user:
-                    # answer user who is also question author is not allow to accept answer
-                    if answer.author == question.author:
-                        response_data['success'] = 0
-                        response_data['allowed'] = -1
-                    # check if answer has been accepted already
-                    elif answer.accepted:
-                        auth.onAnswerAcceptCanceled(answer, request.user)
-                        response_data['status'] = 1
-                    else:
-                        # set other answers in this question not accepted first
-                        for answer_of_question in Answer.objects.get_answers_from_question(question, request.user):
-                            if answer_of_question != answer and answer_of_question.accepted:
-                                auth.onAnswerAcceptCanceled(answer_of_question, request.user)
+        vote.cancel()
+        vote_type = 'none'
+    except ObjectDoesNotExist:
+        #there is no vote yet
+        vote = Vote(user=user, content_object=post, vote=vote_score)
+        vote.save()
 
-                        #make sure retrieve data again after above author changes, they may have related data
-                        answer = get_object_or_404(Answer, id=answer_id)
-                        auth.onAnswerAccept(answer, request.user)
-                else:
-                    response_data['allowed'] = 0
-                    response_data['success'] = 0
-            # favorite
-            elif vote_type == '4':
-                has_favorited = False
-                fav_questions = FavoriteQuestion.objects.filter(question=question)
-                # if the same question has been favorited before, then delete it
-                if fav_questions is not None:
-                    for item in fav_questions:
-                        if item.user == request.user:
-                            item.delete()
-                            response_data['status'] = 1
-                            response_data['count']  = len(fav_questions) - 1
-                            question.decrement_favourite_count()
-                            if response_data['count'] < 0:
-                                response_data['count'] = 0
-                            has_favorited = True
-                # if above deletion has not been executed, just insert a new favorite question
-                if not has_favorited:
-                    new_item = FavoriteQuestion(question=question, user=request.user)
-                    new_item.save()
-                    response_data['count']  = FavoriteQuestion.objects.filter(question=question).count()
-                    question.increment_favourite_count()
+    response = {
+        'commands': {
+            'update_post_score': [post_type, id, vote.vote * (vote_type == 'none' and -1 or 1)],
+            'update_user_post_vote': [post_type, id, vote_type]
+        }
+    }
 
-            elif vote_type in ['1', '2', '5', '6']:
-                post_id = id
-                post = question
-                vote_score = 1
-                if vote_type in ['5', '6']:
-                    answer_id = request.POST.get('postId')
-                    answer = get_object_or_404(Answer, id=answer_id)
-                    post_id = answer_id
-                    post = answer
-                if vote_type in ['2', '6']:
-                    vote_score = -1
+    votes_left = int(settings.MAX_VOTES_PER_DAY) - user_vote_count_today + (vote_type == 'none' and -1 or 1)
 
-                if post.author == request.user:
-                    response_data['allowed'] = -1
-                elif not __can_vote(vote_score, request.user):
-                    response_data['allowed'] = -2
-                elif post.votes.filter(user=request.user).count() > 0:
-                    vote = post.votes.filter(user=request.user)[0]
-                    # unvote should be less than certain time
-                    if (datetime.datetime.now().day - vote.voted_at.day) >= int(settings.DENY_UNVOTE_DAYS):
-                        response_data['status'] = 2
-                    else:
-                        voted = vote.vote
-                        if voted > 0:
-                            # cancel upvote
-                            auth.onUpVotedCanceled(vote, post, request.user)
+    if int(settings.START_WARN_VOTES_LEFT) >= votes_left:
+        response['message'] = _("You have %(nvotes) %(tvotes) left today.") % \
+                    {'nvotes': votes_left, 'tvotes': ungettext('vote', 'votes', votes_left)}
 
-                        else:
-                            # cancel downvote
-                            auth.onDownVotedCanceled(vote, post, request.user)
+    return response
 
-                        response_data['status'] = 1
-                        response_data['count'] = post.score
-                elif Vote.objects.get_votes_count_today_from_user(request.user) >= settings.MAX_VOTES_PER_DAY:
-                    response_data['allowed'] = -3
-                else:
-                    vote = Vote(user=request.user, content_object=post, vote=vote_score, voted_at=datetime.datetime.now())
-                    if vote_score > 0:
-                        # upvote
-                        auth.onUpVoted(vote, post, request.user)
-                    else:
-                        # downvote
-                        auth.onDownVoted(vote, post, request.user)
+@command
+def flag_post(request, post_type, id):
+    post = get_object_or_404(post_type == "question" and Question or Answer, id=id)
+    user = request.user
 
-                    votes_left = int(settings.MAX_VOTES_PER_DAY) - Vote.objects.get_votes_count_today_from_user(request.user)
-                    if votes_left <= settings.START_WARN_VOTES_LEFT:
-                        response_data['message'] = u'%s votes left' % votes_left
-                    response_data['count'] = post.score
-            elif vote_type in ['7', '8']:
-                post = question
-                post_id = id
-                if vote_type == '8':
-                    post_id = request.POST.get('postId')
-                    post = get_object_or_404(Answer, id=post_id)
+    if not user.is_authenticated():
+        raise AnonymousNotAllowedException(_('flag posts'))
 
-                if FlaggedItem.objects.get_flagged_items_count_today(request.user) >= settings.MAX_FLAGS_PER_DAY:
-                    response_data['allowed'] = -3
-                elif not auth.can_flag_offensive(request.user):
-                    response_data['allowed'] = -2
-                elif post.flagged_items.filter(user=request.user).count() > 0:
-                    response_data['status'] = 1
-                else:
-                    item = FlaggedItem(user=request.user, content_object=post, flagged_at=datetime.datetime.now())
-                    auth.onFlaggedItem(item, post, request.user)
-                    response_data['count'] = post.offensive_flag_count
-                    # send signal when question or answer be marked offensive
-                    mark_offensive.send(sender=post.__class__, instance=post, mark_by=request.user)
-            elif vote_type in ['9', '10']:
-                post = question
-                post_id = id
-                if vote_type == '10':
-                    post_id = request.POST.get('postId')
-                    post = get_object_or_404(Answer, id=post_id)
+    if user == post.author:
+        raise CannotDoOnOwnException(_('flag'))
 
-                if not auth.can_delete_post(request.user, post):
-                    response_data['allowed'] = -2
-                elif post.deleted == True:
-                    logging.debug('debug restoring post in view')
-                    auth.onDeleteCanceled(post, request.user)
-                    response_data['status'] = 1
-                else:
-                    auth.onDeleted(post, request.user)
-                    delete_post_or_answer.send(sender=post.__class__, instance=post, delete_by=request.user)
-            elif vote_type == '11':#subscribe q updates
-                user = request.user
-                if user.is_authenticated():
-                    if user not in question.followed_by.all():
-                        question.followed_by.add(user)
-                        if settings.EMAIL_VALIDATION == 'on' and user.email_isvalid == False:
-                            response_data['message'] = \
-                                    _('subscription saved, %(email)s needs validation, see %(details_url)s') \
-                                    % {'email':user.email,'details_url':reverse('faq') + '#validate'}
-                else:
-                    pass
-                    #response_data['status'] = 0
-                    #response_data['allowed'] = 0
-            elif vote_type == '12':#unsubscribe q updates
-                user = request.user
-                if user.is_authenticated():
-                    if user in question.followed_by.all():
-                        question.followed_by.remove(user)
-        else:
-            response_data['success'] = 0
-            response_data['message'] = u'Request mode is not supported. Please try again.'
+    if not (user.can_flag_offensive(post)):
+        raise NotEnoughRepPointsException(_('flag posts'))
 
-        data = simplejson.dumps(response_data)
+    user_flag_count_today = user.get_flagged_items_count_today()
 
-    except Exception, e:
-        response_data['message'] = str(e)
-        data = simplejson.dumps(response_data)
-    return HttpResponse(data, mimetype="application/json")
+    if user_flag_count_today >= int(settings.MAX_FLAGS_PER_DAY):
+        raise NotEnoughLeftException(_('flags'), str(settings.MAX_FLAGS_PER_DAY))
+
+    try:
+        post.flagged_items.get(user=user)
+        raise CannotDoubleActionException(_('flag'))
+    except ObjectDoesNotExist:
+        #there is no vote yet
+        flag = FlaggedItem(user=user, content_object=post)
+        flag.save()
+
+    response = {
+
+    }
+
+    return response
+        
+@command
+def like_comment(request, id):
+    comment = get_object_or_404(Comment, id=id)
+    user = request.user
+
+    if not user.is_authenticated():
+        raise AnonymousNotAllowedException(_('like comments'))
+
+    if user == comment.user:
+        raise CannotDoOnOwnException(_('like'))
+
+    if not user.can_like_comment(comment):
+        raise NotEnoughRepPointsException( _('like comments'))    
+
+    try:
+        like = LikedComment.active.get(comment=comment, user=user)
+        like.cancel()
+        likes = False
+    except ObjectDoesNotExist:
+        like = LikedComment(comment=comment, user=user)
+        like.save()
+        likes = True
+
+    return {
+        'commands': {
+            'update_comment_score': [comment.id, likes and 1 or -1],
+            'update_likes_comment_mark': [comment.id, likes and 'on' or 'off']
+        }
+    }
+
+@command
+def delete_comment(request, id):
+    comment = get_object_or_404(Comment, id=id)
+    user = request.user
+
+    if not user.is_authenticated():
+        raise AnonymousNotAllowedException(_('delete comments'))
+
+    if not user.can_delete_comment(comment):
+        raise NotEnoughRepPointsException( _('delete comments'))
+
+    comment.mark_deleted(user)
+
+    return {
+        'commands': {
+            'remove_comment': [comment.id],
+        }
+    }
+
+@command
+def mark_favorite(request, id):
+    question = get_object_or_404(Question, id=id)
+
+    if not request.user.is_authenticated():
+        raise AnonymousNotAllowedException(_('mark a question as favorite'))
+
+    try:
+        favorite = FavoriteQuestion.objects.get(question=question, user=request.user)
+        favorite.delete()
+        added = False
+    except ObjectDoesNotExist:
+        favorite = FavoriteQuestion(question=question, user=request.user)
+        favorite.save()
+        added = True
+
+    return {
+        'commands': {
+            'update_favorite_count': [added and 1 or -1],
+            'update_favorite_mark': [added and 'on' or 'off']
+        }
+    }
+
+@command
+def comment(request, post_type, id):
+    post = get_object_or_404(post_type == "question" and Question or Answer, id=id)
+    user = request.user
+
+    if not user.is_authenticated():
+        raise AnonymousNotAllowedException(_('comment'))
+
+    if not request.method == 'POST':
+        raise Exception(_("Invalid request"))
+
+    if 'id' in request.POST:
+        comment = get_object_or_404(Comment, id=request.POST['id'])
+
+        if not user.can_edit_comment(comment):
+            raise NotEnoughRepPointsException( _('edit comments'))
+    else:
+        if not user.can_comment(post):
+            raise NotEnoughRepPointsException( _('comment'))
+
+        comment = Comment(user=user, content_object=post)
+
+    comment_text = request.POST.get('comment', '').strip()
+
+    if not len(comment_text):
+        raise Exception(_("Comment is empty"))
+
+    comment.comment=comment_text
+    comment.save()
+
+    if comment._is_new:
+        return {
+            'commands': {
+                'insert_comment': [
+                    post_type, id,
+                    comment.id, comment_text, user.username, user.get_profile_url(), reverse('delete_comment', kwargs={'id': comment.id})
+                ]
+            }
+        }
+    else:
+        return {
+            'commands': {
+                'update_comment': [comment.id, comment.comment]
+            }
+        }
+
+
+@command
+def accept_answer(request, id):
+    user = request.user
+
+    if not user.is_authenticated():
+        raise AnonymousNotAllowedException(_('accept answers'))
+
+    answer = get_object_or_404(Answer, id=id)
+    question = answer.question
+
+    if not user.can_accept_answer(answer):
+        raise Exception(_("Sorry but only the question author can accept an answer"))
+
+    commands = {}
+
+    if answer.accepted:
+        answer.unmark_accepted()
+        commands['unmark_accepted'] = [answer.id]
+    else:
+        try:
+            accepted = question.answers.get(accepted=True)
+            accepted.unmark_accepted()
+            commands['unmark_accepted'] = [accepted.id]
+        except:
+            pass
+
+        answer.mark_accepted(user)
+        commands['mark_accepted'] = [answer.id]
+
+    return {'commands': commands}
+
+@command    
+def delete_post(request, post_type, id):
+    post = get_object_or_404(post_type == "question" and Question or Answer, id=id)
+    user = request.user
+
+    if not user.is_authenticated():
+        raise AnonymousNotAllowedException(_('delete posts'))
+
+    if not (user.can_delete_post(post)):
+        raise NotEnoughRepPointsException(_('delete posts'))
+
+    post.mark_deleted(user)
+
+    return {
+        'commands': {
+                'mark_deleted': [post_type, id]
+            }
+    }
+
+@command
+def subscribe(request, id):
+    question = get_object_or_404(Question, id=id)
+
+    try:
+        subscription = QuestionSubscription.objects.get(question=question, user=request.user)
+        subscription.delete()
+        subscribed = False
+    except:
+        subscription = QuestionSubscription(question=question, user=request.user, auto_subscription=False)
+        subscription.save()
+        subscribed = True
+
+    return {
+        'commands': {
+                'set_subscription_button': [subscribed and _('unsubscribe me') or _('subscribe me')],
+                'set_subscription_status': ['']
+            }
+    }
 
 #internally grouped views - used by the tagging system
 @ajax_login_required
@@ -280,8 +397,8 @@ def close(request, id):#close question
     question close
     """
     question = get_object_or_404(Question, id=id)
-    if not auth.can_close_question(request.user, question):
-        return HttpResponse('Permission denied.')
+    if not request.user.can_close_question(question):
+        return HttpResponseForbidden()
     if request.method == 'POST':
         form = CloseForm(request.POST)
         if form.is_valid():
@@ -306,8 +423,8 @@ def reopen(request, id):#re-open question
     """
     question = get_object_or_404(Question, id=id)
     # open question
-    if not auth.can_reopen_question(request.user, question):
-        return HttpResponse('Permission denied.')
+    if not request.user.can_reopen_question(question):
+        return HttpResponseForbidden()
     if request.method == 'POST' :
         Question.objects.filter(id=question.id).update(closed=False,
             closed_by=None, closed_at=None, close_reason=None)
@@ -326,19 +443,4 @@ def read_message(request):#marks message a read
                 request.user.delete_messages()
     return HttpResponse('')
 
-@login_required
-def switch_subscription(request, id):
-    question = get_object_or_404(Question, id=id)
 
-    try:
-        subscription = QuestionSubscription.objects.get(question=question, user=request.user)
-        subscription.delete()
-        subscription = False
-    except:
-        subscription = QuestionSubscription(question=question, user=request.user, auto_subscription=False)
-        subscription.save()
-
-    return render_to_response('subscription_status.html', {
-        'subscription': subscription,
-        'question': question,
-    }, context_instance=RequestContext(request))

@@ -22,7 +22,6 @@ class Badge(models.Model):
     multiple    = models.BooleanField(default=False)
     # Denormalised data
     awarded_count = models.PositiveIntegerField(default=0)
-
     awarded_to    = models.ManyToManyField(User, through='Award', related_name='badges')
 
     class Meta:
@@ -34,13 +33,14 @@ class Badge(models.Model):
     def __unicode__(self):
         return u'%s: %s' % (self.get_type_display(), self.name)
 
-    def save(self, **kwargs):
+    def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = self.name#slugify(self.name)
-        super(Badge, self).save(**kwargs)
+        super(Badge, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return '%s%s/' % (reverse('badge', args=[self.id]), self.slug)
+
 
 class AwardManager(models.Manager):
     def get_recent_awards(self):
@@ -66,51 +66,57 @@ class Award(MetaContent, UserContent):
     def __unicode__(self):
         return u'[%s] is awarded a badge [%s] at %s' % (self.user.username, self.badge.name, self.awarded_at)
 
+    def save(self, *args, **kwargs):
+        super(Award, self).save(*args, **kwargs)
+
+        if self._is_new:
+            self.badge.awarded_count += 1
+            self.badge.save()
+
+            if self.badge.type == Badge.GOLD:
+                self.user.gold += 1
+            if self.badge.type == Badge.SILVER:
+                self.user.silver += 1
+            if self.badge.type == Badge.BRONZE:
+                self.user.bronze += 1
+            self.user.save()
+
     class Meta:
         unique_together = ('content_type', 'object_id', 'user', 'badge')
         app_label = 'forum'
         db_table = u'award'
 
-class ReputeManager(models.Manager):
-    def get_reputation_by_upvoted_today(self, user):
-        """
-        For one user in one day, he can only earn rep till certain score (ep. +200)
-        by upvoted(also substracted from upvoted canceled). This is because we need
-        to prohibit gaming system by upvoting/cancel again and again.
-        """
-        if user is not None:
-            today = datetime.date.today()
-            sums = self.filter(models.Q(reputation_type=1) | models.Q(reputation_type=-8),
-                                user=user, reputed_at__range=(today, today + datetime.timedelta(1))). \
-                               aggregate(models.Sum('positive'), models.Sum('negative'))            
 
-            positive = sums['positive__sum']
-            negative = sums['negative__sum']
-
-            if positive is None:
-                positive = 0
-
-            if negative is None:
-                negative = 0
-                
-            return positive + negative
-        else:
-            return 0
-
-class Repute(models.Model):
+class Repute(UserContent):
     """The reputation histories for user"""
-    user     = models.ForeignKey(User)
-    positive = models.SmallIntegerField(default=0)
-    negative = models.SmallIntegerField(default=0)
+    value    = models.SmallIntegerField(default=0)
     question = models.ForeignKey('Question')
     reputed_at = models.DateTimeField(default=datetime.datetime.now)
     reputation_type = models.SmallIntegerField(choices=TYPE_REPUTATION)
-    reputation = models.IntegerField(default=1)
-    
-    objects = ReputeManager()
+    user_previous_rep = models.IntegerField(default=0)
 
     def __unicode__(self):
         return u'[%s]\' reputation changed at %s' % (self.user.username, self.reputed_at)
+
+    @property
+    def positive(self):
+        if self.value > 0: return self.value
+        return 0
+
+    @property
+    def negative(self):
+        if self.value < 0: return self.value
+        return 0
+
+    @property
+    def reputation(self):
+        return self.user_previous_rep + self.value
+
+    def save(self, *args, **kwargs):
+        self.user_previous_rep = self.user.reputation
+        self.user.reputation = self.user.reputation + self.value
+        self.user.save()
+        super(Repute, self).save(*args, **kwargs)
 
     class Meta:
         app_label = 'forum'

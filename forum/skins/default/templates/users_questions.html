@@ -25,7 +25,7 @@
             <div class="favorites-empty"> </div>
         {% endif %}
     <div id="question-summary-{{question.id}}" class="question-summary narrow">
-        <a style="text-decoration: none;" href="{% url question id=question.id %}{{question.title|slugify}}">
+        <a style="text-decoration: none;" href="{{ question.get_absolute_url }}">
             <div class="stats">
                 <div class="votes">
                     <span class="vote-count-post">{{question.vote_count|intcomma}}</span>
@@ -43,7 +43,7 @@
         </a>
         <div class="summary">
             <div class="question-title">
-                <a title="{{question.summary}}" href="{% url question id=question.id %}{{question.title|slugify}}">{{question.title}}</a>
+                <a title="{{question.summary}}" href="{{ question.get_absolute_url }}">{{question.title}}</a>
             </div>
             <div class="tags">
                 {% convert2tagname_list question %}

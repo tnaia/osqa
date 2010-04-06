@@ -2,8 +2,8 @@ import re
 from string import lower
 
 from django.contrib.contenttypes.models import ContentType
+from django.db.models.signals import post_save
 
-from forum.models.utils import countable_update
 from forum.models.user import activity_record
 from forum.models import Badge, Award, Activity
 
@@ -58,22 +58,21 @@ class AbstractBadge(object):
 
 class CountableAbstractBadge(AbstractBadge):
 
-    def __init__(self, model, countable, expected_value, handler):
-        sender = getattr(model, "%s_sender" % countable)
-
-        def wrapper(sender, **kwargs):
-            if kwargs['new_value'] == expected_value:
-                handler(instance=kwargs['instance'])
+    def __init__(self, model, field, expected_value, handler):
+        def wrapper(instance, **kwargs):
+            dirty_fields = instance.get_dirty_fields()
+            if field in dirty_fields and instance.__dict__[field] == expected_value:
+                handler(instance=instance)
         
-        countable_update.connect(wrapper, sender=sender, weak=False)
+        post_save.connect(wrapper, sender=model, weak=False)
 
 class PostCountableAbstractBadge(CountableAbstractBadge):
-    def __init__(self, model, countable, expected_value):
+    def __init__(self, model, field, expected_value):
 
         def handler(instance):            
             self.award_badge(instance.author, instance)
 
-        super(PostCountableAbstractBadge, self).__init__(model, countable, expected_value, handler)
+        super(PostCountableAbstractBadge, self).__init__(model, field, expected_value, handler)
 
 
 class ActivityAbstractBadge(AbstractBadge):

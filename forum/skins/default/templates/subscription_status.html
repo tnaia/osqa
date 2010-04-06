@@ -2,16 +2,18 @@
 
 <h3 class="subtitle">{% trans "Subscription" %}:</h3>
 {% if request.user.is_authenticated %}
-    {% if subscription %}
-        {% if subscription.auto_subscription %}
-            <p>{% trans "You were automatically subscribed to this question." %}</p>
+    <div class="subscription-status">
+        {% if subscription %}
+            {% if subscription.auto_subscription %}
+                <p>{% trans "You were automatically subscribed to this question." %}</p>
+            {% else %}
+                <p>{% trans "You are subscribed to this question." %}</p>
+            {% endif %}
         {% else %}
-            <p>{% trans "You are subscribed to this question." %}</p>
+            <p>{% trans "You are not subscribed to this question." %}</p>
         {% endif %}
-    {% else %}
-        <p>{% trans "You are not subscribed to this question." %}</p>
-    {% endif %}
-    <p><a class="sidebar_button subscription_switch" href="{% url switch_subscription id=question.id %}">
+    </div>
+    <p><a class="ajax-command sidebar_button subscription_switch" href="{% url subscribe id=question.id %}">
         {% if subscription %}
             {% trans "unsubscribe me" %}
         {% else %}
@@ -26,15 +28,3 @@
 {% else %}
     <p>{% trans "Once you sign in you will be able to subscribe for any updates here" %}</p>
 {% endif %}
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.subscription_switch').live('click', function() {
-            var $link = $(this)
-            $.post($link.attr('href'), function(response) {
-                $('#subscription_box').html(response)
-            });
-
-            return false;
-        });
-    });
-</script>

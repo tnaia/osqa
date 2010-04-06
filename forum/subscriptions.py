@@ -37,7 +37,7 @@ def question_posted(sender, instance, **kwargs):
 
     recipients = create_recipients_dict(subscribers)
 
-    send_email(settings.EMAIL_SUBJECT_PREFIX + _("New question on %s") % settings.APP_SHORT_NAME,
+    send_email(settings.EMAIL_SUBJECT_PREFIX + _("New question on %(app_name)s") % dict(app_name=settings.APP_SHORT_NAME),
                recipients, "notifications/newquestion.html", {
         'question': question,
     })
@@ -69,7 +69,7 @@ def answer_posted(sender, instance, **kwargs):
     ).exclude(id=answer.author.id)
     recipients = create_recipients_dict(subscribers)
 
-    send_email(settings.EMAIL_SUBJECT_PREFIX + _("New answer to '%s'") % question.title,
+    send_email(settings.EMAIL_SUBJECT_PREFIX + _("New answer to '%(question_title)s'") % dict(question_title=question.title),
                recipients, "notifications/newanswer.html", {
         'question': question,
         'answer': answer
@@ -94,21 +94,21 @@ def comment_posted(sender, instance, **kwargs):
 
     q_filter = Q(subscription_settings__notify_comments=True) | Q(subscription_settings__notify_comments_own_post=True, id=post.author.id)
 
-    #inreply = re.search('@\w+', comment.comment)
-    #if inreply is not None:
-    #    q_filter = q_filter | Q(subscription_settings__notify_reply_to_comments=True,
-    #                            username__istartswith=inreply.group(0)[1:],
-    #                            comments__object_id=post.id,
-    #                            comments__content_type=ContentType.objects.get_for_model(post.__class__)
-    #                            )
+    inreply = re.search('@\w+', comment.comment)
+    if inreply is not None:
+        q_filter = q_filter | Q(subscription_settings__notify_reply_to_comments=True,
+                                username__istartswith=inreply.group(0)[1:],
+                                comments__object_id=post.id,
+                                comments__content_type=ContentType.objects.get_for_model(post.__class__)
+                                )
 
     subscribers = subscribers.filter(
             q_filter, subscription_settings__subscribed_questions='i', subscription_settings__enable_notifications=True 
-    ).exclude(id=comment.user.id)
+    ).exclude(id=comment.user.id).distinct()
 
     recipients = create_recipients_dict(subscribers)
 
-    send_email(settings.EMAIL_SUBJECT_PREFIX + _("New comment on %s") % question.title,
+    send_email(settings.EMAIL_SUBJECT_PREFIX + _("New comment on %(question_title)s") % dict(question_title=question.title),
                recipients, "notifications/newcomment.html", {
                 'comment': comment,
                 'post': post,
@@ -133,7 +133,7 @@ def answer_accepted(sender, instance, **kwargs):
     ).exclude(id=question.author.id)
     recipients = create_recipients_dict(subscribers)
 
-    send_email(settings.EMAIL_SUBJECT_PREFIX + _("An answer to '%s' was accepted") % question.title,
+    send_email(settings.EMAIL_SUBJECT_PREFIX + _("An answer to '%(question_title)s' was accepted") % dict(question_title=question.title),
                recipients, "notifications/answeraccepted.html", {
         'question': question,
         'answer': answer
@@ -142,8 +142,8 @@ def answer_accepted(sender, instance, **kwargs):
 activity_record.connect(answer_accepted, sender=const.TYPE_ACTIVITY_MARK_ANSWER, weak=False)
 
 
-def member_joined(sender, instance, **kwargs):
-    if not instance._is_new:
+def member_joined(sender, instance, created, **kwargs):
+    if not created:
         return
         
     subscribers = User.objects.values('email', 'username').filter(
@@ -153,7 +153,7 @@ def member_joined(sender, instance, **kwargs):
 
     recipients = create_recipients_dict(subscribers)
 
-    send_email(settings.EMAIL_SUBJECT_PREFIX + _("%s is a new member on %s") % (instance.username, settings.APP_SHORT_NAME),
+    send_email(settings.EMAIL_SUBJECT_PREFIX + _("%(username)s is a new member on %(app_name)s") % dict(username=instance.username, app_name=settings.APP_SHORT_NAME),
                recipients, "notifications/newmember.html", {
         'newmember': instance,
     })
@@ -163,14 +163,61 @@ def member_joined(sender, instance, **kwargs):
 
 post_save.connect(member_joined, sender=User, weak=False)
 
-def question_viewed(sender, user, **kwargs):
+def question_viewed(instance, user, **kwargs):
+    if not user.is_authenticated():
+        return
+        
     try:
-        subscription = QuestionSubscription.objects.get(question=sender, user=user)
+        subscription = QuestionSubscription.objects.get(question=instance, user=user)
         subscription.last_view = datetime.datetime.now()
         subscription.save()
     except:
         if user.subscription_settings.questions_viewed:
-            subscription = QuestionSubscription(question=sender, user=user)
+            subscription = QuestionSubscription(question=instance, user=user)
             subscription.save()
 
 question_view.connect(question_viewed)
+
+#todo: this stuff goes temporarily here
+from forum.models import Award, Answer
+
+def notify_award_message(instance, created, **kwargs):
+    if created:
+        user = instance.user
+
+        msg = (u"Congratulations, you have received a badge '%s'. " \
+                + u"Check out <a href=\"%s\">your profile</a>.") \
+                % (instance.badge.name, user.get_profile_url())
+
+        user.message_set.create(message=msg)
+
+post_save.connect(notify_award_message, sender=Award)
+
+#todo: translate this
+record_answer_event_re = re.compile("You have received (a|\d+) .*new response.*")
+def record_answer_event(instance, created, **kwargs):
+    if created:
+        q_author = instance.question.author
+        found_match = False
+        #print 'going through %d messages' % q_author.message_set.all().count()
+        for m in q_author.message_set.all():
+            #print m.message
+            match = record_answer_event_re.search(m.message)
+            if match:
+                found_match = True
+                try:
+                    cnt = int(match.group(1))
+                except:
+                    cnt = 1
+                m.message = u"You have received %d <a href=\"%s?sort=responses\">new responses</a>."\
+                            % (cnt+1, q_author.get_profile_url())
+
+                m.save()
+                break
+        if not found_match:
+            msg = u"You have received a <a href=\"%s?sort=responses\">new response</a>."\
+                    % q_author.get_profile_url()
+
+            q_author.message_set.create(message=msg)
+
+post_save.connect(record_answer_event, sender=Answer)

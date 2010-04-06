@@ -12,15 +12,14 @@ from django.http import get_host
 import types
 import datetime
 
-from forum.models import AuthKeyUserAssociation, ValidationHash
 from forum.authentication.forms import SimpleRegistrationForm, SimpleEmailSubscribeForm, \
         TemporaryLoginRequestForm, ChangePasswordForm, SetPasswordForm
 from forum.utils.mail import send_email
 
 from forum.authentication.base import InvalidAuthentication
-from forum.authentication import AUTH_PROVIDERS
+from forum.authentication import AUTH_PROVIDERS, user_logged_in
 
-from forum.models import Question, Answer
+from forum.models import AuthKeyUserAssociation, ValidationHash, Question, Answer
 
 def signin_page(request, action=None):
     if action is None:
@@ -335,8 +334,7 @@ def login_and_forward(request,  user, forward=None, message=None):
     user.backend = "django.contrib.auth.backends.ModelBackend"
     login(request,  user)
 
-    from forum.models import user_logged_in
-    user_logged_in.send(user=user,session_key=old_session,sender=None)
+    user_logged_in.send(user=user,old_session=old_session,sender=None)
 
     if not forward:
         signin_action = request.session.get('on_signin_action', None)

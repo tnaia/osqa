@@ -10,11 +10,12 @@ from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirec
 from django.utils.translation import ugettext as _
 from django.utils.http import urlquote_plus
 from django.utils.html import strip_tags
+from django.utils import simplejson
 from django.core.urlresolvers import reverse
-from forum.forms import *#incomplete list is EditUserForm, ModerateUserForm, TagFilterSelectionForm,
+from forum.forms import *
 from forum.utils.html import sanitize_html
-from forum import auth
-import calendar
+from forum.authentication import user_updated 
+import time
 from django.contrib.contenttypes.models import ContentType
 
 question_type = ContentType.objects.get_for_model(Question)
@@ -84,7 +85,7 @@ def users(request):
 def moderate_user(request, id):
     """ajax handler of user moderation
     """
-    if not auth.can_moderate_users(request.user) or request.method != 'POST':
+    if not request.user.is_superuser or request.method != 'POST':
         raise Http404
     if not request.is_ajax():
         return HttpResponseForbidden(mimetype="application/json")
@@ -208,9 +209,9 @@ def user_stats(request, user_id, user_view):
                         'vote_up_count',
                         'vote_down_count')[:100]
 
-    up_votes = Vote.objects.get_up_vote_count_from_user(user)
-    down_votes = Vote.objects.get_down_vote_count_from_user(user)
-    votes_today = Vote.objects.get_votes_count_today_from_user(user)
+    up_votes = user.get_up_vote_count()
+    down_votes = user.get_down_vote_count()
+    votes_today = user.get_vote_count_today()
     votes_total = int(settings.MAX_VOTES_PER_DAY)
 
     question_id_set = set(map(lambda v: v['id'], list(questions))) \
@@ -254,7 +255,7 @@ def user_stats(request, user_id, user_view):
         )
         user_tags.query.group_by = ['name']
 
-    if auth.can_moderate_users(request.user):
+    if request.user.is_superuser:
         moderate_user_form = ModerateUserForm(instance=user)
     else:
         moderate_user_form = None
@@ -688,10 +689,10 @@ def user_responses(request, user_id, user_view):
 
 def user_votes(request, user_id, user_view):
     user = get_object_or_404(User, id=user_id)
-    if not auth.can_view_user_votes(request.user, user):
+    if not request.user == user:
         raise Http404
     votes = []
-    question_votes = Vote.objects.extra(
+    question_votes = Vote.active.extra(
         select={
             'title' : 'question.title',
             'question_id' : 'question.id',
@@ -715,7 +716,7 @@ def user_votes(request, user_id, user_view):
     if(len(question_votes) > 0):
         votes.extend(question_votes)
 
-    answer_votes = Vote.objects.extra(
+    answer_votes = Vote.active.extra(
         select={
             'title' : 'question.title',
             'question_id' : 'question.id',
@@ -751,34 +752,13 @@ def user_votes(request, user_id, user_view):
 
 def user_reputation(request, user_id, user_view):
     user = get_object_or_404(User, id=user_id)
-    try:
-        from django.db.models import Sum
-        reputation = Repute.objects.extra(
-                                          select={'question_id':'question_id',
-                                          'title': 'question.title'},
-                                          tables=['repute', 'question'],
-                                          order_by=['-reputed_at'],
-                                          where=['user_id=%s AND question_id=question.id'],
-                                          params=[user.id]
-                                          ).values('question_id', 'title', 'reputed_at', 'reputation')
-        reputation = reputation.annotate(positive=Sum("positive"), negative=Sum("negative"))
-    except ImportError:
-        reputation = Repute.objects.extra(
-                                          select={'positive':'sum(positive)', 'negative':'sum(negative)', 'question_id':'question_id',
-                                          'title': 'question.title'},
-                                          tables=['repute', 'question'],
-                                          order_by=['-reputed_at'],
-                                          where=['user_id=%s AND question_id=question.id'],
-                                          params=[user.id]
-                                          ).values('positive', 'negative', 'question_id', 'title', 'reputed_at', 'reputation')
-        reputation.query.group_by = ['question_id']
 
-    rep_list = []
-    for rep in Repute.objects.filter(user=user).order_by('reputed_at'):
-        dic = '[%s,%s]' % (calendar.timegm(rep.reputed_at.timetuple()) * 1000, rep.reputation)
-        rep_list.append(dic)
-    reps = ','.join(rep_list)
-    reps = '[%s]' % reps
+    reputation = user.reputes.order_by('-reputed_at')
+
+    graph_data = simplejson.dumps([
+            (time.mktime(rep.reputed_at.timetuple()) * 1000, rep.reputation)
+            for rep in reputation
+    ])
 
     return render_to_response(user_view.template_file, {
                               "tab_name": user_view.id,
@@ -786,7 +766,7 @@ def user_reputation(request, user_id, user_view):
                               "page_title": user_view.page_title,
                               "view_user": user,
                               "reputation": reputation,
-                              "reps": reps
+                              "graph_data": graph_data
                               }, context_instance=RequestContext(request))
 
 def user_favorites(request, user_id, user_view):

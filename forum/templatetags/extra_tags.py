@@ -12,6 +12,7 @@ from forum.const import *
 from forum.models import Question, Answer, QuestionRevision, AnswerRevision
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
+from django.utils import simplejson
 from django.conf import settings
 from django.template.defaulttags import url as default_url
 from forum import skins
@@ -195,13 +196,6 @@ def get_score_badge_by_details(rep, gold, silver, bronze):
 		'badgeword' : _('badges'),
     })      
     
-@register.simple_tag
-def get_user_vote_image(dic, key, arrow):
-    if dic.has_key(key):
-        if int(dic[key]) == int(arrow):
-            return '-on'
-    return ''
-        
 @register.simple_tag
 def get_age(birthday):
     current_time = datetime.datetime(*time.localtime()[0:6])
@@ -392,3 +386,30 @@ def user_var(parser, token):
     return UserVarNode(tokens)
 
 
+class VariablesNode(template.Node):
+    def __init__(self, nodelist, var_name):
+        self.nodelist = nodelist
+        self.var_name = var_name
+
+    def render(self, context):
+        source = self.nodelist.render(context)
+        context[self.var_name] = simplejson.loads(source)
+        return ''
+
+@register.tag(name='var')
+def do_variables(parser, token):
+    try:
+        tag_name, arg = token.contents.split(None, 1)
+    except ValueError:
+        msg = '"%s" tag requires arguments' % token.contents.split()[0]
+        raise template.TemplateSyntaxError(msg)
+    m = re.search(r'as (\w+)', arg)
+    if m:
+        var_name, = m.groups()
+    else:
+        msg = '"%s" tag had invalid arguments' % tag_name
+        raise template.TemplateSyntaxError(msg)
+
+    nodelist = parser.parse(('endvar',))
+    parser.delete_first_token()
+    return VariablesNode(nodelist, var_name)

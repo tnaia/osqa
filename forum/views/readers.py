@@ -15,18 +15,18 @@ from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.utils.datastructures import SortedDict
 from django.views.decorators.cache import cache_page
+from django.utils.http import urlquote  as django_urlquote
+from django.template.defaultfilters import slugify
 
 from forum.utils.html import sanitize_html
 from markdown2 import Markdown
-#from lxml.html.diff import htmldiff
 from forum.utils.diff import textDiff as htmldiff
 from forum.forms import *
 from forum.models import *
 from forum.auth import *
 from forum.const import *
-from forum import auth
 from forum.utils.forms import get_next_url
-import django.dispatch
+from forum.models.question import question_view
 
 # used in index page
 #refactor - move these numbers somewhere?
@@ -100,9 +100,7 @@ def index(request):#generates front page - shows listing of questions sorted in 
     objects_list = Paginator(qs, pagesize)
     questions = objects_list.page(page)
 
-    # RISK - inner join queries
-    #questions = questions.select_related()
-    tags = Tag.objects.get_valid_tags(INDEX_TAGS_SIZE)
+    tags = Tag.active.order_by('-id')[:INDEX_TAGS_SIZE]
 
     awards = Award.objects.get_recent_awards()
 
@@ -216,7 +214,7 @@ def questions(request, tagname=None, unanswered=False):#a view generating listin
 
     # Get related tags from this page objects
     if questions.object_list.count() > 0:
-        related_tags = Tag.objects.get_tags_by_questions(questions.object_list)
+        related_tags = Tag.objects.filter(questions__id__in=[q.id for q in questions.object_list]).distinct()
     else:
         related_tags = None
     tags_autocomplete = _get_tags_cache_json()
@@ -404,142 +402,71 @@ def tags(request):#view showing a listing of available tags - plain list
                                             }
                                 }, context_instance=RequestContext(request))
 
-question_view = django.dispatch.Signal(providing_args=['instance', 'user'])
-
-def question(request, id):#refactor - long subroutine. display question body, answers and comments
-    """view that displays body of the question and 
-    all answers to it
-    """
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-
-    view_id = request.GET.get('sort', None)
+def get_answer_sort_order(request):
     view_dic = {"latest":"-added_at", "oldest":"added_at", "votes":"-score" }
-    try:
-        orderby = view_dic[view_id]
-    except KeyError:
-        qsm = request.session.get('questions_sort_method',None)
-        if qsm in ('mostvoted','latest'):
-            logging.debug('loaded from session ' + qsm)
-            if qsm == 'mostvoted':
-                view_id = 'votes'
-                orderby = '-score'
-            else:
-                view_id = 'latest'
-                orderby = '-added_at'
-        else:
-            view_id = "votes"
-            orderby = "-score"
 
-    logging.debug('view_id=' + str(view_id))
+    view_id = request.GET.get('sort', request.session.get('answer_sort_order', None))
 
-    question = get_object_or_404(Question, id=id)
-    try:
-        pattern = r'/%s%s%d/([\w-]+)' % (django_settings.FORUM_SCRIPT_ALIAS,_('question/'), question.id)
-        path_re = re.compile(pattern)
-        logging.debug(pattern)
-        logging.debug(request.path)
-        m = path_re.match(request.path)
-        if m:
-            slug = m.group(1)
-            logging.debug('have slug %s' % slug)
-            assert(slug == slugify(question.title))
-        else:
-            logging.debug('no match!')
-    except Exception, e:
-        return HttpResponseRedirect(question.get_absolute_url())
+    if view_id is None or not view_id in view_dic:
+        view_id = "votes"
 
-    if question.deleted and not auth.can_view_deleted_post(request.user, question):
-        raise Http404
-    answer_form = AnswerForm(question,request.user)
-    answers = Answer.objects.get_answers_from_question(question, request.user)
-    answers = answers.select_related(depth=1)
+    if view_id != request.session.get('answer_sort_order', None):
+        request.session['answer_sort_order'] = view_id
 
-    favorited = question.has_favorite_by_user(request.user)
-    if request.user.is_authenticated():
-        question_vote = question.votes.select_related().filter(user=request.user)
-    else:
-        question_vote = None #is this correct?
-    if question_vote is not None and question_vote.count() > 0:
-        question_vote = question_vote[0]
+    return (view_id, view_dic[view_id])
 
-    user_answer_votes = {}
-    for answer in answers:
-        vote = answer.get_user_vote(request.user)
-        if vote is not None and not user_answer_votes.has_key(answer.id):
-            vote_value = -1
-            if vote.is_upvote():
-                vote_value = 1
-            user_answer_votes[answer.id] = vote_value
-
-    if answers is not None:
-        answers = answers.order_by("-accepted", orderby)
-
-    filtered_answers = []
-    for answer in answers:
-        if answer.deleted == True:
-            if answer.author_id == request.user.id:
-                filtered_answers.append(answer)
-        else:
-            filtered_answers.append(answer)
-
-    objects_list = Paginator(filtered_answers, ANSWERS_PAGE_SIZE)
-    page_objects = objects_list.page(page)
-
-    #todo: merge view counts per user and per session
-    #1) view count per session
-    update_view_count = False
-    if 'question_view_times' not in request.session:
+def update_question_view_times(request, question):
+    if not 'question_view_times' in request.session:
         request.session['question_view_times'] = {}
 
     last_seen = request.session['question_view_times'].get(question.id,None)
     updated_when, updated_who = question.get_last_update_info()
 
-    if updated_who != request.user:
-        if last_seen:
-            if last_seen < updated_when:
-                update_view_count = True 
-        else:
-            update_view_count = True
+    if not last_seen or last_seen < updated_when:
+        question.view_count = question.view_count + 1
+        question_view.send(sender=update_question_view_times, instance=question, user=request.user)
 
     request.session['question_view_times'][question.id] = datetime.datetime.now()
 
-    if update_view_count:
-        question.increment_view_count()
-        question.save()
+def question(request, id, slug):
+    question = get_object_or_404(Question, id=id)
 
-    #2) question view count per user
+    if slug != urlquote(slugify(question.title)):
+        return HttpResponseRedirect(question.get_absolute_url())
+
+    page = int(request.GET.get('page', 1))
+    view_id, order_by = get_answer_sort_order(request)
+
+    if question.deleted and not request.user.can_view_deleted_post(question):
+        raise Http404
+
+    answer_form = AnswerForm(question,request.user)
+    answers = request.user.get_visible_answers(question)
+
+    if answers is not None:
+        answers = [a for a in answers.order_by("-accepted", order_by)
+                   if not a.deleted or a.author == request.user]
+
+    objects_list = Paginator(answers, ANSWERS_PAGE_SIZE)
+    page_objects = objects_list.page(page)
+
+    update_question_view_times(request, question)
+
     if request.user.is_authenticated():
-        question_view.send(sender=question, user=request.user)
-
         try:
             subscription = QuestionSubscription.objects.get(question=question, user=request.user)
         except:
             subscription = False
-
-        #try:
-        #    question_view_ = QuestionView.objects.get(who=request.user, question=question)
-        #except QuestionView.DoesNotExist:
-        #    question_view_ = QuestionView(who=request.user, question=question)
-        #question_view_.when = datetime.datetime.now()
-        #question_view_.save()
-
     else:
         subscription = False
 
     return render_to_response('question.html', {
         "question" : question,
-        "question_vote" : question_vote,
-        "question_comment_count":question.comments.count(),
         "answer" : answer_form,
         "answers" : page_objects.object_list,
-        "user_answer_votes": user_answer_votes,
         "tags" : question.tags.all(),
         "tab_id" : view_id,
-        "favorited" : favorited,
-        "similar_questions" : Question.objects.get_similar_questions(question),
+        "similar_questions" : question.get_related_questions(),
         "subscription": subscription,
         "context" : {
             'is_paginated' : True,
@@ -553,6 +480,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
             'extend_url' : "#sort-top"
         }
         }, context_instance=RequestContext(request))
+
 
 QUESTION_REVISION_TEMPLATE = ('<h1>%(title)s</h1>\n'
                               '<div class="text">%(html)s</div>\n'

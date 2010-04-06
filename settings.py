@@ -23,7 +23,6 @@ MIDDLEWARE_CLASSES = [
     #'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     #'django.middleware.cache.FetchFromCacheMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'forum.middleware.extended_user.ExtendedUser',
     #'django.middleware.sqlprint.SqlPrintingMiddleware',
     'forum.middleware.anon_user.ConnectToSessionMessagesMiddleware',
@@ -68,7 +67,6 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.humanize',
     'django.contrib.sitemaps',
-    #'django_evolution',
     'forum',
 ]
 
@@ -79,5 +77,11 @@ if DEBUG:
         INSTALLED_APPS.append('debug_toolbar')
     except:
         pass
+
+try:
+    import south
+    INSTALLED_APPS.append('south')
+except:
+    pass
 
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',]

@@ -1,9 +1,7 @@
 from base import *
 from tag import Tag
 
-from forum.utils.lists import LazyList
-
-class QuestionManager(models.Manager):
+class QuestionManager(CachedManager):
     def create_new(self, title=None,author=None,added_at=None, wiki=False,tagnames=None,summary=None, text=None):
         question = Question(
             title            = title,
@@ -36,92 +34,11 @@ class QuestionManager(models.Manager):
         )
         return question
 
-    def update_tags(self, question, tagnames, user):
-        """
-        Updates Tag associations for a question to match the given
-        tagname string.
+question_view = django.dispatch.Signal(providing_args=['instance', 'user'])
 
-        Returns ``True`` if tag usage counts were updated as a result,
-        ``False`` otherwise.
-        """
-
-        current_tags = list(question.tags.all())
-        current_tagnames = set(t.name for t in current_tags)
-        updated_tagnames = set(t for t in tagnames.split(' ') if t)
-        modified_tags = []
-
-        removed_tags = [t for t in current_tags
-                        if t.name not in updated_tagnames]
-        if removed_tags:
-            modified_tags.extend(removed_tags)
-            question.tags.remove(*removed_tags)
-
-        added_tagnames = updated_tagnames - current_tagnames
-        if added_tagnames:
-            added_tags = Tag.objects.get_or_create_multiple(added_tagnames,
-                                                            user)
-            modified_tags.extend(added_tags)
-            question.tags.add(*added_tags)
-
-        if modified_tags:
-            Tag.objects.update_use_counts(modified_tags)
-            return True
-
-        return False
-
-    def update_answer_count(self, question):
-        """
-        Executes an UPDATE query to update denormalised data with the
-        number of answers the given question has.
-        """
-
-        # for some reasons, this Answer class failed to be imported,
-        # although we have imported all classes from models on top.
-        from answer import Answer
-        self.filter(id=question.id).update(
-            answer_count=Answer.objects.get_answers_from_question(question).filter(deleted=False).count())
-
-    def update_view_count(self, question):
-        """
-        update counter+1 when user browse question page
-        """
-        self.filter(id=question.id).update(view_count = question.view_count + 1)
-
-    def update_favorite_count(self, question):
-        """
-        update favourite_count for given question
-        """
-        self.filter(id=question.id).update(favourite_count = FavoriteQuestion.objects.filter(question=question).count())
-
-    def get_similar_questions(self, question):
-        """
-        Get 10 similar questions for given one.
-        This will search the same tag list for give question(by exactly same string) first.
-        Questions with the individual tags will be added to list if above questions are not full.
-        """
-        #print datetime.datetime.now()
-
-        manager = self
-
-        def get_data():
-            questions = list(manager.filter(tagnames = question.tagnames, deleted=False).all())
-
-            tags_list = question.tags.all()
-            for tag in tags_list:
-                extend_questions = manager.filter(tags__id = tag.id, deleted=False)[:50]
-                for item in extend_questions:
-                    if item not in questions and len(questions) < 10:
-                        questions.append(item)
-
-            #print datetime.datetime.now()
-            return questions
-
-        return LazyList(get_data)
-
-
-class Question(Content, DeletableContent):
+class Question(Content):
     title    = models.CharField(max_length=300)
-    tags     = models.ManyToManyField('Tag', related_name='questions')
+    tags     = models.ManyToManyField(Tag, related_name='questions')
     answer_accepted = models.BooleanField(default=False)
     closed          = models.BooleanField(default=False)
     closed_by       = models.ForeignKey(User, null=True, blank=True, related_name='closed_questions')
@@ -132,8 +49,8 @@ class Question(Content, DeletableContent):
 
     # Denormalised data
     answer_count         = models.PositiveIntegerField(default=0)
-    view_count           = CountableField(default=0)
-    favourite_count      = CountableField(default=0)
+    view_count           = models.IntegerField(default=0)
+    favourite_count      = models.IntegerField(default=0)
     last_activity_at     = models.DateTimeField(default=datetime.datetime.now)
     last_activity_by     = models.ForeignKey(User, related_name='last_active_in_questions')
     tagnames             = models.CharField(max_length=125)
@@ -153,23 +70,32 @@ class Question(Content, DeletableContent):
         except Exception:
             logging.debug('problem pinging google did you register you sitemap with google?')
 
-    def save(self, **kwargs):
-        """
-        Overridden to manually manage addition of tags when the object
-        is first saved.
+    def save(self, *args, **kwargs):
+        dirty = self.get_dirty_fields()
 
-        This is required as we're using ``tagnames`` as the sole means of
-        adding and editing tags.
-        """
-        initial_addition = (self.id is None)
-        
-        super(Question, self).save(**kwargs)
+        if 'tagnames' in dirty:
+            new_tags = self.tagname_list()
+            old_tags = [name for name in dirty['tagnames'].split(u' ')]
 
-        if initial_addition:
-            tags = Tag.objects.get_or_create_multiple(self.tagname_list(),
-                                                      self.author)
-            self.tags.add(*tags)
-            Tag.objects.update_use_counts(tags)
+            for name in [n for n in new_tags if not n in old_tags]:
+                try:
+                    tag = Tag.objects.get(name=name)
+                except:
+                    tag = Tag.objects.create(name=name, created_by=self.last_edited_by or self.author)
+
+                tag.used_count = tag.used_count + 1
+                if tag.deleted:
+                    tag.unmark_deleted()
+                tag.save()
+
+            for name in [n for n in old_tags if not n in new_tags]:
+                tag = Tag.objects.get(name=name)
+                tag.used_count = tag.used_count - 1
+                if tag.used_count == 0:
+                    tag.mark_deleted(self.last_edited_by or self.author)
+                tag.save()
+
+        super(Question, self).save(*args, **kwargs)
 
     def tagname_list(self):
         """Creates a list of Tag names from the ``tagnames`` attribute."""
@@ -179,13 +105,7 @@ class Question(Content, DeletableContent):
         return u','.join([unicode(tag) for tag in self.tagname_list()])
 
     def get_absolute_url(self):
-        return '%s%s' % (reverse('question', args=[self.id]), django_urlquote(slugify(self.title)))
-
-    def has_favorite_by_user(self, user):
-        if not user.is_authenticated():
-            return False
-
-        return FavoriteQuestion.objects.filter(question=self, user=user).count() > 0
+        return reverse('question', kwargs={'id': self.id, 'slug': django_urlquote(slugify(self.title))})
 
     def get_answer_count_by_user(self, user_id):
         from answer import Answer
@@ -223,64 +143,52 @@ class Question(Content, DeletableContent):
 
         return when, who
 
-    def get_update_summary(self,last_reported_at=None,recipient_email=''):
-        edited = False
-        if self.last_edited_at and self.last_edited_at > last_reported_at:
-            if self.last_edited_by.email != recipient_email:
-                edited = True
-        comments = []
-        for comment in self.comments.all():
-            if comment.added_at > last_reported_at and comment.user.email != recipient_email:
-                comments.append(comment)
-        new_answers = []
-        answer_comments = []
-        modified_answers = []
-        commented_answers = []
-        import sets
-        commented_answers = sets.Set([])
-        for answer in self.answers.all():
-            if (answer.added_at > last_reported_at and answer.author.email != recipient_email):
-                new_answers.append(answer)
-            if (answer.last_edited_at
-                and answer.last_edited_at > last_reported_at
-                and answer.last_edited_by.email != recipient_email):
-                modified_answers.append(answer)
-            for comment in answer.comments.all():
-                if comment.added_at > last_reported_at and comment.user.email != recipient_email:
-                    commented_answers.add(answer)
-                    answer_comments.append(comment)
+    def get_related_questions(self, count=10):
+        cache_key = '%s.related_questions:%d:%d' % (settings.APP_URL, count, self.id)
+        related_list = cache.get(cache_key)
 
-        #create the report
-        if edited or new_answers or modified_answers or answer_comments:
-            out = []
-            if edited:
-                out.append(_('%(author)s modified the question') % {'author':self.last_edited_by.username})
-            if new_answers:
-                names = sets.Set(map(lambda x: x.author.username,new_answers))
-                people = ', '.join(names)
-                out.append(_('%(people)s posted %(new_answer_count)s new answers') \
-                                % {'new_answer_count':len(new_answers),'people':people})
-            if comments:
-                names = sets.Set(map(lambda x: x.user.username,comments))
-                people = ', '.join(names)
-                out.append(_('%(people)s commented the question') % {'people':people})
-            if answer_comments:
-                names = sets.Set(map(lambda x: x.user.username,answer_comments))
-                people = ', '.join(names)
-                if len(commented_answers) > 1:
-                    out.append(_('%(people)s commented answers') % {'people':people})
-                else:
-                    out.append(_('%(people)s commented an answer') % {'people':people})
-            url = settings.APP_URL + self.get_absolute_url()
-            retval = '<a href="%s">%s</a>:<br>\n' % (url,self.title)
-            out = map(lambda x: '<li>' + x + '</li>',out)
-            retval += '<ul>' + '\n'.join(out) + '</ul><br>\n'
-            return retval
-        else:
-            return None
+        if related_list is None:
+            related_list = Question.objects.values('id').filter(tags__id__in=[t.id for t in self.tags.all()]
+            ).exclude(id=self.id).annotate(frequency=models.Count('id')).order_by('-frequency')[:count]
+            cache.set(cache_key, related_list, 60 * 60)
+
+        return [Question.objects.get(id=r['id']) for r in related_list]
 
     def __unicode__(self):
         return self.title
+
+def question_viewed(instance, **kwargs):
+    instance.view_count += 1
+    instance.save()
+
+question_view.connect(question_viewed)
+
+class FavoriteQuestion(models.Model):
+    """A favorite Question of a User."""
+    question      = models.ForeignKey('Question')
+    user          = models.ForeignKey(User, related_name='user_favorite_questions')
+    added_at      = models.DateTimeField(default=datetime.datetime.now)
+
+    class Meta:
+        unique_together = ('question', 'user')
+        app_label = 'forum'
+        db_table = u'favorite_question'
+
+    def __unicode__(self):
+        return '[%s] favorited at %s' %(self.user, self.added_at)
+
+    def _update_question_fav_count(self, diff):
+        self.question.favourite_count = self.question.favourite_count + diff
+        self.question.save()
+
+    def save(self, *args, **kwargs):
+        super(FavoriteQuestion, self).save(*args, **kwargs)
+        if self._is_new:
+            self._update_question_fav_count(1)
+
+    def delete(self):
+        self._update_question_fav_count(-1)
+        super(FavoriteQuestion, self).delete()
 
 class QuestionSubscription(models.Model):
     user = models.ForeignKey(User)
@@ -290,18 +198,6 @@ class QuestionSubscription(models.Model):
 
     class Meta:
         app_label = 'forum'
-
-class FavoriteQuestion(models.Model):
-    """A favorite Question of a User."""
-    question      = models.ForeignKey(Question)
-    user          = models.ForeignKey(User, related_name='user_favorite_questions')
-    added_at      = models.DateTimeField(default=datetime.datetime.now)
-
-    class Meta:
-        app_label = 'forum'
-        db_table = u'favorite_question'
-    def __unicode__(self):
-        return '[%s] favorited at %s' %(self.user, self.added_at)
 
 class QuestionRevision(ContentRevision):
     """A revision of a Question."""
@@ -320,13 +216,13 @@ class QuestionRevision(ContentRevision):
         #print 'in QuestionRevision.get_absolute_url()'
         return reverse('question_revisions', args=[self.question.id])
 
-    def save(self, **kwargs):
+    def save(self, *args, **kwargs):
         """Looks up the next available revision number."""
         if not self.revision:
             self.revision = QuestionRevision.objects.filter(
                 question=self.question).values_list('revision',
                                                     flat=True)[0] + 1
-        super(QuestionRevision, self).save(**kwargs)
+        super(QuestionRevision, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return u'revision %s of %s' % (self.revision, self.title)

@@ -241,23 +241,6 @@ class EditUserForm(forms.Form):
                     raise forms.ValidationError(_('this email has already been registered, please use another one'))
         return self.cleaned_data['email']
 
-class TagFilterSelectionForm(forms.ModelForm):
-    tag_filter_setting = forms.ChoiceField(choices=TAG_EMAIL_FILTER_CHOICES, #imported from forum/const.py
-                                            initial='ignored',
-                                            label=_('Choose email tag filter'),
-                                            widget=forms.RadioSelect)
-    class Meta:
-        model = User
-        fields = ('tag_filter_setting',)
-
-    def save(self):
-        before = self.instance.tag_filter_setting
-        super(TagFilterSelectionForm, self).save()
-        after = self.instance.tag_filter_setting #User.objects.get(pk=self.instance.id).tag_filter_setting
-        if before != after:
-            return True
-        return False
-
 
 class SubscriptionSettingsForm(forms.Form):
     member_joins = forms.ChoiceField(widget=forms.RadioSelect, choices=NOTIFICATION_CHOICES)

@@ -7,8 +7,6 @@ from forum.badges.base import PostCountableAbstractBadge, ActivityAbstractBadge,
         ActivityCountAbstractBadge, CountableAbstractBadge, AbstractBadge
 from forum.models import Question, Answer, Activity, Tag
 from forum.models.user import activity_record
-from forum.models.utils import countable_update
-from forum.models.tag import tags_update_use_count
 from forum import const
 
 import settings
@@ -170,7 +168,7 @@ class CleanupBadge(FirstActivityAbstractBadge):
     description = _('First rollback')
 
     def __init__(self):
-        super(CleanupBadge, self).__init__(const.TYPE_ACTIVITY_CANCEL_VOTE)
+        super(CleanupBadge, self).__init__((const.TYPE_ACTIVITY_CANCEL_VOTE_UP, const.TYPE_ACTIVITY_CANCEL_VOTE_DOWN))
 
 
 class CivicDutyBadge(ActivityCountAbstractBadge):
@@ -238,21 +236,22 @@ class TeacherBadge(CountableAbstractBadge):
 
 class AcceptedAndVotedAnswerAbstractBadge(AbstractBadge):
     def __init__(self, up_votes, handler):
-        def handler(sender, **kwargs):
-            if sender is const.TYPE_ACTIVITY_MARK_ANSWER:
-                answer = kwargs['instance'].content_object
-                accepted = True
-                vote_count = answer.vote_up_count
+        def wrapper(sender, instance, **kwargs):
+            if sender is Answer:
+                answer = instance
+                if not "vote_up_count" in answer.get_dirty_fields():
+                    return
             else:
-                answer = kwargs['instance']
-                accepted = answer.accepted
-                vote_count = kwargs['new_value']
+                answer = instance.content_object
+
+            accepted = answer.accepted
+            vote_count = answer.vote_up_count
 
             if accepted and vote_count == up_votes:
                 handler(answer)
 
-        activity_record.connect(handler, sender=const.TYPE_ACTIVITY_MARK_ANSWER, weak=False)
-        countable_update.connect(handler, sender=getattr(Answer, "vote_up_count_sender"), weak=False)
+        activity_record.connect(wrapper, sender=const.TYPE_ACTIVITY_MARK_ANSWER, weak=False)
+        post_save.connect(wrapper, sender=Answer, weak=False)
 
 
 class EnlightenedBadge(AcceptedAndVotedAnswerAbstractBadge):
@@ -277,20 +276,17 @@ class GuruBadge(AcceptedAndVotedAnswerAbstractBadge):
         super(GuruBadge, self).__init__(settings.GURU_UP_VOTES, handler)
 
 
-class NecromancerBadge(AbstractBadge):
+class NecromancerBadge(CountableAbstractBadge):
     type = const.SILVER_BADGE
     description = _('Answered a question more than %(dif_days)s days later with at least %(up_votes)s votes') % \
             {'dif_days': str(settings.NECROMANCER_DIF_DAYS), 'up_votes': str(settings.NECROMANCER_UP_VOTES)}
 
     def __init__(self):
-        def handler(sender, **kwargs):
-            if kwargs['new_value'] == settings.NECROMANCER_UP_VOTES:
-                answer = kwargs['instance']
+        def handler(instance):
+            if instance.added_at >= (instance.question.added_at + timedelta(days=int(settings.NECROMANCER_DIF_DAYS))):
+                self.award_badge(instance.author, instance)
 
-                if answer.added_at >= (answer.question.added_at + timedelta(days=int(settings.NECROMANCER_DIF_DAYS))):
-                    self.award_badge(answer.author, answer)
-
-        countable_update.connect(handler, sender=getattr(Answer, "vote_up_count_sender"), weak=False)
+        super(NecromancerBadge, self).__init__(Answer, "vote_up_count", settings.NECROMANCER_UP_VOTES, handler)
 
 
 class TaxonomistBadge(AbstractBadge):
@@ -298,16 +294,11 @@ class TaxonomistBadge(AbstractBadge):
     description = _('Created a tag used by %s questions') % str(settings.TAXONOMIST_USE_COUNT)
 
     def __init__(self):
-        def handler(sender, **kwargs):
-            map(parse_tag, Tag.objects.values('id', 'used_count').
-                filter(id__in=map(lambda t: t.id, kwargs['tags'])))
+        def handler(instance, **kwargs):
+            if instance.used_count == settings.TAXONOMIST_USE_COUNT:
+                self.award_badge(instance.created_by, instance)           
 
-        def parse_tag(tag):
-            if tag['used_count'] == settings.TAXONOMIST_USE_COUNT:
-                tag = Tag.objects.get(id=tag['id'])
-                self.award_badge(tag.created_by, tag)
-
-        tags_update_use_count.connect(handler, weak=False)
+        post_save.connect(handler, sender=Tag, weak=False)
 
 
 #class GeneralistTag(AbstractBadge):

@@ -4,9 +4,6 @@
 {% load extra_tags %}
 {% block title %}{% spaceless %}{% trans "Ask a question" %}{% endspaceless %}{% endblock %}
 {% block forejs %}
-        <script type='text/javascript' src='{% media  "/media/js/com.cnprog.editor.js" %}'></script>
-        <script type='text/javascript' src='{% media  "/media/js/com.cnprog.post.js" %}'></script>
-        <script type='text/javascript' src='{% media  "/media/js/jquery.validate.pack.js" %}'></script>
         <script type='text/javascript' src='{% media  "/media/js/wmd/showdown.js" %}'></script>
         <script type='text/javascript' src='{% media  "/media/js/wmd/wmd.js" %}'></script>
         <link rel="stylesheet" type="text/css" href="{% media  "/media/js/wmd/wmd.css" %}" />
@@ -15,10 +12,6 @@
             //set current module button style
             $("#nav_ask").attr('className',"on");
             $('#editor').TextAreaResizer();
-
-            //highlight code synctax when editor has new text
-            $("#editor").typeWatch({highlight: false, wait: 3000,
-                             captureLength: 5, callback: lanai.highlightSyntax});
 
             //toggle preview of editor
 			//todo remove copy-paste
@@ -48,9 +41,6 @@
                 }
 
             });
-
-            setupFormValidation("#fmask", CPValidator.getQuestionFormRules(), CPValidator.getQuestionFormMessages());
-            lanai.highlightSyntax();
 
         });
         </script>

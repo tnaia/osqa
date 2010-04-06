@@ -19,7 +19,6 @@ from forum.forms import *
 from forum.models import *
 from forum.auth import *
 from forum.const import *
-from forum import auth
 from forum.utils.forms import get_next_url
 from forum.views.readers import _get_tags_cache_json
 
@@ -50,8 +49,8 @@ def upload(request):#ajax upload file to a question or answer
     try:
         f = request.FILES['file-upload']
         # check upload permission
-        if not auth.can_upload_files(request.user):
-            raise UploadPermissionNotAuthorized
+        if not request.user.can_upload_files():
+            raise UploadPermissionNotAuthorized()
 
         # check file type
         file_name_suffix = os.path.splitext(f.name)[1].lower()
@@ -147,11 +146,11 @@ def edit_question(request, id):#edit or retag a question
     """view to edit question
     """
     question = get_object_or_404(Question, id=id)
-    if question.deleted and not auth.can_view_deleted_post(request.user, question):
+    if question.deleted and not request.user.can_view_deleted_post(question):
         raise Http404
-    if auth.can_edit_post(request.user, question):
+    if request.user.can_edit_post(question):
         return _edit_question(request, question)
-    elif auth.can_retag_questions(request.user):
+    elif request.user.can_retag_questions():
         return _retag_question(request, question)
     else:
         raise Http404
@@ -166,17 +165,14 @@ def _retag_question(request, question):#non-url subview of edit question - just 
             if form.has_changed():
                 latest_revision = question.get_latest_revision()
                 retagged_at = datetime.datetime.now()
-                # Update the Question itself
-                Question.objects.filter(id=question.id).update(
-                    tagnames         = form.cleaned_data['tags'],
-                    last_edited_at   = retagged_at,
-                    last_edited_by   = request.user,
-                    last_activity_at = retagged_at,
-                    last_activity_by = request.user
-                )
-                # Update the Question's tag associations
-                Question.objects.update_tags(question,
-                    form.cleaned_data['tags'], request.user)
+
+                question.tagnames = form.cleaned_data['tags']
+                question.last_edited_at = retagged_at
+                question.last_edited_by = request.user
+                question.last_activity_at = retagged_at
+                question.last_activity_by = request.user
+                question.save()
+
                 # Create a new revision
                 QuestionRevision.objects.create(
                     question   = question,
@@ -187,8 +183,6 @@ def _retag_question(request, question):#non-url subview of edit question - just 
                     summary    = CONST['retagged'],
                     text       = latest_revision.text
                 )
-                # send tags updated singal
-                tags_updated.send(sender=question.__class__, question=question)
 
             return HttpResponseRedirect(question.get_absolute_url())
     else:
@@ -224,31 +218,25 @@ def _edit_question(request, question):#non-url subview of edit_question - just e
                                     form.cleaned_data['tags'])
 
                     # Update the Question itself
-                    updated_fields = {
-                        'title': form.cleaned_data['title'],
-                        'last_edited_at': edited_at,
-                        'last_edited_by': request.user,
-                        'last_activity_at': edited_at,
-                        'last_activity_by': request.user,
-                        'tagnames': form.cleaned_data['tags'],
-                        'summary': strip_tags(html)[:120],
-                        'html': html,
-                    }
+                    question.title = form.cleaned_data['title']
+                    question.last_edited_at = edited_at
+                    question.last_edited_by = request.user
+                    question.last_activity_at = edited_at
+                    question.last_activity_by = request.user
+                    question.tagnames = form.cleaned_data['tags']
+                    question.summary = strip_tags(html)[:120]
+                    question.html = html
 
                     # only save when it's checked
                     # because wiki doesn't allow to be edited if last version has been enabled already
                     # and we make sure this in forms.
                     if ('wiki' in form.cleaned_data and
                         form.cleaned_data['wiki']):
-                        updated_fields['wiki'] = True
-                        updated_fields['wikified_at'] = edited_at
+                        question.wiki = True
+                        question.wikified_at = edited_at
 
-                    Question.objects.filter(
-                        id=question.id).update(**updated_fields)
-                    # Update the Question's tag associations
-                    if tags_changed:
-                        Question.objects.update_tags(question, form.cleaned_data['tags'], request.user)
-                        #tags_updated.send(sender=question.__class__, question=question)
+                    question.save()
+
                     # Create a new revision
                     revision = QuestionRevision(
                         question   = question,
@@ -279,9 +267,9 @@ def _edit_question(request, question):#non-url subview of edit_question - just e
 @login_required
 def edit_answer(request, id):
     answer = get_object_or_404(Answer, id=id)
-    if answer.deleted and not auth.can_view_deleted_post(request.user, answer):
+    if answer.deleted and not request.user.can_view_deleted_post(answer):
         raise Http404
-    elif not auth.can_edit_post(request.user, answer):
+    elif not request.user.can_edit_post(answer):
         raise Http404
     else:
         latest_revision = answer.get_latest_revision()
@@ -371,74 +359,3 @@ def answer(request, id):#process a new answer
 
     return HttpResponseRedirect(question.get_absolute_url())
 
-def __generate_comments_json(obj, type, user):#non-view generates json data for the post comments
-    comments = obj.comments.all().order_by('id')
-    # {"Id":6,"PostId":38589,"CreationDate":"an hour ago","Text":"hello there!","UserDisplayName":"Jarrod Dixon","UserUrl":"/users/3/jarrod-dixon","DeleteUrl":null}
-    json_comments = []
-    from forum.templatetags.extra_tags import diff_date
-    for comment in comments:
-        comment_user = comment.user
-        delete_url = ""
-        if user != None and auth.can_delete_comment(user, comment):
-            #/posts/392845/comments/219852/delete
-            #todo translate this url
-            delete_url = reverse('index') + type + "s/%s/comments/%s/delete/" % (obj.id, comment.id)
-        json_comments.append({"id" : comment.id,
-            "object_id" : obj.id,
-            "comment_age" : diff_date(comment.added_at),
-            "text" : comment.comment,
-            "user_display_name" : comment_user.username,
-            "user_url" : comment_user.get_profile_url(),
-            "delete_url" : delete_url
-        })
-
-    data = simplejson.dumps(json_comments)
-    return HttpResponse(data, mimetype="application/json")
-
-
-def question_comments(request, id):#ajax handler for loading comments to question
-    question = get_object_or_404(Question, id=id)
-    user = request.user
-    return __comments(request, question, 'question')
-
-def answer_comments(request, id):#ajax handler for loading comments on answer
-    answer = get_object_or_404(Answer, id=id)
-    user = request.user
-    return __comments(request, answer, 'answer')
-
-def __comments(request, obj, type):#non-view generic ajax handler to load comments to an object
-    # only support get post comments by ajax now
-    user = request.user
-    if request.is_ajax():
-        if request.method == "GET":
-            response = __generate_comments_json(obj, type, user)
-        elif request.method == "POST":
-            if auth.can_add_comments(user,obj):
-                comment_data = request.POST.get('comment')
-                comment = Comment(content_object=obj, comment=comment_data, user=request.user)
-                comment.save()
-                obj.comment_count = obj.comment_count + 1
-                obj.save()
-                response = __generate_comments_json(obj, type, user)
-            else:
-                response = HttpResponseForbidden(mimetype="application/json")
-        return response
-
-def delete_comment(request, object_id='', comment_id='', commented_object_type=None):#ajax handler to delete comment
-    response = None
-    commented_object = None
-    if commented_object_type == 'question':
-        commented_object = Question
-    elif commented_object_type == 'answer':
-        commented_object = Answer
-
-    if request.is_ajax():
-        comment = get_object_or_404(Comment, id=comment_id)
-        if auth.can_delete_comment(request.user, comment):
-            obj = get_object_or_404(commented_object, id=object_id)
-            obj.comments.remove(comment)
-            obj.comment_count = obj.comment_count - 1
-            obj.save()
-            user = request.user
-            return __generate_comments_json(obj, commented_object_type, user)
-    raise PermissionDenied()

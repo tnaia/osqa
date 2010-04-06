@@ -1,7 +1,8 @@
 from base import *
 from forum import const
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import User as DjangoUser
+from django.contrib.auth.models import User as DjangoUser, AnonymousUser as DjangoAnonymousUser
+from django.db.models import Q
 from hashlib import md5
 import string
 from random import Random
@@ -16,37 +17,93 @@ QUESTIONS_PER_PAGE_CHOICES = (
    (50, u'50'),
 )
 
-class User(DjangoUser):
+class UserManager(CachedManager):
+    def get_site_owner(self):
+        return self.all().order_by('date_joined')[0]
+
+class AnonymousUser(DjangoAnonymousUser):
+    def get_visible_answers(self, question):
+        return question.answers.filter(deleted=False)
+
+    def can_view_deleted_post(self, post):
+        return False
+
+    def can_vote_up(self):
+        return False
+
+    def can_vote_down(self):
+        return False
+
+    def can_flag_offensive(self, post=None):
+        return False
+
+    def can_view_offensive_flags(self, post=None):
+        return False
+
+    def can_comment(self, post):
+        return False
+
+    def can_like_comment(self, comment):
+        return False
+
+    def can_edit_comment(self, comment):
+        return False
+
+    def can_delete_comment(self, comment):
+        return False
+
+    def can_accept_answer(self, answer):
+        return False
+
+    def can_edit_post(self, post):
+        return False
+
+    def can_retag_questions(self):
+        return False
+
+    def can_close_question(self, question):
+        return False
+
+    def can_reopen_question(self, question):
+        return False
+
+    def can_delete_post(self, post):
+        return False
+
+    def can_upload_files(self):
+        return False
+
+class User(BaseModel, DjangoUser):
     is_approved = models.BooleanField(default=False)
     email_isvalid = models.BooleanField(default=False)
     email_key = models.CharField(max_length=32, null=True)
     reputation = models.PositiveIntegerField(default=1)
-    gravatar = models.CharField(max_length=32)
 
     gold = models.SmallIntegerField(default=0)
     silver = models.SmallIntegerField(default=0)
     bronze = models.SmallIntegerField(default=0)
 
     questions_per_page = models.SmallIntegerField(choices=QUESTIONS_PER_PAGE_CHOICES, default=10)
+    hide_ignored_questions = models.BooleanField(default=False)
+    
     last_seen = models.DateTimeField(default=datetime.datetime.now)
     real_name = models.CharField(max_length=100, blank=True)
     website = models.URLField(max_length=200, blank=True)
     location = models.CharField(max_length=100, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     about = models.TextField(blank=True)
+    
+    objects = UserManager()
 
-    hide_ignored_questions = models.BooleanField(default=False)
-    tag_filter_setting = models.CharField(max_length=16, choices=TAG_EMAIL_FILTER_CHOICES, default='ignored')
+    @property
+    def gravatar(self):
+        return hashlib.md5(self.email).hexdigest()
 
-    @classmethod
-    def user_is_username_taken(cls,username):
-        try:
-            cls.objects.get(username=username)
-            return True
-        except cls.MultipleObjectsReturned:
-            return True
-        except cls.DoesNotExist:
-            return False
+    def save(self, *args, **kwargs):
+        if self.reputation < 0:
+            self.reputation = 1
+
+        super(User, self).save(*args, **kwargs)
 
     def user_get_absolute_url(self):
         return "/users/%d/%s/" % (self.id, (self.username))
@@ -62,26 +119,110 @@ class User(DjangoUser):
 
     def get_profile_url(self):
         """Returns the URL for this User's profile."""
-        return "/users/%d/%s" % (self.id, slugify(self.username))
+        return "/%s%d/%s" % (_('users/'), self.id, slugify(self.username))
 
     def get_profile_link(self):
         profile_link = u'<a href="%s">%s</a>' % (self.get_profile_url(),self.username)
         logging.debug('in get profile link %s' % profile_link)
         return mark_safe(profile_link)
 
+    def get_vote_count_today(self):
+        today = datetime.date.today()
+        return self.votes.filter(voted_at__range=(today - datetime.timedelta(days=1), today)).count()
+
+    def get_up_vote_count(self):
+        return self.votes.filter(vote=1).count()
+
+    def get_down_vote_count(self):
+        return self.votes.filter(vote=-1).count()
+
+    def get_reputation_by_upvoted_today(self):
+        today = datetime.datetime.now()
+        sum = self.reputes.filter(
+                models.Q(reputation_type=TYPE_REPUTATION_GAIN_BY_UPVOTED) |
+                models.Q(reputation_type=TYPE_REPUTATION_LOST_BY_UPVOTE_CANCELED),
+                reputed_at__range=(today - datetime.timedelta(days=1), today)).aggregate(models.Sum('value'))
+
+        if sum.get('value__sum', None) is not None: return sum['value__sum']
+        return 0
+
+    def get_flagged_items_count_today(self):
+        today = datetime.date.today()
+        return self.flaggeditems.filter(flagged_at__range=(today - datetime.timedelta(days=1), today)).count()
+
+    def get_visible_answers(self, question):
+        if self.is_superuser:
+            return question.answers
+        else:
+            return question.answers.filter(models.Q(deleted=False) | models.Q(deleted_by=self))
+
+    def can_view_deleted_post(self, post):
+        return self.is_superuser or post.author == self
+
+    def can_vote_up(self):
+        return self.reputation >= int(settings.REP_TO_VOTE_UP) or self.is_superuser
+
+    def can_vote_down(self):
+        return self.reputation >= int(settings.REP_TO_VOTE_DOWN) or self.is_superuser
+
+    def can_flag_offensive(self, post=None):
+        if post is not None and post.author == self:
+            return False
+        return self.is_superuser or self.reputation >= int(settings.REP_TO_FLAG)
+
+    def can_view_offensive_flags(self, post=None):
+        if post is not None and post.author == self:
+            return True
+        return self.is_superuser or self.reputation >= int(settings.REP_TO_VIEW_FLAGS)
+
+    def can_comment(self, post):
+        return self == post.author or self.reputation >= int(settings.REP_TO_COMMENT
+        ) or self.is_superuser or (post.__class__.__name__ == "Answer" and self == post.question.author)
+
+    def can_like_comment(self, comment):
+        return self != comment.user and (self.reputation >= int(settings.REP_TO_LIKE_COMMENT) or self.is_superuser)
+
+    def can_edit_comment(self, comment):
+        return (comment.user == self and comment.added_at >= datetime.datetime.now() - datetime.timedelta(minutes=60)
+        ) or self.is_superuser
+
+    def can_delete_comment(self, comment):
+        return self == comment.user or self.reputation >= int(settings.REP_TO_DELETE_COMMENTS) or self.is_superuser
+
+    def can_accept_answer(self, answer):
+        return self.is_superuser or self == answer.question.author
+
+    def can_edit_post(self, post):
+        return self.is_superuser or self == post.author or self.reputation >= int(settings.REP_TO_EDIT_OTHERS
+        ) or (post.wiki and self.reputation >= int(settings.REP_TO_EDIT_WIKI))
+
+    def can_retag_questions(self):
+        return self.reputation >= int(settings.REP_TO_RETAG)
+
+    def can_close_question(self, question):
+        return self.is_superuser or (self == question.author and self.reputation >= int(settings.REP_TO_CLOSE_OWN)
+        ) or self.reputation >= int(settings.REP_TO_CLOSE_OTHERS)
+
+    def can_reopen_question(self, question):
+        return self.is_superuser or (self == question.author and self.reputation >= settings.REP_TO_REOPEN_OWN)
+
+    def can_delete_post(self, post):
+        return self.is_superuser or (self == post.author and (post.__class__.__name__ == "Answer" or
+        not post.answers.filter(~Q(author=self)).count()))
+
+    def can_upload_files(self):
+        return self.is_superuser or self.reputation >= int(settings.REP_TO_UPLOAD)
+
     class Meta:
         app_label = 'forum'
 
-class Activity(models.Model):
+class Activity(MetaContent):
     """
     We keep some history data for user activities
     """
     user = models.ForeignKey(User)
     activity_type = models.SmallIntegerField(choices=TYPE_ACTIVITY)
     active_at = models.DateTimeField(default=datetime.datetime.now)
-    content_type   = models.ForeignKey(ContentType)
-    object_id      = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
     is_auditted    = models.BooleanField(default=False)
 
     class Meta:
@@ -91,8 +232,8 @@ class Activity(models.Model):
     def __unicode__(self):
         return u'[%s] was active at %s' % (self.user.username, self.active_at)
 
-    def save(self):
-        super(Activity, self).save()
+    def save(self, *args, **kwargs):
+        super(Activity, self).save(*args, **kwargs)
         if self._is_new:
             activity_record.send(sender=self.activity_type, instance=self)
 

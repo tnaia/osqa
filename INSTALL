@@ -32,11 +32,14 @@ sudo easy_install html5lib
 http://code.google.com/p/python-markdown2/
 sudo easy_install markdown2
 
-4. Optionally you may want to install Django Debug Toolbar for debugging.
+4. Optional, but highly recommended, you may want to install south from http://south.aeracode.org/ , it will make upgrades a lot easier.
+
+
+5. Also optionally you may want to install Django Debug Toolbar for debugging.
 This is not required and OSQA will just ignore it if you don't have it.
 http://github.com/robhudson/django-debug-toolbar/tree/master
 
-5. Depending on which modules you decide to enable (see bellow for more info on modules),
+6. Depending on which modules you decide to enable (see bellow for more info on modules),
 you may need to install some aditional dependencies. Here's a list of the dependencies of each bundled module if any:
 
     a) openidauth, depends on Python-openid
@@ -108,6 +111,8 @@ e.g,
 create database osqa DEFAULT CHARACTER SET UTF8 COLLATE utf8_general_ci;
 grant all on osqa.* to 'osqa'@'localhost';
 And then run "python manage.py syncdb" to synchronize your database.
+
+If you're using south, then run "python manage.py migrate forum 0001 --fake".
 
 When you're prompted to create a new superuser, answer "no". Once you get your site running, create a new user through the normal
 OSQA account creation process and that will be your super user.

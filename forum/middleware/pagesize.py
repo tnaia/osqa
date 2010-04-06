@@ -29,5 +29,6 @@ class QuestionsPageSizeMiddleware(object):
         request.session["pagesize"] = pagesize
 
     def process_exception(self,request,exception):
-        import logging
-        logging.debug('have exception %s' % str(exception))
+        raise
+        #import logging
+        #logging.debug('have exception %s' % str(exception))

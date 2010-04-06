@@ -19,8 +19,6 @@
                Hilite.debug_referrer = location.href;
            });
        </script>
-       <script type='text/javascript' src='{% media  "/media/js/com.cnprog.editor.js" %}'></script>
-       <script type='text/javascript' src='{% media  "/media/js/com.cnprog.tag_selector.js" %}'></script>
 {% endblock %}
 {% block content %}
 <div class="tabBar">
@@ -83,13 +81,13 @@
                 {% endif %}
 			{% else %}
                 {% if is_unanswered %}
-                    {% blocktrans count questions as cnt with questions_count|intcomma as q_num %}
+                    {% blocktrans count questions_count as cnt with questions_count|intcomma as q_num %}
                     have total {{q_num}} unanswered questions
                     {% plural %}
                     have total {{q_num}} unanswered questions
                     {% endblocktrans %}
                 {% else %}
-                    {% blocktrans count questions as cnt with questions_count|intcomma as q_num %}
+                    {% blocktrans count questions_count as cnt with questions_count|intcomma as q_num %}
                     have total {{q_num}} question
                     {% plural %}
                     have total {{q_num}} questions

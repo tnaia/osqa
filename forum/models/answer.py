@@ -2,7 +2,7 @@ from base import *
 
 from question import Question
 
-class AnswerManager(models.Manager):
+class AnswerManager(CachedManager):
     def create_new(self, question=None, author=None, added_at=None, wiki=False, text='', email_notify=False):
         answer = Answer(
             question = question,
@@ -22,7 +22,6 @@ class AnswerManager(models.Manager):
         question.last_activity_at = added_at
         question.last_activity_by = author
         question.save()
-        Question.objects.update_answer_count(question)
 
         AnswerRevision.objects.create(
             answer     = answer,
@@ -33,58 +32,52 @@ class AnswerManager(models.Manager):
             text       = text
         )
 
-        #set notification/delete
-        if email_notify:
-            if author not in question.followed_by.all():
-                question.followed_by.add(author)
-        else:
-            #not sure if this is necessary. ajax should take care of this...
-            try:
-                question.followed_by.remove(author)
-            except:
-                pass
 
-    #GET_ANSWERS_FROM_USER_QUESTIONS = u'SELECT answer.* FROM answer INNER JOIN question ON answer.question_id = question.id WHERE question.author_id =%s AND answer.author_id <> %s'
-    def get_answers_from_question(self, question, user=None):
-        """
-        Retrieves visibile answers for the given question. Delete answers
-        are only visibile to the person who deleted them.
-        """
-
-        if user is None or not user.is_authenticated():
-            return self.filter(question=question, deleted=False)
-        else:
-            return self.filter(models.Q(question=question),
-                               models.Q(deleted=False) | models.Q(deleted_by=user))
-
-    #todo: I think this method is not being used anymore, I'll just comment it for now
-    #def get_answers_from_questions(self, user_id):
-    #    """
-    #    Retrieves visibile answers for the given question. Which are not included own answers
-    #    """
-    #    cursor = connection.cursor()
-    #    cursor.execute(self.GET_ANSWERS_FROM_USER_QUESTIONS, [user_id, user_id])
-    #    return cursor.fetchall()
-
-class Answer(Content, DeletableContent):
+class Answer(Content):
     question = models.ForeignKey('Question', related_name='answers')
     accepted    = models.BooleanField(default=False)
     accepted_at = models.DateTimeField(null=True, blank=True)
+    accepted_by = models.ForeignKey(User, null=True)
+
 
     objects = AnswerManager()
 
     class Meta(Content.Meta):
         db_table = u'answer'
 
-    def get_user_vote(self, user):
-        if user.__class__.__name__ == "AnonymousUser":
-            return None
+    def mark_accepted(self, user):
+        if not self.accepted and not self.question.answer_accepted:
+            self.accepted = True
+            self.accepted_at = datetime.datetime.now()
+            self.accepted_by = user
+            self.save()
+            self.question.answer_accepted = True
+            self.question.save()
+            return True
 
-        votes = self.votes.filter(user=user)
-        if votes and votes.count() > 0:
-            return votes[0]
-        else:
-            return None
+        return False
+
+    def unmark_accepted(self):
+        if self.accepted:
+            self.accepted = False
+            self.save()
+            self.question.answer_accepted = False
+            self.question.save()
+            return True
+
+        return False
+
+    def _update_question_answer_count(self, diff):
+        self.question.answer_count = self.question.answer_count + diff
+        self.question.save()
+
+    def mark_deleted(self, user):
+        if super(Answer, self).mark_deleted(user):
+            self._update_question_answer_count(-1)
+
+    def unmark_deleted(self):
+        if super(Answer, self).unmark_deleted():
+            self._update_question_answer_count(1)
 
     def get_latest_revision(self):
         return self.revisions.all()[0]
@@ -93,7 +86,13 @@ class Answer(Content, DeletableContent):
         return self.question.title
 
     def get_absolute_url(self):
-        return '%s%s#%s' % (reverse('question', args=[self.question.id]), django_urlquote(slugify(self.question.title)), self.id)
+        return '%s#%s' % (self.question.get_absolute_url(), self.id)
+
+    def save(self, *args, **kwargs):
+        super(Answer, self).save(*args, **kwargs)
+
+        if self._is_new:
+            self._update_question_answer_count(1)
 
     def __unicode__(self):
         return self.html
@@ -113,13 +112,13 @@ class AnswerRevision(ContentRevision):
         db_table = u'answer_revision'
         ordering = ('-revision',)
 
-    def save(self, **kwargs):
+    def save(self, *args, **kwargs):
         """Looks up the next available revision number if not set."""
         if not self.revision:
             self.revision = AnswerRevision.objects.filter(
                 answer=self.answer).values_list('revision',
                                                 flat=True)[0] + 1
-        super(AnswerRevision, self).save(**kwargs)
+        super(AnswerRevision, self).save(*args, **kwargs)
 
 class AnonymousAnswer(AnonymousContent):
     question = models.ForeignKey('Question', related_name='anonymous_answers')

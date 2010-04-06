@@ -23,7 +23,7 @@
 			</div>
 		</div>
 
-		<h2><a title="{{question.summary}}" href="{% url question id=question.id %}{{question.title|slugify}}">{{question.title}}</a></h2>
+		<h2><a title="{{question.summary}}" href="{{ question.get_absolute_url }}">{{question.title}}</a></h2>
 		<div class="userinfo">
 			<span class="relativetime" title="{{question.last_activity_at}}">{% diff_date question.last_activity_at %}</span>
 			{% if question.last_activity_by %}

@@ -36,7 +36,6 @@ urlpatterns = patterns('',
     url(r'^%s$' % _('faq/'), app.meta.faq, name='faq'),
     url(r'^%s$' % _('privacy/'), app.meta.privacy, name='privacy'),
     url(r'^%s$' % _('logout/'), app.meta.logout, name='logout'),
-    url(r'^%s(?P<id>\d+)/%s$' % (_('answers/'), _('comments/')), app.writers.answer_comments, name='answer_comments'),
     url(r'^%s(?P<id>\d+)/%s$' % (_('answers/'), _('edit/')), app.writers.edit_answer, name='edit_answer'),
     url(r'^%s(?P<id>\d+)/%s$' % (_('answers/'), _('revisions/')), app.readers.answer_revisions, name='answer_revisions'),
     url(r'^%s$' % _('questions/'), app.readers.questions, name='questions'),
@@ -46,20 +45,22 @@ urlpatterns = patterns('',
     url(r'^%s(?P<id>\d+)/%s$' % (_('questions/'), _('close/')), app.commands.close, name='close'),
     url(r'^%s(?P<id>\d+)/%s$' % (_('questions/'), _('reopen/')), app.commands.reopen, name='reopen'),
     url(r'^%s(?P<id>\d+)/%s$' % (_('questions/'), _('answer/')), app.writers.answer, name='answer'),
-    url(r'^%s(?P<id>\d+)/%s$' % (_('questions/'), _('vote/')), app.commands.vote, name='vote'),
+
+    url(r'^%s(?P<post_type>[a-z]+)/(?P<id>\d+)/(?P<vote_type>[a-z]+)/' % _('vote/'), app.commands.vote_post, name='vote_post'),
+    url(r'^%s(?P<id>\d+)/$' % _('like_comment/'), app.commands.like_comment, name="like_comment"),
+    url(r'^%s(?P<post_type>[a-z]+)/(?P<id>\d+)/' % _('comment/'), app.commands.comment, name='comment'),
+    url(r'^%s(?P<id>\d+)/$' % _('delete_comment/'), app.commands.delete_comment, name="delete_comment"),
+    url(r'^%s(?P<id>\d+)/$' % _('accept_answer/'), app.commands.accept_answer, name="accept_answer"),
+    url(r'^%s(?P<id>\d+)/$' % _('mark_favorite/'), app.commands.mark_favorite, name="mark_favorite"),
+    url(r'^%s(?P<post_type>[a-z]+)/(?P<id>\d+)/' % _('flag/'), app.commands.flag_post, name='flag_post'),
+    url(r'^%s(?P<post_type>[a-z]+)/(?P<id>\d+)/' % _('delete/'), app.commands.delete_post, name='delete_post'),
+    url(r'^%s(?P<id>\d+)/$' % _('subscribe/'), app.commands.subscribe, name="subscribe"),
+
     url(r'^%s(?P<id>\d+)/%s$' % (_('questions/'), _('revisions/')), app.readers.question_revisions, name='question_revisions'),
-    url(r'^%s(?P<id>\d+)/%s$' % (_('questions/'), _('comments/')), app.writers.question_comments, name='question_comments'),
     url(r'^%s$' % _('command/'), app.commands.ajax_command, name='call_ajax'),
 
-    url(r'^%s(?P<object_id>\d+)/%s(?P<comment_id>\d+)/%s$' % (_('questions/'), _('comments/'),_('delete/')), \
-                                                app.writers.delete_comment, kwargs={'commented_object_type':'question'},\
-                                                name='delete_question_comment'),
-
-    url(r'^%s(?P<object_id>\d+)/%s(?P<comment_id>\d+)/%s$' % (_('answers/'), _('comments/'),_('delete/')), \
-                                                app.writers.delete_comment, kwargs={'commented_object_type':'answer'}, \
-                                                name='delete_answer_comment'), \
     #place general question item in the end of other operations
-    url(r'^%s(?P<id>\d+)/' % _('question/'), app.readers.question, name='question'),
+    url(r'^%s(?P<id>\d+)/(?P<slug>[\w-]+)$' % _('question/'), app.readers.question, name='question'),
     url(r'^%s$' % _('tags/'), app.readers.tags, name='tags'),
     url(r'^%s(?P<tag>[^/]+)/$' % _('tags/'), app.readers.tag, name='tag_questions'),
 
@@ -75,7 +76,7 @@ urlpatterns = patterns('',
                                 kwargs={'action':'remove'}, \
                                 name='mark_ignored_tag'),
 
-    url(r'^%s(?P<id>\d+)/$' % _('switch_subscription/'), app.commands.switch_subscription, name="switch_subscription"),
+
 
     url(r'^%s$' % _('users/'),app.users.users, name='users'),
     url(r'^%s(?P<id>\d+)/$' % _('moderate-user/'), app.users.moderate_user, name='moderate_user'),
@@ -90,8 +91,7 @@ urlpatterns = patterns('',
     url(r'^%s$' % _('upload/'), app.writers.upload, name='upload'),
     url(r'^%s$' % _('search/'), app.readers.search, name='search'),
     url(r'^%s$' % _('feedback/'), app.meta.feedback, name='feedback'),
-    #(r'^%sfb/' % _('account/'),  include('fbconnect.urls')), 
-    #(r'^%s' % _('account/'), include('django_authopenid.urls')),
+
     (r'^i18n/', include('django.conf.urls.i18n')),
 
     url(r'^%s%s$' % (_('account/'), _('signin/')), app.auth.signin_page, name='auth_signin'),
@@ -107,9 +107,6 @@ urlpatterns = patterns('',
     url(r'^%s%s(?P<id>\d+)/%s$' % (_('account/'), _('providers/'),  _('remove/')), app.auth.remove_external_provider, name='user_remove_external_provider'),
     url(r'^%s%s%s$' % (_('account/'), _('providers/'),  _('add/')), app.auth.signin_page, name='user_add_external_provider'),
 
-    #url(r'^%s%s%s$' % (_('accounts/'), _('password/'), _('confirm/')), app.user.confirmchangepw, name='user_confirmchangepw'),
-    #url(r'^%s$' % _('account/'), app.users.account_settings, name='user_account_settings'),
-    #url(r'^%s$' % _('delete/'), app.users.delete, name='user_delete'),
 
     url(r'^%s$' % _('admin/'), app.admin.index, name="admin_index"),
     url(r'^%s%s$' % (_('admin/'), _('go_bootstrap/')), app.admin.go_bootstrap, name="admin_go_bootstrap"),

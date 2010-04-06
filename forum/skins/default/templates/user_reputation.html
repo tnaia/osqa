@@ -4,12 +4,12 @@
 {% load extra_filters %}
 {% load humanize %}
 {% block userjs %}
-       <script type='text/javascript' src='{% media  "/media/js/excanvas.pack.js" %}'></script>
-       <script type='text/javascript' src='{% media  "/media/js/jquery.flot.pack.js" %}'></script>
+       <script type='text/javascript' src='{% media  "/media/js/excanvas.min.js" %}'></script>
+       <script type='text/javascript' src='{% media  "/media/js/jquery.flot.min.js" %}'></script>
        
        <script type="text/javascript">
         $().ready(function(){
-            var d = {{ reps }};
+            var d = {{ graph_data }};
             var placeholder = $("#diagram");
 
             var plot = $.plot(placeholder, [d], {
@@ -34,7 +34,7 @@
                         <div style="float:left;width:20px;color:red">{{ rep.negative }}</div>
                         
                     </div>
-                    <a href="{% url question rep.question_id %}{{ rep.title|slugify }}">{{ rep.title }}</a> <span class="small">({{ rep.reputed_at }})</span>                    
+                    <a href="{{ rep.question.get_absolute_url }}">{{ rep.question.title }}</a> <span class="small">({{ rep.reputed_at }})</span>
                 </p>
                 {% endfor %}
             </div>

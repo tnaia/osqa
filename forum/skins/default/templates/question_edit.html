@@ -4,9 +4,6 @@
 {% load extra_tags %}
 {% block title %}{% spaceless %}{% trans "Edit question" %}{% endspaceless %}{% endblock %}
 {% block forejs %}
-        <script type='text/javascript' src='{% media  "/media/js/com.cnprog.editor.js" %}'></script>
-        <script type='text/javascript' src='{% media  "/media/js/com.cnprog.post.js" %}'></script>
-        <script type='text/javascript' src='{% media  "/media/js/jquery.validate.pack.js" %}'></script>
         <script type='text/javascript' src='{% media  "/media/js/wmd/showdown.js" %}'></script>
         <script type='text/javascript' src='{% media  "/media/js/wmd/wmd.js" %}'></script>
         <link rel="stylesheet" type="text/css" href="{% media  "/media/js/wmd/wmd.css" %}" />
@@ -16,10 +13,7 @@
             $("#nav_questions").attr('className',"on");
             $('#editor').TextAreaResizer();
             
-            //highlight code synctax when editor has new text
-            $("#editor").typeWatch({highlight: false, wait: 3000,
-                             captureLength: 5, callback: lanai.highlightSyntax});
-                             
+
             //toggle preview of editor
             var display = true;
             var txt = "[{% trans "hide preview" %}]";
@@ -48,15 +42,12 @@
                     return row.n;
                 }
                 
-            });
-            
-            setupFormValidation("#fmedit", CPValidator.getQuestionFormRules(), CPValidator.getQuestionFormMessages());
-            
+            });         
+
             $('#id_revision').unbind().change(function(){
                 $("#select_revision").click();
             });
-            lanai.highlightSyntax();
-            
+
         });
         </script>
 {% endblock %}

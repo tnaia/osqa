@@ -1099,34 +1099,6 @@ a:hover.medal {
     cursor: pointer;
 }
 
-.vote-number {
-    font-family: Arial;
-    padding: 0px 0 3px 0;
-    font-size: 140%;
-    font-weight: bold;
-    color: #777;
-}
-
-.question-img-upvote:hover {
-    background: url(../images/vote-arrow-up-on.png)
-}
-
-.question-img-downvote:hover {
-    background: url(../images/vote-arrow-down-on.png)
-}
-
-.question-img-favorite:hover {
-    background: url(../images/vote-favorite-on.png)
-}
-
-.favorite-number {
-    padding: 0px;
-    font-size: 100%;
-    font-family: Arial;
-    font-weight: bold;
-    color: #777;
-}
-
 .vote-notification {
     z-index: 1;
     cursor: pointer;
@@ -1167,22 +1139,6 @@ a:hover.medal {
     color: #fff;
 }
 
-.action-link a {
-    color: #777;
-    padding: 3px;
-    cursor: pointer;
-}
-
-.action-link: a hover {
-    background-color: #777;
-    text-decoration: none;
-    color: #fff;
-}
-
-.action-link-separator {
-    color: #ccc;
-}
-
 .wiki-category {
     margin-left: 5px;
     color: #999;
@@ -1214,11 +1170,6 @@ form.post-comments input {
     width: 100px;
 }
 
-span.text-counter {
-    margin-right: 20px;
-    font-size: 11px;
-}
-
 span.form-error {
     color: #990000;
     font-weight: normal;
@@ -1236,20 +1187,6 @@ div.comments-container, div.comments-container-accepted, div.comments-container-
 .post-comments a {
     color: #888888;
     padding: 0 3px 2px;
-}
-
-a.comments-link, a.comments-link-accepted, a.comments-link-owner, a.comments-link-deleted {
-    color: black;
-    font-size: 11px;
-    background: #eeeeee;
-    padding: 3px;
-    cursor: pointer;
-}
-
-.post-comments a:hover {
-    background-color: #777777;
-    color: white;
-    text-decoration: none;
 }
 
 a.comment-user, a.comment-user:hover {
@@ -2251,14 +2188,6 @@ p.space-above {
     vertical-align: top;
 }
 
-p.comment {
-    border-top: 1px dotted #ccccce;
-    margin: 0;
-    font-size: 11px;
-    color: #444444;
-    padding: 5px 0 5px 0;
-}
-
 .delete-icon {
     vertical-align: middle;
     padding-left: 3px;
@@ -2471,4 +2400,189 @@ a.sidebar_button:hover {
     background-color: #777777;
     color: white;
     text-decoration: none;
+}
+
+a.post-vote, a.favorite-mark, a.accept-answer {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    display: block;
+}
+
+a.post-vote.up {
+    background: url('/m/default/media/images/vote-arrow-up.png') no-repeat center center;
+}
+
+a.post-vote.up.on, a.post-vote.up:hover {
+    background: url('/m/default/media/images/vote-arrow-up-on.png') no-repeat center center;
+}
+
+a.post-vote.down {
+    background: url('/m/default/media/images/vote-arrow-down.png') no-repeat center center;
+}
+
+a.post-vote.down.on, a.post-vote.down:hover {
+    background: url('/m/default/media/images/vote-arrow-down-on.png') no-repeat center center;
+}
+
+a.accept-answer {
+    background: url('/m/default/media/images/vote-accepted.png') no-repeat center center;
+}
+
+a.accept-answer.on, a.accept-answer:hover {
+    background: url('/m/default/media/images/vote-accepted-on.png') no-repeat center center;
+}
+
+.post-score {
+    font-family: Arial;
+    padding: 0px 0 3px 0;
+    font-size: 140%;
+    font-weight: bold;
+    color: #777;
+}
+
+a.favorite-mark {
+     background: url('/m/default/media/images/vote-favorite-off.png') no-repeat center center;
+}
+
+a.favorite-mark.on, a.favorite-mark:hover {
+     background: url('/m/default/media/images/vote-favorite-on.png') no-repeat center center;
+}
+
+.favorite-count {
+    padding: 0px;
+    font-size: 100%;
+    font-family: Arial;
+    font-weight: bold;
+    color: #777;
+}
+
+.comment {
+    border-top: 1px dotted #ccccce;
+    margin: 0px;
+    width: 100%;
+}
+
+.comment.not_top_scorer {
+    display: none;
+}
+
+.comment-score {
+    font-family: Arial;
+    padding-top: 3px;
+    font-size: 16px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #777;
+    width: 22px;
+}
+
+.comment-text {
+    margin: 0;
+    margin-left: 22px;
+    color: #444444;
+    padding: 0px;
+    font-size: 11px;
+}
+
+.comment-info {
+    text-align: right;
+    font-size: 11px;
+    margin: 0px;
+}
+
+a.comment-like, a.comment-delete, a.comment-edit {
+    width: 18px;
+    height: 18px;
+    position: relative;
+    margin-left: 2px;
+    float: right;
+}
+
+a.comment-like {
+    background: url('/m/default/media/images/comment-like.png') no-repeat center center;
+}
+
+a.comment-like:hover, a.comment-like.on {
+    background: url('/m/default/media/images/comment-like-on.png') no-repeat center center;
+}
+
+a.comment-delete {
+    background: url('/m/default/media/images/comment-delete.png') no-repeat center center;
+}
+
+a.comment-delete:hover {
+    background: url('/m/default/media/images/comment-delete-hover.png') no-repeat center center;
+}
+
+a.comment-edit {
+    background: url('/m/default/media/images/comment-edit.png') no-repeat center center;
+}
+
+a.comment-edit:hover {
+    background: url('/m/default/media/images/comment-edit-hover.png') no-repeat center center;
+}
+
+.comment-form-container {
+    display: none;
+    padding-top: 12px;
+}
+
+.comment-form-widgets-container input {
+    vertical-align: top;
+}
+
+.comment-form-widgets-container textarea {
+    height: 6em;
+    width: 80%;
+}
+
+span.comment-chars-left {
+    margin-right: 20px;
+    font-size: 11px;
+}
+
+span.comment-chars-left.warn {
+    color: red;
+}
+
+div.comment-tools {
+    text-align: right;
+    border-top: 1px dotted #ccccce;
+    padding-top: 12px;
+}
+
+div.comment-tools .comments-showing {
+    font-size: 11px;
+    color: #777777;
+}
+
+div.comment-tools a {
+    color: black;
+    font-size: 11px;
+    background: #eeeeee;
+    padding: 3px;
+    cursor: pointer;
+}
+
+div.comment-tools a:hover {
+    background-color: #777777;
+    color: white;
+    text-decoration: none;
+}
+
+.action-link a {
+    color: #777;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.action-link a.ajax-command:hover {
+    background-color: #777;
+    text-decoration: none;
+    color: #fff;
+}
+
+.action-link-separator {
+    color: #ccc;
 }
