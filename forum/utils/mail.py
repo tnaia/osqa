@@ -37,13 +37,12 @@ def send_msg_list(msgs, sender=None):
                 try:
                     connection.sendmail(sender, [email], msg)
                 except Exception, e:
-                    print e
+                    pass
             try:
                 connection.quit()
             except socket.sslerror:
                 connection.close()
         except Exception, e:
-            print e
             pass
 
 def html2text(s, ignore_tags=(), indent_width=4, page_width=80):
