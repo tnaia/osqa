@@ -1194,17 +1194,6 @@ div.comments-container, div.comments-container-accepted, div.comments-container-
     padding: 0 3px 2px;
 }
 
-a.comment-user, a.comment-user:hover {
-    background-color: inherit;
-    color: blue;
-    padding: 0;
-}
-
-a.comment-user:hover {
-    text-decoration: underline;
-}
-
-
 #answers {
 }
 
