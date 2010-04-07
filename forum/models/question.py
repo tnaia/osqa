@@ -71,23 +71,33 @@ class Question(Content):
         except Exception:
             logging.debug('problem pinging google did you register you sitemap with google?')
 
-    def save(self, *args, **kwargs):
+    def get_tag_list_if_changed(self):
         dirty = self.get_dirty_fields()
 
         if 'tagnames' in dirty:
             new_tags = self.tagname_list()
-            old_tags = [name for name in dirty['tagnames'].split(u' ')]
 
-            for name in [n for n in new_tags if not n in old_tags]:
+            old_tags = dirty['tagnames']
+            if old_tags is None:
+                old_tags = []
+            else:
+                old_tags = [name for name in dirty['tagnames'].split(u' ')]
+
+            tag_list = []
+
+            for name in new_tags:
                 try:
                     tag = Tag.objects.get(name=name)
                 except:
                     tag = Tag.objects.create(name=name, created_by=self.last_edited_by or self.author)
 
-                tag.used_count = tag.used_count + 1
-                if tag.deleted:
-                    tag.unmark_deleted()
-                tag.save()
+                tag_list.append(tag)
+
+                if not name in old_tags:
+                    tag.used_count = tag.used_count + 1
+                    if tag.deleted:
+                        tag.unmark_deleted()
+                    tag.save()
 
             for name in [n for n in old_tags if not n in new_tags]:
                 tag = Tag.objects.get(name=name)
@@ -96,7 +106,14 @@ class Question(Content):
                     tag.mark_deleted(self.last_edited_by or self.author)
                 tag.save()
 
+            return tag_list
+
+        return None
+
+    def save(self, *args, **kwargs):
+        tags = self.get_tag_list_if_changed()
         super(Question, self).save(*args, **kwargs)
+        if not tags is None: self.tags = tags
 
     def tagname_list(self):
         """Creates a list of Tag names from the ``tagnames`` attribute."""

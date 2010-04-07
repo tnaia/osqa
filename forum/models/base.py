@@ -65,9 +65,8 @@ class BaseModel(models.Model):
 
     def get_dirty_fields(self):
         missing = object()
-        return dict([(k, v) for k,v in self.__dict__.items()
-                 if self._original_state.get(k, missing) == missing or 
-                    self._original_state[k] != v])
+        return dict([(k, self._original_state.get(k, None)) for k,v in self.__dict__.items()
+                 if self._original_state.get(k, missing) == missing or self._original_state[k] != v])
 
     def save(self, *args, **kwargs):
         super(BaseModel, self).save(*args, **kwargs)
