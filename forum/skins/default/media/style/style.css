@@ -32,7 +32,7 @@ hr {
 
 input, select {
     vertical-align: middle;
-    font-family: Trebuchet MS, "segoe ui", Helvetica, "Microsoft YaHei", 宋 体, Tahoma, Verdana, MingLiu, PMingLiu, Arial, sans-serif;
+    font-family: Trebuchet MS, "segoe ui", Helvetica, "Microsoft YaHei", å®‹ ä½“, Tahoma, Verdana, MingLiu, PMingLiu, Arial, sans-serif;
 }
 
 p {
@@ -124,11 +124,6 @@ a:hover {
     color: #FFFFFF;
 }
 
-.help_text {
-    font-weight: normal;
-    cursor: help;
-}
-
 .u {
     text-decoration: underline;
 }
@@ -209,7 +204,7 @@ blockquote {
     background-color: #F5F5F5;
 }
 
-/*页面布局*/
+
 #wrapper {
     width: 960px;
     margin: auto;
@@ -251,12 +246,12 @@ blockquote {
     padding-top: 6px;
     padding-bottom: 0px;
     text-align: center;
-    background: #777;
+    background: #BDCCED;
 }
 
 /*#licenseLogo {position:absolute;top:10px;right:10px;}*/
 
-/*顶部及导航栏*/
+
 #top {
     position: absolute;
     top: 0px;
@@ -295,7 +290,7 @@ blockquote {
 
 #navBar .nav a {
     color: #333333;
-    background-color: #fff0e0;
+    background-color: #e5ebf8;
     /*border-left: 1px solid #eeeeec;
                  border-right: 1px solid #babdb6;
                  border-top: 1px solid #eeeeec;*/
@@ -319,11 +314,8 @@ blockquote {
 #navBar .nav a.on {
     height: 24px;
     line-height: 28px;
-    border-bottom: 1px solid #a40000;
-    border-right: 1px solid #820000;
-    border-top: 1px solid #d40000;
-    border-left: 1px solid #d40000; /*background:#A31E39; */
-    background: #a40000;
+    border: 1px solid #356FCB;
+    background: #356FCB;
     color: #FFF;
     font-weight: 600;
     text-decoration: none
@@ -345,11 +337,14 @@ blockquote {
     padding-right: 0px;
 }
 
-/*搜索栏*/
+
 #searchBar {
     width: 958px;
-    background-color: #888a85; /*#e9b96e;*/
-    border: 1px solid #aaaaaa;
+    background-color: #B6C4E2;
+    border: 1px solid #eeeeec;
+    border-left: 1px solid #eeeeec;
+    border-right: 1px solid #a9aca5;
+    border-bottom: 1px solid #babdb6;
     padding: 4px 0 0 0;
 }
 
@@ -371,8 +366,8 @@ blockquote {
 
 #searchBar .options {
     padding: 3px 0 3px 0;
-    font-size: 100%;
-    color: #EEE; /*letter-spacing:1px;*/
+    font-size: 120%;
+    color: #333; /*letter-spacing:1px;*/
 }
 
 #searchBar .options INPUT {
@@ -383,7 +378,7 @@ blockquote {
     cursor: pointer
 }
 
-/*问题列表*/
+
 #listA {
     float: left;
     background-color: #FFF;
@@ -510,14 +505,20 @@ blockquote {
     float: left;
 }
 
-.short-summary h2 {
+.short-summary h2 a {
     font-size: 16px;
     font-family: "Trebuchet MS", "segoe ui", arial, sans-serif;
+    color: #2A5594;
 }
 
 .short-summary .userinfo {
     float: right;
     margin-top: 8px;
+    color: #666;
+}
+
+.userinfo a {
+    color: #3060a8;
 }
 
 .short-summary .counts {
@@ -545,6 +546,10 @@ blockquote {
     -webkit-border-radius: 5px;
 }
 
+.short-summary .votes, .short-summary .views {
+	color: #666;
+}
+
 #question-table {
     margin-bottom: 10px; /*border-bottom:1px solid #888a85;*/
 }
@@ -563,7 +568,7 @@ blockquote {
     margin-top: 3px;
 }
 
-/*内容块*/
+
 .boxA {
     background: #888a85;
     padding: 6px;
@@ -625,10 +630,10 @@ blockquote {
 }
 
 .boxC {
-    background: #cacdc6; /*f9f7ed;*/
+    background: #E5EBF8;
     padding: 10px;
     margin-bottom: 8px;
-    border-top: 1px solid #eeeeec;
+    border: 1px solid #eeeeec;
     border-left: 1px solid #eeeeec;
     border-right: 1px solid #a9aca5;
     border-bottom: 1px solid #babdb6;
@@ -647,7 +652,7 @@ blockquote {
     margin: 0;
 }
 
-/*分页*/
+/*åˆ†é¡µ*/
 .pager {
     margin-top: 10px;
     margin-bottom: 16px;
@@ -738,7 +743,7 @@ blockquote {
     padding: 5px 0 10px 0;
 }
 
-/*标签*/
+
 .tag {
     font-size: 13px;
     font-weight: normal;
@@ -761,21 +766,19 @@ blockquote {
 
 .tags a {
     white-space: nowrap;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: normal;
-    color: #333;
+    color: #777;
     text-decoration: none;
     background-color: #EEE;
-    border-left: 3px solid #777;
-    border-top: 1px solid #EEE;
     border-bottom: 1px solid #CCC;
     border-right: 1px solid #CCC;
     padding: 1px 8px 1px 8px;
 }
 
 .tags a:hover {
-    background-color: #fFF;
-    color: #333;
+    background-color: #356FCB;
+    color: #FFF;
 }
 
 .tagsbox {
@@ -815,14 +818,14 @@ blockquote {
     white-space: nowrap;
 }
 
-/*奖牌*/
+
 a.medal {
     font-size: 14px;
     line-height: 250%;
-    font-weight: 800;
+    font-weight: bold;
     color: #333;
     text-decoration: none;
-    background: url(../images/medala.gif) no-repeat;
+    background: #FFFFCD;
     border-left: 1px solid #EEE;
     border-top: 1px solid #EEE;
     border-bottom: 1px solid #CCC;
@@ -840,7 +843,7 @@ a:hover.medal {
     border-right: 1px solid #D1CA3D;
 }
 
-/*Tab栏*/
+
 .tabBar {
     background-color: #FFF;
     border-bottom: 1px solid white;
@@ -1008,7 +1011,7 @@ a:hover.medal {
     border-bottom: 1px solid #777;
 }
 
-/*RSS订阅*/
+
 #feeds {
     margin: 10px 0;
 }
@@ -1020,7 +1023,7 @@ a:hover.medal {
     font-size: 13px;
 }
 
-/*问题*/
+
 #question {
     margin-bottom: 30px;
 }
@@ -1204,7 +1207,7 @@ a.comment-user:hover {
     text-decoration: underline;
 }
 
-/*回答*/
+
 #answers {
 }
 
@@ -1238,18 +1241,18 @@ a.comment-user:hover {
 }
 
 .answered {
-    background: #CCC;
-    color: #999;
+    background: #E5EBF8;
+    color: #314362;
 }
 
 .answered-accepted {
-    background: #CCC;
-    color: #763333;
+    background: #E6F8DD;
+    color: #3A6231;
 }
 
 .unanswered {
-    background: #777;
-    color: white;
+    background: #F3E3E1;
+    color: #6B2B28;
 }
 
 .answered-by-owner {
@@ -1276,7 +1279,7 @@ a.comment-user:hover {
     background: #F4E7E7 none repeat scroll 0 0;
 }
 
-/*标签列表*/
+
 /*
 .tagsbox {}
 .tagsbox a {color:#000;line-height:30px;margin-right:10px;font-size:100%;background-color:#F9F7ED;padding:3px;border:1px solid #aaaaaa;}
@@ -1298,7 +1301,14 @@ a.comment-user:hover {
     list-style-type: none;
 }
 
-/*登录*/
+.badge-list a {
+	color: #3060a8;
+}
+
+.badge-list a.medal {
+    color: #333333;
+}
+
 .list-item {
     margin-left: 15px;
 }
@@ -1405,13 +1415,13 @@ table.check-table td {
 }
 
 .openid-samples .list, .list li {
-    font-family: Trebuchet MS, "segoe ui", Helvetica, "Microsoft YaHei", 宋 体, Tahoma, Verdana, MingLiu, PMingLiu, Arial, sans-serif;
+    font-family: Trebuchet MS, "segoe ui", Helvetica, "Microsoft YaHei", å®‹ ä½“, Tahoma, Verdana, MingLiu, PMingLiu, Arial, sans-serif;
     list-style: none !important;
     margin-left: -30px !important;
     line-height: 20px !important;
 }
 
-/*表单相关*/
+/*è¡¨å•ç›¸å…³*/
 span.form-error {
     color: #990000;
     font-size: 90%;
@@ -1470,7 +1480,7 @@ span.form-error {
     margin: 5px 0 5px 0;
 }
 
-/*修订记录*/
+/*ä¿®è®¢è®°å½•*/
 
 #revisions {
     width: 950px;
@@ -1549,7 +1559,7 @@ ins .post-tag {
     background-color: #97ff97;
 }
 
-/*用户资料页面*/
+
 .count {
     font-family: Arial;
     font-size: 200%;
@@ -1670,7 +1680,6 @@ ins .post-tag {
     -moz-border-radius: 5px;
     -khtml-border-radius: 5px;
     -webkit-border-radius: 5px;
-    color: #777;
 }
 
 .narrow .status {
@@ -1723,7 +1732,6 @@ div.started {
 }
 
 .relativetime {
-    font-weight: bold;
     text-decoration: none;
 }
 
@@ -1852,7 +1860,7 @@ div.started .reputation-score {
     color: #333;
 }
 
-/*读书频道*/
+/*è¯»ä¹¦é¢‘é“*/
 .bookInfo {
     float: left;
     width: 940px;
@@ -1911,7 +1919,7 @@ div.started .reputation-score {
     text-decoration: underline;
 }
 
-/*其他全局样式*/
+/*å…¶ä»–å…¨å±€æ ·å¼*/
 .hilite {
     background-color: #ff0;
 }
@@ -1956,12 +1964,12 @@ div.started .reputation-score {
 }
 
 .footerLinks {
-    color: #EEE;
+    color: #3060a8;
     font-size: 13px; /* letter-spacing:1px;*/
 }
 
 .footerLinks a {
-    color: #FFF;
+    color: #3060a8;
     font-size: 13px;
 }
 
