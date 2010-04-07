@@ -80,14 +80,8 @@ def upload(request):#ajax upload file to a question or answer
 
     return HttpResponse(result, mimetype="application/xml")
 
-#@login_required #actually you can post anonymously, but then must register
-def ask(request):#view used to ask a new question
-    """a view to ask a new question
-    gives space for q title, body, tags and checkbox for to post as wiki
 
-    user can start posting a question anonymously but then
-    must login/register in order for the question go be shown
-    """
+def ask(request):
     if request.method == "POST" and "text" in request.POST:
         form = AskForm(request.POST)
         if form.is_valid():
@@ -99,7 +93,7 @@ def ask(request):#view used to ask a new question
             text = form.cleaned_data['text']
             html = sanitize_html(markdowner.convert(text))
             summary = strip_tags(html)[:120]
-
+            
             if request.user.is_authenticated():
                 author = request.user 
 

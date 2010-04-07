@@ -102,7 +102,7 @@ marked_deleted.connect(record_delete_post, sender=Answer)
 
 def record_update_tags(instance, created, **kwargs):
     if not created and 'tagnames' in instance.get_dirty_fields():
-        activity = Activity(user=question.author, active_at=datetime.datetime.now(), content_object=instance, activity_type=TYPE_ACTIVITY_UPDATE_TAGS)
+        activity = Activity(user=instance.author, active_at=datetime.datetime.now(), content_object=instance, activity_type=TYPE_ACTIVITY_UPDATE_TAGS)
         activity.save()
 
 post_save.connect(record_update_tags, sender=Question)

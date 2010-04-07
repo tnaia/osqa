@@ -124,6 +124,11 @@ a:hover {
     color: #FFFFFF;
 }
 
+.help_text {
+    font-weight: normal;
+    cursor: help;
+}
+
 .u {
     text-decoration: underline;
 }

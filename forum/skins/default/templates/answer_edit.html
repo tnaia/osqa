@@ -43,7 +43,7 @@
         <form id="fmedit" action="{% url edit_answer answer.id %}" method="post" >
             <label for="id_revision" ><strong>{% trans "revision" %}:</strong></label> <br/> 
             {% if revision_form.revision.errors %}{{ revision_form.revision.errors.as_ul }}{% endif %}
-            <div style="vertical-align:middle">
+            <div>
             {{ revision_form.revision }} <input type="submit" style="display:none" id="select_revision" name="select_revision" value="{% trans "select revision" %}">
             </div>
             <div class="form-item">

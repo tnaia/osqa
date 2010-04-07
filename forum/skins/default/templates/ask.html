@@ -87,8 +87,8 @@
                                 <span id="pre-collapse" title="{% trans "Toggle the real time Markdown editor preview" %}">{% trans "toggle preview" %}</span>
                             </td>
                             {% if settings.WIKI_ON %}
-                            <td style="text-align:right;">
-                                {{ form.wiki }} <span style="font-weight:normal;cursor:help" title="{{form.wiki.help_text}}">{{ form.wiki.label_tag }} </span>
+                            <td class="tright">
+                                {{ form.wiki }} <span class="help_text" title="{{form.wiki.help_text}}">{{ form.wiki.label_tag }} </span>
                             </td>
                             {% endif %}
                         </tr>

@@ -49,7 +49,6 @@ class CachedManager(models.Manager):
 
 
 class BaseModel(models.Model):
-
     objects = CachedManager()
 
     class Meta:
@@ -58,7 +57,7 @@ class BaseModel(models.Model):
 
     def __init__(self, *args, **kwargs):
         super(BaseModel, self).__init__(*args, **kwargs)
-        self._original_state = dict(self.__dict__)
+        self._original_state = dict([(k, v) for k,v in self.__dict__.items() if not k in kwargs])
 
     @classmethod
     def cache_key(cls, pk):
@@ -66,14 +65,13 @@ class BaseModel(models.Model):
 
     def get_dirty_fields(self):
         missing = object()
-        result = {}
-        for key, value in self._original_state.iteritems():
-            if value != self.__dict__.get(key, missing):
-                result[key] = value
-        return result
+        return dict([(k, v) for k,v in self.__dict__.items()
+                 if self._original_state.get(k, missing) == missing or 
+                    self._original_state[k] != v])
 
     def save(self, *args, **kwargs):
         super(BaseModel, self).save(*args, **kwargs)
+        self._original_state = dict(self.__dict__)
         cache.set(self.cache_key(self.pk), self, 86400)
 
     def delete(self):
@@ -215,7 +213,6 @@ class Content(BaseModel, DeletableContent):
     def save(self, *args, **kwargs):
         self.__dict__['score'] = self.__dict__['vote_up_count'] - self.__dict__['vote_down_count']
         super(Content,self).save(*args, **kwargs)
-        self._original_state = dict(self.__dict__)
 
         try:
             ping_google()

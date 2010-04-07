@@ -116,7 +116,6 @@ def go_bootstrap(request):
     settings.REP_TO_EDIT_WIKI.set_value(200)
     settings.REP_TO_EDIT_OTHERS.set_value(400)
     settings.REP_TO_CLOSE_OTHERS.set_value(600)
-    #settings.REP_TO_LOCK.set_value(800)
     settings.REP_TO_DELETE_COMMENTS.set_value(400)
     settings.REP_TO_VIEW_FLAGS.set_value(30)
     settings.REP_TO_DISABLE_NOFOLLOW.set_value(800)

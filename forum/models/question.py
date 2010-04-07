@@ -3,6 +3,7 @@ from tag import Tag
 
 class QuestionManager(CachedManager):
     def create_new(self, title=None,author=None,added_at=None, wiki=False,tagnames=None,summary=None, text=None):
+
         question = Question(
             title            = title,
             author           = author,
