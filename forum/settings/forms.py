@@ -46,7 +46,7 @@ class ImageFormWidget(forms.Widget):
             # check file type
             file_name_suffix = os.path.splitext(f.name)[1].lower()
 
-            if not file_name_suffix in ('.jpg', '.jpeg', '.gif', '.png', '.bmp', '.tiff'):
+            if not file_name_suffix in ('.jpg', '.jpeg', '.gif', '.png', '.bmp', '.tiff', '.ico'):
                 raise Exception('File type not allowed')
 
             from forum.settings import UPFILES_FOLDER, UPFILES_ALIAS
