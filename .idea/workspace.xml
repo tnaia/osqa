@@ -15,14 +15,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="df1b69cf-9c35-4a78-9890-c59b542399e8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/views/users.py" afterPath="$PROJECT_DIR$/forum/views/users.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/osqaadmin/index.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/osqaadmin/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/osqaadmin/base.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/osqaadmin/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/notifications/answeraccepted.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/notifications/answeraccepted.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/templates/question/accept_button.html" afterPath="$PROJECT_DIR$/forum/skins/default/templates/question/accept_button.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.py" afterPath="$PROJECT_DIR$/settings.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="DELETED" beforePath="D:\osqa\dev\osqa\forum\skins\default\media\js\excanvas.pack.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/views/readers.py" afterPath="$PROJECT_DIR$/forum/views/readers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/views/writers.py" afterPath="$PROJECT_DIR$/forum/views/writers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/skins/default/media/style/style.css" afterPath="$PROJECT_DIR$/forum/skins/default/media/style/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forum/subscriptions.py" afterPath="$PROJECT_DIR$/forum/subscriptions.py" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="osqa.iws" />
@@ -84,28 +83,10 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/forum/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="42" selection-start="887" selection-end="887" vertical-scroll-proportion="-12.92">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="meta.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/forum/views/meta.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="0" selection-start="619" selection-end="619" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="users.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="users.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/forum/views/users.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="617" column="26" selection-start="27421" selection-end="27421" vertical-scroll-proportion="0.7624811">
+            <state line="617" column="26" selection-start="27421" selection-end="27421" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -114,7 +95,34 @@
       <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/forum/skins/default/media/style/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="881" column="32" selection-start="14116" selection-end="14116" vertical-scroll-proportion="-9.12">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="accept_button.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/question/accept_button.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="167" selection-start="319" selection-end="319" vertical-scroll-proportion="-2.72">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="subscriptions.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/forum/subscriptions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="132" column="39" selection-start="5535" selection-end="5535" vertical-scroll-proportion="0.5400908">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="answeraccepted.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/notifications/answeraccepted.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="0" selection-start="754" selection-end="754" vertical-scroll-proportion="-11.56">
               <folding />
             </state>
           </provider>
@@ -138,19 +146,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user_reputation.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/user_reputation.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="7" selection-start="149" selection-end="711" vertical-scroll-proportion="-4.08">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/osqaadmin/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="17" selection-start="629" selection-end="629" vertical-scroll-proportion="-9.52">
+            <state line="13" column="35" selection-start="253" selection-end="253" vertical-scroll-proportion="-8.84">
               <folding />
             </state>
           </provider>
@@ -184,10 +183,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/forum/skins/default/media/style/style.css" />
-        <option value="$PROJECT_DIR$/forum/views/admin.py" />
-        <option value="$PROJECT_DIR$/forum/forms.py" />
-        <option value="$PROJECT_DIR$/forum/activity.py" />
         <option value="$PROJECT_DIR$/forum/skins/default/templates/about.html" />
         <option value="$PROJECT_DIR$/forum/models/base.py" />
         <option value="$PROJECT_DIR$/settings.py" />
@@ -196,10 +191,14 @@
         <option value="$PROJECT_DIR$/forum/views/meta.py" />
         <option value="$PROJECT_DIR$/forum/urls.py" />
         <option value="$PROJECT_DIR$/forum/skins/default/templates/osqaadmin/base.html" />
-        <option value="$PROJECT_DIR$/forum/skins/default/templates/osqaadmin/index.html" />
         <option value="$PROJECT_DIR$/forum/views/readers.py" />
         <option value="$PROJECT_DIR$/forum/views/writers.py" />
         <option value="$PROJECT_DIR$/forum/views/users.py" />
+        <option value="$PROJECT_DIR$/forum/skins/default/templates/osqaadmin/index.html" />
+        <option value="$PROJECT_DIR$/forum/skins/default/media/style/style.css" />
+        <option value="$PROJECT_DIR$/forum/skins/default/templates/question/accept_button.html" />
+        <option value="$PROJECT_DIR$/forum/skins/default/templates/notifications/answeraccepted.html" />
+        <option value="$PROJECT_DIR$/forum/subscriptions.py" />
       </list>
     </option>
   </component>
@@ -384,6 +383,102 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osqa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osqa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="forum" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skins" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osqa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osqa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="forum" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skins" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osqa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osqa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="forum" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skins" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="notifications" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osqa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osqa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="forum" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skins" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -668,27 +763,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/about.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="120" selection-start="328" selection-end="328" vertical-scroll-proportion="-8.84">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="0" selection-start="2894" selection-end="2894" vertical-scroll-proportion="0.8530259">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/forum/models/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="71" selection-start="2285" selection-end="2285" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -738,27 +812,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/osqaadmin/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="17" selection-start="629" selection-end="629" vertical-scroll-proportion="-9.52">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/forum/views/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/forum/skins/default/media/style/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/forum/views/readers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="0" selection-start="1034" selection-end="1034" vertical-scroll-proportion="0.0">
@@ -775,7 +828,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/forum/views/users.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="617" column="26" selection-start="27421" selection-end="27421" vertical-scroll-proportion="0.7624811">
+        <state line="617" column="26" selection-start="27421" selection-end="27421" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forum/views/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/osqaadmin/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="35" selection-start="253" selection-end="253" vertical-scroll-proportion="-8.84">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forum/skins/default/media/style/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="881" column="32" selection-start="14116" selection-end="14116" vertical-scroll-proportion="-9.12">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/question/accept_button.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="167" selection-start="319" selection-end="319" vertical-scroll-proportion="-2.72">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/notifications/answeraccepted.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="0" selection-start="754" selection-end="754" vertical-scroll-proportion="-11.56">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forum/subscriptions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="132" column="39" selection-start="5535" selection-end="5535" vertical-scroll-proportion="0.5400908">
           <folding />
         </state>
       </provider>

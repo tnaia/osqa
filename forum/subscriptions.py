@@ -130,7 +130,7 @@ def answer_accepted(sender, instance, **kwargs):
             subscription_settings__enable_notifications=True,
             subscription_settings__notify_accepted=True,
             subscription_settings__subscribed_questions='i'
-    ).exclude(id=question.author.id)
+    ).exclude(id=answer.accepted_by.id)
     recipients = create_recipients_dict(subscribers)
 
     send_email(settings.EMAIL_SUBJECT_PREFIX + _("An answer to '%(question_title)s' was accepted") % dict(question_title=question.title),
