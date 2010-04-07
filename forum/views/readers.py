@@ -23,7 +23,6 @@ from markdown2 import Markdown
 from forum.utils.diff import textDiff as htmldiff
 from forum.forms import *
 from forum.models import *
-from forum.auth import *
 from forum.const import *
 from forum.utils.forms import get_next_url
 from forum.models.question import question_view

@@ -293,7 +293,7 @@ def user_recent(request, user_id, user_view):
             self.title = title
             self.summary = summary
             slug_title = slugify(title)
-            self.title_link = reverse('question', kwargs={'id':question_id}) + u'%s' % slug_title
+            self.title_link = reverse('question', kwargs={'id':question_id, 'slug':slug_title})
             if int(answer_id) > 0:
                 self.title_link += '#%s' % answer_id
 
@@ -584,7 +584,7 @@ def user_responses(request, user_id, user_view):
 
 
     # question comments
-    comments = Comment.objects.extra(
+    comments = Comment.active.extra(
                                 select={
                                     'title' : 'question.title',
                                     'question_id' : 'comment.object_id',
@@ -613,7 +613,7 @@ def user_responses(request, user_id, user_view):
         responses.extend(comments)
 
     # answer comments
-    comments = Comment.objects.extra(
+    comments = Comment.active.extra(
         select={
             'title' : 'question.title',
             'question_id' : 'question.id',

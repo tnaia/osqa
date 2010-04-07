@@ -17,7 +17,6 @@ from forum.utils.html import sanitize_html
 from markdown2 import Markdown
 from forum.forms import *
 from forum.models import *
-from forum.auth import *
 from forum.const import *
 from forum.utils.forms import get_next_url
 from forum.views.readers import _get_tags_cache_json
