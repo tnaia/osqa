@@ -3,22 +3,7 @@
 {% load i18n %}
 
 {% block adminjs %}
-<script type='text/javascript' src='{% media  "/media/js/excanvas.min.js" %}'></script>
-       <script type='text/javascript' src='{% media  "/media/js/jquery.flot.min.js" %}'></script>
-
-       <script type="text/javascript">
-        $().ready(function(){
-            var d = {{ graph_data }};
-            var placeholder = $("#diagram");
-
-            var plot = $.plot(placeholder, [d], {
-                xaxis: { mode: "time" },
-                points: { show: true },
-                lines: { show: true }
-            });
-        });
-
-        </script>
+ 
 {% endblock %}
 
 {% block subtitle %}
