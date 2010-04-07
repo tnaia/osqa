@@ -15,6 +15,13 @@ Your site main logo.
 """),
 widget=ImageFormWidget))
 
+APP_FAVICON = Setting('APP_FAVICON', '/m/default/media/images/favicon.ico', BASIC_SET, dict(
+label = _("Favicon"),
+help_text = _("""
+Your site favicon.
+"""),
+widget=ImageFormWidget))
+
 APP_TITLE = Setting('APP_TITLE', 'OSQA: Open Source Q&A Forum', BASIC_SET, dict(
 label = _("Application title"),
 help_text = _("""

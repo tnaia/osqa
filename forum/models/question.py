@@ -122,8 +122,9 @@ class Question(Content):
     def tagname_meta_generator(self):
         return u','.join([unicode(tag) for tag in self.tagname_list()])
 
+    @models.permalink    
     def get_absolute_url(self):
-        return reverse('question', kwargs={'id': self.id, 'slug': django_urlquote(slugify(self.title))})
+        return ('question', (), {'id': self.id, 'slug': django_urlquote(slugify(self.title))})
 
     def get_answer_count_by_user(self, user_id):
         from answer import Answer

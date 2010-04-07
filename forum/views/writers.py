@@ -55,7 +55,7 @@ def upload(request):#ajax upload file to a question or answer
         # check file type
         file_name_suffix = os.path.splitext(f.name)[1].lower()
 
-        if not file_name_suffix in ('.jpg', '.jpeg', '.gif', '.png', '.bmp', '.tiff'):
+        if not file_name_suffix in ('.jpg', '.jpeg', '.gif', '.png', '.bmp', '.tiff', '.ico'):
             raise FileTypeNotAllow
 
         storage = FileSystemStorage(str(settings.UPFILES_FOLDER), str(settings.UPFILES_ALIAS))
