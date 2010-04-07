@@ -60,7 +60,7 @@ urlpatterns = patterns('',
     url(r'^%s$' % _('command/'), app.commands.ajax_command, name='call_ajax'),
 
     #place general question item in the end of other operations
-    url(r'^%s(?P<id>\d+)/(?P<slug>[\w-]+)$' % _('question/'), app.readers.question, name='question'),
+    url(r'^%s(?P<id>\d+)/(?P<slug>[\w-]*)$' % _('question/'), app.readers.question, name='question'),
     url(r'^%s$' % _('tags/'), app.readers.tags, name='tags'),
     url(r'^%s(?P<tag>[^/]+)/$' % _('tags/'), app.readers.tag, name='tag_questions'),
 
