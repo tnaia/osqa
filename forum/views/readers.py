@@ -111,10 +111,13 @@ def index(request):#generates front page - shows listing of questions sorted in 
 
     tags_autocomplete = _get_tags_cache_json()
 
+    question_count = Question.objects.filter(deleted=False).count()
+
     return render_to_response('index.html', {
         'interesting_tag_names': interesting_tag_names,
         'tags_autocomplete': tags_autocomplete,
         'ignored_tag_names': ignored_tag_names,
+        'question_count': question_count,
         "questions" : questions,
         "tab_id" : view_id,
         "tags" : tags,
@@ -131,111 +134,56 @@ def index(request):#generates front page - shows listing of questions sorted in 
             'pagesize' : pagesize
         }}, context_instance=RequestContext(request))
 
-def unanswered(request):#generates listing of unanswered questions
+def unanswered(request):
     return questions(request, unanswered=True)
 
-def questions(request, tagname=None, unanswered=False):#a view generating listing of questions, used by 'unanswered' too
-    """
-    List of Questions, Tagged questions, and Unanswered questions.
-    """
-    # template file
-    # "questions.html" or maybe index.html in the future
-    template_file = "questions.html"
-    # Set flag to False by default. If it is equal to True, then need to be saved.
-    pagesize_changed = False
-    # get pagesize from session, if failed then get default value
-    pagesize = QUESTIONS_PAGE_SIZE #request.session.get("pagesize",QUESTIONS_PAGE_SIZE)
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
+def questions(request, tagname=None, unanswered=False):
+    pagesize = request.session.get("pagesize",QUESTIONS_PAGE_SIZE)
+    page = int(request.GET.get('page', 1))
 
+    questions = Question.objects.filter(deleted=False)
+
+    if tagname is not None:
+        questions = questions.filter(tags__name=unquote(tagname))
+
+    if unanswered:
+        questions = questions.filter(answer_accepted=False)
+
+    if request.user.is_authenticated():
+        questions = questions.filter(
+                ~Q(tags__id__in=request.user.marked_tags.filter(user_selections__reason='bad')))
+
+    #todo: improve this stuff
     view_dic = {"latest":"-added_at", "active":"-last_activity_at", "hottest":"-answer_count", "mostvoted":"-score" }
     view_id, orderby = _get_and_remember_questions_sort_method(request,view_dic,'latest')
 
-    # check if request is from tagged questions
-    qs = Question.objects.exclude(deleted=True)
-
-    if tagname is not None:
-        qs = qs.filter(tags__name = unquote(tagname))
-
-    if unanswered:
-        qs = qs.exclude(answer_accepted=True)
-
-    author_name = None
-    #user contributed questions & answers
-    if 'user' in request.GET:
-        try:
-            author_name = request.GET['user']
-            u = User.objects.get(username=author_name)
-            qs = qs.filter(Q(author=u) | Q(answers__author=u))
-        except User.DoesNotExist:
-            author_name = None
-
-    if request.user.is_authenticated():
-        uid_str = str(request.user.id)
-        qs = qs.extra(
-                        select = SortedDict([
-                            (
-                                'interesting_score', 
-                                'SELECT COUNT(1) FROM forum_markedtag, question_tags '
-                                  + 'WHERE forum_markedtag.user_id = %s '
-                                  + 'AND forum_markedtag.tag_id = question_tags.tag_id '
-                                  + 'AND forum_markedtag.reason = \'good\' '
-                                  + 'AND question_tags.question_id = question.id'
-                            ),
-                                ]),
-                        select_params = (uid_str,),
-                     )
-        if request.user.hide_ignored_questions:
-            ignored_tags = Tag.objects.filter(user_selections__reason='bad',
-                                            user_selections__user = request.user)
-            qs = qs.exclude(tags__in=ignored_tags)
-        else:
-            qs = qs.extra(
-                        select = SortedDict([
-                            (
-                                'ignored_score', 
-                                'SELECT COUNT(1) FROM forum_markedtag, question_tags '
-                                  + 'WHERE forum_markedtag.user_id = %s '
-                                  + 'AND forum_markedtag.tag_id = question_tags.tag_id '
-                                  + 'AND forum_markedtag.reason = \'bad\' '
-                                  + 'AND question_tags.question_id = question.id'
-                            )
-                                ]),
-                        select_params = (uid_str, )
-                     )
-
-    qs = qs.select_related(depth=1).order_by(orderby)
-
-    objects_list = Paginator(qs, pagesize)
+    questions=questions.order_by(orderby)
+    
+    objects_list = Paginator(questions, pagesize)
     questions = objects_list.page(page)
 
-    # Get related tags from this page objects
     if questions.object_list.count() > 0:
         related_tags = Tag.objects.filter(questions__id__in=[q.id for q in questions.object_list]).distinct()
     else:
         related_tags = None
-    tags_autocomplete = _get_tags_cache_json()
 
-    # get the list of interesting and ignored tags
     (interesting_tag_names, ignored_tag_names) = (None, None)
     if request.user.is_authenticated():
         pt = MarkedTag.objects.filter(user=request.user)
         interesting_tag_names = pt.filter(reason='good').values_list('tag__name', flat=True)
         ignored_tag_names = pt.filter(reason='bad').values_list('tag__name', flat=True)
 
-    return render_to_response(template_file, {
+    return render_to_response('questions.html.', {
         "questions" : questions,
-        "author_name" : author_name,
+        "author_name" : None,
         "tab_id" : view_id,
         "questions_count" : objects_list.count,
         "tags" : related_tags,
-        "tags_autocomplete" : tags_autocomplete, 
+        "tags_autocomplete" : _get_tags_cache_json(),
         "searchtag" : tagname,
         "is_unanswered" : unanswered,
         "interesting_tag_names": interesting_tag_names,
-        'ignored_tag_names': ignored_tag_names, 
+        'ignored_tag_names': ignored_tag_names,
         "context" : {
             'is_paginated' : True,
             'pages': objects_list.num_pages,
@@ -247,6 +195,7 @@ def questions(request, tagname=None, unanswered=False):#a view generating listin
             'base_url' : request.path + '?sort=%s&' % view_id,
             'pagesize' : pagesize
         }}, context_instance=RequestContext(request))
+
 
 def search(request): #generates listing of questions matching a search query - including tags and just words
     """generates listing of questions matching a search query
