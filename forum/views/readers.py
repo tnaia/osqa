@@ -173,7 +173,7 @@ def questions(request, tagname=None, unanswered=False):
         interesting_tag_names = pt.filter(reason='good').values_list('tag__name', flat=True)
         ignored_tag_names = pt.filter(reason='bad').values_list('tag__name', flat=True)
 
-    return render_to_response('questions.html.', {
+    return render_to_response('questions.html', {
         "questions" : questions,
         "author_name" : None,
         "tab_id" : view_id,
