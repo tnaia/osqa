@@ -65,9 +65,9 @@ def post_controls(post, user):
 
         if post_type == 'question':
             if post.closed and user.can_reopen_question(post):
-                controls.append(post_control(_('reopen'), reverse('reopen', kwargs={'id': post.id}), True))
+                controls.append(post_control(_('reopen'), reverse('reopen', kwargs={'id': post.id})))
             elif not post.closed and user.can_close_question(post):
-                controls.append(post_control(_('close'), reverse('close', kwargs={'id': post.id}), True))
+                controls.append(post_control(_('close'), reverse('close', kwargs={'id': post.id})))
 
         if user.can_flag_offensive(post):
             controls.append(post_control(_('flag'), reverse('flag_post', kwargs={'post_type': post_type, 'id': post.id}), 

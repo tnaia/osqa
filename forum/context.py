@@ -17,6 +17,7 @@ def application_settings(context):
         'WIKI_ON':settings.WIKI_ON,
         'RESOURCE_REVISION':settings.RESOURCE_REVISION,
         'OSQA_SKIN':settings.OSQA_DEFAULT_SKIN,
+        'APP_FAVICON':settings.APP_FAVICON,
         }
     return {'settings':my_settings}
 

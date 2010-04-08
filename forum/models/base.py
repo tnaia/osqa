@@ -24,10 +24,10 @@ class CachedManager(models.Manager):
     use_for_related_fields = True
 
     def get(self, *args, **kwargs):
-        pk = None
-        for val in ('pk', 'pk__exact', 'id', 'id__exact'):
-            if val in kwargs:
-                pk = kwargs[val]
+        try:
+            pk = [k for k in kwargs.keys() if k in ('pk', 'pk__exact', 'id', 'id__exact') or k.endswith('_ptr__pk')][0]
+        except:
+            pk = None
 
         if pk is not None:
             key = self.model.cache_key(pk)
@@ -86,7 +86,7 @@ class UndeletedObjectManager(models.Manager):
     def get_query_set(self):
         return super(UndeletedObjectManager, self).get_query_set().filter(deleted=False)
 
-class MetaContent(models.Model):
+class MetaContent(BaseModel):
     """
         Base class for Vote, Comment and FlaggedItem
     """

@@ -4,7 +4,7 @@ from forum.models import User
 
 from django.utils.translation import ugettext as _
 
-class Badge(models.Model):
+class Badge(BaseModel):
     """Awarded for notable actions performed on the site by Users."""
     GOLD = 1
     SILVER = 2
