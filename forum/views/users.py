@@ -55,7 +55,7 @@ def users(request):
         base_url = reverse('users') + '?sort=%s&' % sortby
     else:
         sortby = "reputation"
-        objects_list = Paginator(User.objects.extra(where=['username like %s'], params=['%' + suser + '%']).order_by('-reputation'), USERS_PAGE_SIZE)
+        objects_list = Paginator(User.objects.filter(username__icontains=suser).order_by('-reputation'), USERS_PAGE_SIZE)
         base_url = reverse('users') + '?name=%s&sort=%s&' % (suser, sortby)
 
     try:
