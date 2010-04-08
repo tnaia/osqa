@@ -54,91 +54,15 @@ def _get_tags_cache_json():#service routine used by views requiring tag list in 
     tags = simplejson.dumps(tags_list)
     return tags
 
-def _get_and_remember_questions_sort_method(request, view_dic, default):#service routine used by q listing views and question view
-    """manages persistence of post sort order
-    it is assumed that when user wants newest question - 
-    then he/she wants newest answers as well, etc.
-    how far should this assumption actually go - may be a good question
-    """
-    if default not in view_dic:
-        raise Exception('default value must be in view_dic')
 
-    q_sort_method = request.REQUEST.get('sort', None)
-    if q_sort_method == None:
-        q_sort_method = request.session.get('questions_sort_method', default)
-
-    if q_sort_method not in view_dic:
-        q_sort_method = default
-    request.session['questions_sort_method'] = q_sort_method
-    return q_sort_method, view_dic[q_sort_method]
-
-#refactor? - we have these
-#views that generate a listing of questions in one way or another:
-#index, unanswered, questions, search, tag
-#should we dry them up?
-#related topics - information drill-down, search refinement
-
-def index(request):#generates front page - shows listing of questions sorted in various ways
-    """index view mapped to the root url of the Q&A site
-    """
-    view_dic = {
-             "latest":"-last_activity_at",
-             "hottest":"-answer_count",
-             "mostvoted":"-score",
-             }
-    view_id, orderby = _get_and_remember_questions_sort_method(request, view_dic, 'latest')
-
-    pagesize = request.session.get("pagesize",QUESTIONS_PAGE_SIZE)
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-
-    qs = Question.objects.exclude(deleted=True).order_by(orderby)
-
-    objects_list = Paginator(qs, pagesize)
-    questions = objects_list.page(page)
-
-    tags = Tag.active.order_by('-id')[:INDEX_TAGS_SIZE]
-
-    awards = Award.objects.get_recent_awards()
-
-    (interesting_tag_names, ignored_tag_names) = (None, None)
-    if request.user.is_authenticated():
-        pt = MarkedTag.objects.filter(user=request.user)
-        interesting_tag_names = pt.filter(reason='good').values_list('tag__name', flat=True)
-        ignored_tag_names = pt.filter(reason='bad').values_list('tag__name', flat=True)
-
-    tags_autocomplete = _get_tags_cache_json()
-
-    question_count = Question.objects.filter(deleted=False).count()
-
-    return render_to_response('index.html', {
-        'interesting_tag_names': interesting_tag_names,
-        'tags_autocomplete': tags_autocomplete,
-        'ignored_tag_names': ignored_tag_names,
-        'question_count': question_count,
-        "questions" : questions,
-        "tab_id" : view_id,
-        "tags" : tags,
-        "awards" : awards[:INDEX_AWARD_SIZE],
-        "context" : {
-            'is_paginated' : True,
-            'pages': objects_list.num_pages,
-            'page': page,
-            'has_previous': questions.has_previous(),
-            'has_next': questions.has_next(),
-            'previous': questions.previous_page_number(),
-            'next': questions.next_page_number(),
-            'base_url' : request.path + '?sort=%s&' % view_id,
-            'pagesize' : pagesize
-        }}, context_instance=RequestContext(request))
+def index(request):
+    return questions(request, template="index.html", sort='latest', path=reverse('questions'))
 
 def unanswered(request):
     return questions(request, unanswered=True)
 
-def questions(request, tagname=None, unanswered=False):
-    pagesize = request.session.get("pagesize",QUESTIONS_PAGE_SIZE)
+def questions(request, tagname=None, unanswered=False, template="questions.html", sort=None, path=None):
+    pagesize = request.utils.page_size(QUESTIONS_PAGE_SIZE)
     page = int(request.GET.get('page', 1))
 
     questions = Question.objects.filter(deleted=False)
@@ -154,36 +78,26 @@ def questions(request, tagname=None, unanswered=False):
                 ~Q(tags__id__in=request.user.marked_tags.filter(user_selections__reason='bad')))
 
     #todo: improve this stuff
+    if sort is None:
+        sort = request.utils.sort_method('latest')
+    else:
+        request.utils.set_sort_method(sort)
+    
     view_dic = {"latest":"-added_at", "active":"-last_activity_at", "hottest":"-answer_count", "mostvoted":"-score" }
-    view_id, orderby = _get_and_remember_questions_sort_method(request,view_dic,'latest')
+    orderby = view_dic[sort]
 
     questions=questions.order_by(orderby)
     
     objects_list = Paginator(questions, pagesize)
     questions = objects_list.page(page)
 
-    if questions.object_list.count() > 0:
-        related_tags = Tag.objects.filter(questions__id__in=[q.id for q in questions.object_list]).distinct()
-    else:
-        related_tags = None
-
-    (interesting_tag_names, ignored_tag_names) = (None, None)
-    if request.user.is_authenticated():
-        pt = MarkedTag.objects.filter(user=request.user)
-        interesting_tag_names = pt.filter(reason='good').values_list('tag__name', flat=True)
-        ignored_tag_names = pt.filter(reason='bad').values_list('tag__name', flat=True)
-
-    return render_to_response('questions.html', {
+    return render_to_response(template, {
         "questions" : questions,
         "author_name" : None,
-        "tab_id" : view_id,
         "questions_count" : objects_list.count,
-        "tags" : related_tags,
         "tags_autocomplete" : _get_tags_cache_json(),
         "searchtag" : tagname,
         "is_unanswered" : unanswered,
-        "interesting_tag_names": interesting_tag_names,
-        'ignored_tag_names': ignored_tag_names,
         "context" : {
             'is_paginated' : True,
             'pages': objects_list.num_pages,
@@ -192,7 +106,7 @@ def questions(request, tagname=None, unanswered=False):
             'has_next': questions.has_next(),
             'previous': questions.previous_page_number(),
             'next': questions.next_page_number(),
-            'base_url' : request.path + '?sort=%s&' % view_id,
+            'base_url' : (path or request.path) + '?sort=%s&' % sort,
             'pagesize' : pagesize
         }}, context_instance=RequestContext(request))
 

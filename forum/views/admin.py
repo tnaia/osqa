@@ -118,7 +118,6 @@ def go_bootstrap(request):
     settings.REP_TO_CLOSE_OTHERS.set_value(600)
     settings.REP_TO_DELETE_COMMENTS.set_value(400)
     settings.REP_TO_VIEW_FLAGS.set_value(30)
-    settings.REP_TO_DISABLE_NOFOLLOW.set_value(800)
 
     settings.INITIAL_REP.set_value(1)
     settings.MAX_REP_BY_UPVOTE_DAY.set_value(300)

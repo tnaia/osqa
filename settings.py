@@ -26,6 +26,7 @@ MIDDLEWARE_CLASSES = [
     'forum.middleware.extended_user.ExtendedUser',
     #'django.middleware.sqlprint.SqlPrintingMiddleware',
     'forum.middleware.anon_user.ConnectToSessionMessagesMiddleware',
+    'forum.middleware.request_utils.RequestUtils',
     'forum.middleware.cancel.CancelActionMiddleware',
     #'recaptcha_django.middleware.ReCaptchaMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
