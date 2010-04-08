@@ -85,7 +85,16 @@
       <file leaf-file-name="readers.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/forum/views/readers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="90" column="44" selection-start="3357" selection-end="3365" vertical-scroll-proportion="-50.92">
+            <state line="114" column="117" selection-start="4200" selection-end="4200" vertical-scroll-proportion="10.28">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pagesize.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/forum/middleware/pagesize.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="23" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -112,7 +121,7 @@
       <file leaf-file-name="base.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/forum/models/base.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="0" selection-start="1110" selection-end="1110" vertical-scroll-proportion="0.5066274">
+            <state line="27" column="45" selection-start="997" selection-end="997" vertical-scroll-proportion="0.35640648">
               <folding />
             </state>
           </provider>
@@ -143,7 +152,6 @@
         <option value="$PROJECT_DIR$/forum/models/tag.py" />
         <option value="$PROJECT_DIR$/forum/models/question.py" />
         <option value="$PROJECT_DIR$/forum/views/users.py" />
-        <option value="$PROJECT_DIR$/forum/views/readers.py" />
         <option value="$PROJECT_DIR$/forum/middleware/pagesize.py" />
         <option value="$PROJECT_DIR$/forum/views/commands.py" />
         <option value="$PROJECT_DIR$/forum/skins/default/templates/question_list.html" />
@@ -152,6 +160,7 @@
         <option value="$PROJECT_DIR$/forum/context.py" />
         <option value="$PROJECT_DIR$/forum/skins/default/templates/base.html" />
         <option value="$PROJECT_DIR$/forum/skins/default/templates/base_content.html" />
+        <option value="$PROJECT_DIR$/forum/views/readers.py" />
         <option value="$PROJECT_DIR$/forum/models/base.py" />
       </list>
     </option>
@@ -391,6 +400,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osqa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="osqa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="forum" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="middleware" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -752,23 +779,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/forum/middleware/pagesize.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="23" selection-start="43" selection-end="43" vertical-scroll-proportion="0.024495678">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/forum/skins/default/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="54" column="47" selection-start="2093" selection-end="2093" vertical-scroll-proportion="1.3256881">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/forum/views/readers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="44" selection-start="3357" selection-end="3365" vertical-scroll-proportion="-50.92">
           <folding />
         </state>
       </provider>
@@ -780,9 +793,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/forum/middleware/pagesize.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="23" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forum/views/readers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="114" column="117" selection-start="4200" selection-end="4200" vertical-scroll-proportion="10.28">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/forum/models/base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="0" selection-start="1110" selection-end="1110" vertical-scroll-proportion="0.5066274">
+        <state line="27" column="45" selection-start="997" selection-end="997" vertical-scroll-proportion="0.35640648">
           <folding />
         </state>
       </provider>

@@ -25,7 +25,7 @@ class CachedManager(models.Manager):
 
     def get(self, *args, **kwargs):
         try:
-            pk = [k for k in kwargs.keys() if k in ('pk', 'pk__exact', 'id', 'id__exact') or k.endswith('_ptr__pk')][0]
+            pk = [v for (k,v) in kwargs.items() if k in ('pk', 'pk__exact', 'id', 'id__exact') or k.endswith('_ptr__pk')][0]
         except:
             pk = None
 
