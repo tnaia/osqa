@@ -33,7 +33,7 @@ def question_posted(sender, instance, **kwargs):
             (Q(subscription_settings__new_question_watched_tags='i') &
               Q(marked_tags__name__in=question.tagnames.split(' ')) &
               Q(tag_selections__reason='good'))
-    ).exclude(id=question.author.id)
+    ).exclude(id=question.author.id).distinct()
 
     recipients = create_recipients_dict(subscribers)
 
@@ -66,7 +66,7 @@ def answer_posted(sender, instance, **kwargs):
             subscription_settings__enable_notifications=True,
             subscription_settings__notify_answers=True,
             subscription_settings__subscribed_questions='i'
-    ).exclude(id=answer.author.id)
+    ).exclude(id=answer.author.id).distinct()
     recipients = create_recipients_dict(subscribers)
 
     send_email(settings.EMAIL_SUBJECT_PREFIX + _("New answer to '%(question_title)s'") % dict(question_title=question.title),
@@ -130,7 +130,7 @@ def answer_accepted(sender, instance, **kwargs):
             subscription_settings__enable_notifications=True,
             subscription_settings__notify_accepted=True,
             subscription_settings__subscribed_questions='i'
-    ).exclude(id=answer.accepted_by.id)
+    ).exclude(id=answer.accepted_by.id).distinct()
     recipients = create_recipients_dict(subscribers)
 
     send_email(settings.EMAIL_SUBJECT_PREFIX + _("An answer to '%(question_title)s' was accepted") % dict(question_title=question.title),
@@ -149,7 +149,7 @@ def member_joined(sender, instance, created, **kwargs):
     subscribers = User.objects.values('email', 'username').filter(
             subscription_settings__enable_notifications=True,
             subscription_settings__member_joins='i'
-    ).exclude(id=instance.id)
+    ).exclude(id=instance.id).distinct()
 
     recipients = create_recipients_dict(subscribers)
 
