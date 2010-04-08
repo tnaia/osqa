@@ -88,7 +88,7 @@ def index(request):#generates front page - shows listing of questions sorted in 
              }
     view_id, orderby = _get_and_remember_questions_sort_method(request, view_dic, 'latest')
 
-    pagesize = QUESTIONS_PAGE_SIZE #request.session.get("pagesize",QUESTIONS_PAGE_SIZE)
+    pagesize = request.session.get("pagesize",QUESTIONS_PAGE_SIZE)
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
@@ -197,12 +197,7 @@ def questions(request, tagname=None, unanswered=False):
         }}, context_instance=RequestContext(request))
 
 
-def search(request): #generates listing of questions matching a search query - including tags and just words
-    """generates listing of questions matching a search query
-    supports full text search in mysql db using sphinx and internally in postgresql
-    falls back on simple partial string matching approach if
-    full text search function is not available
-    """
+def search(request): 
     if request.method == "GET" and "q" in request.GET:
         keywords = request.GET.get("q")
         search_type = request.GET.get("t")

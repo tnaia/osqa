@@ -1,5 +1,5 @@
 # used in questions
-QUESTIONS_PAGE_SIZE = 10
+QUESTIONS_PAGE_SIZE = 30
 class QuestionsPageSizeMiddleware(object):
     def process_request(self, request):
         # Set flag to False by default. If it is equal to True, then need to be saved.

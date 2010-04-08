@@ -55,7 +55,7 @@ def upload(request):#ajax upload file to a question or answer
         file_name_suffix = os.path.splitext(f.name)[1].lower()
 
         if not file_name_suffix in ('.jpg', '.jpeg', '.gif', '.png', '.bmp', '.tiff', '.ico'):
-            raise FileTypeNotAllow
+            raise FileTypeNotAllow()
 
         storage = FileSystemStorage(str(settings.UPFILES_FOLDER), str(settings.UPFILES_ALIAS))
         new_file_name = storage.save(f.name, f)
@@ -65,7 +65,7 @@ def upload(request):#ajax upload file to a question or answer
 
         if size > float(settings.ALLOW_MAX_FILE_SIZE) * 1024 * 1024:
             storage.delete(new_file_name)
-            raise FileSizeNotAllow
+            raise FileSizeNotAllow()
 
         result = xml_template % ('Good', '', str(settings.UPFILES_ALIAS) + new_file_name)
     except UploadPermissionNotAuthorized:

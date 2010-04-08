@@ -34,6 +34,10 @@
 {% endblock %}
 
 {% block sidebar %}
+<div class="boxC">
+    <div class="questions-count">{{ question_count }}</div>
+    <p>{% trans "questions" %}</p>
+</div>
 {% if not request.user.is_authenticated %}
 <div class="boxA">
 	<h3>{% trans "welcome to website" %}</h3>

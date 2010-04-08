@@ -42,7 +42,7 @@ p {
 }
 
 a {
-    color: #333333;
+    color: #3060A8;
     text-decoration: none;
 }
 
@@ -517,7 +517,7 @@ blockquote {
     color: #666;
 }
 
-.userinfo a {
+.userinfo a, a.userinfo {
     color: #3060a8;
 }
 
