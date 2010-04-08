@@ -91,9 +91,9 @@ def record_cancel_vote(instance, **kwargs):
 vote_canceled.connect(record_cancel_vote)
 
 
-def record_delete_post(instance, delete_by, **kwargs):
+def record_delete_post(instance, **kwargs):
     act_type = (instance.__class__ is Question) and TYPE_ACTIVITY_DELETE_QUESTION or TYPE_ACTIVITY_DELETE_ANSWER
-    activity = Activity(user=delete_by, active_at=datetime.datetime.now(), content_object=instance, activity_type=act_type)
+    activity = Activity(user=instance.deleted_by, active_at=datetime.datetime.now(), content_object=instance, activity_type=act_type)
     activity.save()
 
 marked_deleted.connect(record_delete_post, sender=Question)
