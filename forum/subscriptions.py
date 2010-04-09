@@ -1,7 +1,7 @@
 import os
 import re
 import datetime
-from forum.models import User, Question, Comment, QuestionSubscription, SubscriptionSettings
+from forum.models import User, Question, Comment, QuestionSubscription, SubscriptionSettings, Answer
 from forum.models.user import activity_record
 from forum.utils.mail import send_email
 from forum.views.readers import question_view
@@ -122,24 +122,24 @@ activity_record.connect(comment_posted, sender=const.TYPE_ACTIVITY_COMMENT_QUEST
 activity_record.connect(comment_posted, sender=const.TYPE_ACTIVITY_COMMENT_ANSWER, weak=False)
 
 
-def answer_accepted(sender, instance, **kwargs):
-    answer = instance.content_object
-    question = answer.question
+def answer_accepted(instance, created, **kwargs):
+    if not created and 'accepted' in instance.get_dirty_fields() and instance.accepted:
+        question = instance.question
 
-    subscribers = question.subscribers.values('email', 'username').filter(
-            subscription_settings__enable_notifications=True,
-            subscription_settings__notify_accepted=True,
-            subscription_settings__subscribed_questions='i'
-    ).exclude(id=answer.accepted_by.id).distinct()
-    recipients = create_recipients_dict(subscribers)
+        subscribers = question.subscribers.values('email', 'username').filter(
+                subscription_settings__enable_notifications=True,
+                subscription_settings__notify_accepted=True,
+                subscription_settings__subscribed_questions='i'
+        ).exclude(id=instance.accepted_by.id).distinct()
+        recipients = create_recipients_dict(subscribers)
 
-    send_email(settings.EMAIL_SUBJECT_PREFIX + _("An answer to '%(question_title)s' was accepted") % dict(question_title=question.title),
-               recipients, "notifications/answeraccepted.html", {
-        'question': question,
-        'answer': answer
-    })
+        send_email(settings.EMAIL_SUBJECT_PREFIX + _("An answer to '%(question_title)s' was accepted") % dict(question_title=question.title),
+                   recipients, "notifications/answeraccepted.html", {
+            'question': question,
+            'answer': instance
+        })
 
-activity_record.connect(answer_accepted, sender=const.TYPE_ACTIVITY_MARK_ANSWER, weak=False)
+post_save.connect(answer_accepted, sender=Answer)
 
 
 def member_joined(sender, instance, created, **kwargs):
