@@ -11,6 +11,7 @@ from forum.forms import CloseForm
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from forum.utils.decorators import ajax_method, ajax_login_required
+from decorators import command
 import logging
 
 class NotEnoughRepPointsException(Exception):
@@ -59,27 +60,6 @@ class CannotDoubleActionException(Exception):
             """ % {'action': action, 'faq_url': reverse('faq')})
         )
 
-
-def command(func):
-    def decorated(request, *args, **kwargs):
-        try:
-            response = func(request, *args, **kwargs)
-            response['success'] = True
-        except Exception, e:
-            import sys, traceback
-            traceback.print_exc(file=sys.stdout)
-
-            response = {
-                'success': False,
-                'error_message': str(e)
-            }
-
-        if request.is_ajax():
-            return HttpResponse(simplejson.dumps(response), mimetype="application/json")
-        else:
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-
-    return decorated
 
 @command
 def vote_post(request, post_type, id, vote_type):

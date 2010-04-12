@@ -108,8 +108,8 @@ SILVER_BADGE = 2
 GOLD_BADGE = 1
 
 NOTIFICATION_CHOICES = (
-    ('i', 'Instantly'),
-    ('d', 'Daily'),
-    ('w', 'Weekly'),
-    ('n', 'No notifications'),
+    ('i', _('Instantly')),
+    ('d', _('Daily')),
+    ('w', _('Weekly')),
+    ('n', _('No notifications')),
 )

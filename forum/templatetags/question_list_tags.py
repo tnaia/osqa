@@ -2,16 +2,33 @@ from django import template
 from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
 from forum.models import Tag, MarkedTag
+from forum.templatetags import argument_parser
 
 register = template.Library()
 
-@register.inclusion_tag('question_list/item.html')
-def question_list_item(question):
-    return {'question': question}
+class QuestionItemNode(template.Node):
+    template = template.loader.get_template('question_list/item.html')
 
-@register.inclusion_tag('question_list/sort_tabs.html', takes_context=True)
-def question_sort_tabs(context):
-    return {'current': context['request'].utils.sort_method('latest')}
+    def __init__(self, question, options):
+        self.question = template.Variable(question)
+        self.options = options
+
+    def render(self, context):
+        return self.template.render(template.Context({
+            'question': self.question.resolve(context),
+            'favorite_count': self.options.get('favorite_count', 'no') == 'yes',
+            'signature_type': self.options.get('signature_type', 'lite'),
+        }))
+
+@register.tag
+def question_list_item(parser, token):
+    tokens = token.split_contents()[1:]
+    return QuestionItemNode(tokens[0], argument_parser(tokens[1:]))
+    
+
+@register.inclusion_tag('question_list/sort_tabs.html')
+def question_sort_tabs(sort_context):
+    return sort_context
 
 @register.inclusion_tag('question_list/related_tags.html')
 def question_list_related_tags(questions):
@@ -41,7 +58,7 @@ def question_list_count(context):
         'active': _('Questions are sorted by the <strong>time of last update</strong>.'),
         'hottest': _('Questions sorted by <strong>number of responses</strong>.'),
         'mostvoted': _('Questions are sorted by the <strong>number of votes</strong>.')
-    }[context['request'].utils.sort_method('latest')])
+    }.get(context['request'].utils.sort_method('latest'), ''))
 
     return context
 

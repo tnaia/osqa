@@ -105,8 +105,8 @@ class User(BaseModel, DjangoUser):
 
         super(User, self).save(*args, **kwargs)
 
-    def user_get_absolute_url(self):
-        return "/users/%d/%s/" % (self.id, (self.username))
+    def get_absolute_url(self):
+        return self.get_profile_url()
 
     def get_messages(self):
         messages = []

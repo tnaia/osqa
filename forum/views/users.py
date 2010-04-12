@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from forum.models import User
+from django.db.models import Q, Count
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.template.defaultfilters import slugify
 from django.contrib.contenttypes.models import ContentType
@@ -145,115 +146,19 @@ def edit_user(request, id):
 
 def user_stats(request, user_id, user_view):
     user = get_object_or_404(User, id=user_id)
-    questions = Question.objects.extra(
-        select={
-            'vote_count' : 'question.score',
-            'favorited_myself' : 'SELECT count(*) FROM favorite_question f WHERE f.user_id = %s AND f.question_id = question.id',
-            'la_user_id' : 'auth_user.id',
-            'la_username' : 'auth_user.username',
-            'la_user_gold' : 'forum_user.gold',
-            'la_user_silver' : 'forum_user.silver',
-            'la_user_bronze' : 'forum_user.bronze',
-            'la_user_reputation' : 'forum_user.reputation'
-            },
-        select_params=[user_id],
-        tables=['question', 'auth_user', 'forum_user'],
-        where=['NOT question.deleted AND question.author_id=%s AND question.last_activity_by_id = auth_user.id AND forum_user.user_ptr_id = auth_user.id'],
-        params=[user_id],
-        order_by=['-vote_count', '-last_activity_at']
-    ).values('vote_count',
-             'favorited_myself',
-             'id',
-             'title',
-             'author_id',
-             'added_at',
-             'answer_accepted',
-             'answer_count',
-             'comment_count',
-             'view_count',
-             'favourite_count',
-             'summary',
-             'tagnames',
-             'vote_up_count',
-             'vote_down_count',
-             'last_activity_at',
-             'la_user_id',
-             'la_username',
-             'la_user_gold',
-             'la_user_silver',
-             'la_user_bronze',
-             'la_user_reputation')[:100]
 
-    answered_questions = Question.objects.extra(
-        select={
-            'vote_up_count' : 'answer.vote_up_count',
-            'vote_down_count' : 'answer.vote_down_count',
-            'answer_id' : 'answer.id',
-            'accepted' : 'answer.accepted',
-            'vote_count' : 'answer.score',
-            'comment_count' : 'answer.comment_count'
-            },
-        tables=['question', 'answer'],
-        where=['NOT answer.deleted AND NOT question.deleted AND answer.author_id=%s AND answer.question_id=question.id'],
-        params=[user_id],
-        order_by=['-vote_count', '-answer_id'],
-        select_params=[user_id]
-    ).distinct().values('comment_count',
-                        'id',
-                        'answer_id',
-                        'title',
-                        'author_id',
-                        'accepted',
-                        'vote_count',
-                        'answer_count',
-                        'vote_up_count',
-                        'vote_down_count')[:100]
+    questions = user.questions.filter(deleted=False).order_by('-added_at')
+    answers = user.answers.filter(deleted=False).order_by('-added_at')
 
     up_votes = user.get_up_vote_count()
     down_votes = user.get_down_vote_count()
     votes_today = user.get_vote_count_today()
     votes_total = int(settings.MAX_VOTES_PER_DAY)
 
-    question_id_set = set(map(lambda v: v['id'], list(questions))) \
-                        | set(map(lambda v: v['id'], list(answered_questions)))
+    user_tags = Tag.objects.filter(Q(questions__author=user) | Q(questions__answers__author=user)) \
+        .annotate(user_tag_usage_count=Count('name')).order_by('-user_tag_usage_count')
 
-    user_tags = Tag.objects.filter(questions__id__in = question_id_set)
-    try:
-        from django.db.models import Count
-        awards = Award.objects.extra(
-                                        select={'id': 'badge.id', 
-                                                'name':'badge.name', 
-                                                'description': 'badge.description', 
-                                                'type': 'badge.type'},
-                                        tables=['award', 'badge'],
-                                        order_by=['-awarded_at'],
-                                        where=['user_id=%s AND badge_id=badge.id'],
-                                        params=[user.id]
-                                    ).values('id', 'name', 'description', 'type')
-        total_awards = awards.count()
-        awards = awards.annotate(count = Count('badge__id'))
-        user_tags = user_tags.annotate(user_tag_usage_count=Count('name'))
-
-    except ImportError:
-        awards = Award.objects.extra(
-                                        select={'id': 'badge.id', 
-                                                'count': 'count(badge_id)', 
-                                                'name':'badge.name', 
-                                                'description': 'badge.description', 
-                                                'type': 'badge.type'},
-                                        tables=['award', 'badge'],
-                                        order_by=['-awarded_at'],
-                                        where=['user_id=%s AND badge_id=badge.id'],
-                                        params=[user.id]
-                                    ).values('id', 'count', 'name', 'description', 'type')
-        total_awards = awards.count()
-        awards.query.group_by = ['badge_id']
-
-        user_tags = user_tags.extra(
-            select={'user_tag_usage_count': 'COUNT(1)',},
-            order_by=['-user_tag_usage_count'],
-        )
-        user_tags.query.group_by = ['name']
+    awards = Badge.objects.filter(award_badge__user=user).annotate(count=Count('name')).order_by('-count')
 
     if request.user.is_superuser:
         moderate_user_form = ModerateUserForm(instance=user)
@@ -267,7 +172,7 @@ def user_stats(request, user_id, user_view):
                                 "page_title" : user_view.page_title,
                                 "view_user" : user,
                                 "questions" : questions,
-                                "answered_questions" : answered_questions,
+                                "answers" : answers,
                                 "up_votes" : up_votes,
                                 "down_votes" : down_votes,
                                 "total_votes": up_votes + down_votes,
@@ -275,7 +180,7 @@ def user_stats(request, user_id, user_view):
                                 "votes_total_per_day": votes_total,
                                 "user_tags" : user_tags[:50],
                                 "awards": awards,
-                                "total_awards" : total_awards,
+                                "total_awards" : awards.count(),
                             }, context_instance=RequestContext(request))
 
 def user_recent(request, user_id, user_view):
@@ -541,7 +446,7 @@ def user_responses(request, user_id, user_view):
         def __init__(self, type, title, question_id, answer_id, time, username, user_id, content):
             self.type = type
             self.title = title
-            self.titlelink = reverse('question', args=[question_id]) + u'%s#%s' % (slugify(title), answer_id)
+            self.titlelink = reverse('question', kwargs={'id': question_id, 'slug': slugify(title)}) +u'#%s' % answer_id
             self.time = time
             self.userlink = reverse('users') + u'%s/%s/' % (user_id, username)
             self.username = username

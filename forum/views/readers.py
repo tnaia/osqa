@@ -17,6 +17,7 @@ from django.utils.datastructures import SortedDict
 from django.views.decorators.cache import cache_page
 from django.utils.http import urlquote  as django_urlquote
 from django.template.defaultfilters import slugify
+from django.utils.safestring import mark_safe
 
 from forum.utils.html import sanitize_html
 from markdown2 import Markdown
@@ -26,6 +27,7 @@ from forum.models import *
 from forum.const import *
 from forum.utils.forms import get_next_url
 from forum.models.question import question_view
+import decorators
 
 # used in index page
 #refactor - move these numbers somewhere?
@@ -54,169 +56,82 @@ def _get_tags_cache_json():#service routine used by views requiring tag list in 
     tags = simplejson.dumps(tags_list)
     return tags
 
-
+@decorators.render('index.html')
 def index(request):
-    return questions(request, template="index.html", sort='latest', path=reverse('questions'))
+    return question_list(request, Question.objects.all(), sort='latest', base_path=reverse('questions'))
 
+@decorators.render('questions.html', 'unanswered')
 def unanswered(request):
-    return questions(request, unanswered=True)
+    return question_list(request, Question.objects.filter(answer_accepted=False),
+                         _('Open questions without an accepted answer'))
 
-def questions(request, tagname=None, unanswered=False, template="questions.html", sort=None, path=None):
+@decorators.render('questions.html', 'questions')
+def questions(request):
+    return question_list(request, Question.objects.all())
+
+@decorators.render('questions.html')
+def tag(request, tag):
+    return question_list(request, Question.objects.filter(tags__name=unquote(tag)),
+                        mark_safe(_('Questions tagged <span class="tag">%(tag)s</span>') % {'tag': tag}))
+
+@decorators.list('questions', QUESTIONS_PAGE_SIZE)
+def question_list(request, initial, list_description=_('questions'), sort=None, base_path=None):
     pagesize = request.utils.page_size(QUESTIONS_PAGE_SIZE)
     page = int(request.GET.get('page', 1))
 
-    questions = Question.objects.filter(deleted=False)
-
-    if tagname is not None:
-        questions = questions.filter(tags__name=unquote(tagname))
-
-    if unanswered:
-        questions = questions.filter(answer_accepted=False)
+    questions = initial.filter(deleted=False)
 
     if request.user.is_authenticated():
         questions = questions.filter(
                 ~Q(tags__id__in=request.user.marked_tags.filter(user_selections__reason='bad')))
 
-    #todo: improve this stuff
     if sort is None:
         sort = request.utils.sort_method('latest')
     else:
         request.utils.set_sort_method(sort)
     
     view_dic = {"latest":"-added_at", "active":"-last_activity_at", "hottest":"-answer_count", "mostvoted":"-score" }
-    orderby = view_dic[sort]
 
-    questions=questions.order_by(orderby)
-    
-    objects_list = Paginator(questions, pagesize)
-    questions = objects_list.page(page)
+    questions=questions.order_by(view_dic.get(sort, '-added_at'))
 
-    return render_to_response(template, {
+    return {
         "questions" : questions,
-        "author_name" : None,
-        "questions_count" : objects_list.count,
+        "questions_count" : questions.count(),
         "tags_autocomplete" : _get_tags_cache_json(),
-        "searchtag" : tagname,
-        "is_unanswered" : unanswered,
-        "context" : {
-            'is_paginated' : True,
-            'pages': objects_list.num_pages,
-            'page': page,
-            'has_previous': questions.has_previous(),
-            'has_next': questions.has_next(),
-            'previous': questions.previous_page_number(),
-            'next': questions.next_page_number(),
-            'base_url' : (path or request.path) + '?sort=%s&' % sort,
-            'pagesize' : pagesize
-        }}, context_instance=RequestContext(request))
+        "list_description": list_description,
+        "base_path" : base_path,
+        }
 
 
-def search(request): 
+def search(request):
     if request.method == "GET" and "q" in request.GET:
         keywords = request.GET.get("q")
         search_type = request.GET.get("t")
-        try:
-            page = int(request.GET.get('page', '1'))
-        except ValueError:
-            page = 1
-        if keywords is None:
+        
+        if not keywords:
             return HttpResponseRedirect(reverse(index))
         if search_type == 'tag':
-            return HttpResponseRedirect(reverse('tags') + '?q=%s&page=%s' % (keywords.strip(), page))
+            return HttpResponseRedirect(reverse('tags') + '?q=%s' % (keywords.strip()))
         elif search_type == "user":
-            return HttpResponseRedirect(reverse('users') + '?q=%s&page=%s' % (keywords.strip(), page))
+            return HttpResponseRedirect(reverse('users') + '?q=%s' % (keywords.strip()))
         elif search_type == "question":
-            
-            template_file = "questions.html"
-            # Set flag to False by default. If it is equal to True, then need to be saved.
-            pagesize_changed = False
-            # get pagesize from session, if failed then get default value
-            user_page_size = request.session.get("pagesize", QUESTIONS_PAGE_SIZE)
-            # set pagesize equal to logon user specified value in database
-            if request.user.is_authenticated() and request.user.questions_per_page > 0:
-                user_page_size = request.user.questions_per_page
-
-            try:
-                page = int(request.GET.get('page', '1'))
-                # get new pagesize from UI selection
-                pagesize = int(request.GET.get('pagesize', user_page_size))
-                if pagesize <> user_page_size:
-                    pagesize_changed = True
-
-            except ValueError:
-                page = 1
-                pagesize  = user_page_size
-
-            # save this pagesize to user database
-            if pagesize_changed:
-                request.session["pagesize"] = pagesize
-                if request.user.is_authenticated():
-                    user = request.user
-                    user.questions_per_page = pagesize
-                    user.save()
-
-            view_id = request.GET.get('sort', None)
-            view_dic = {"latest":"-added_at", "active":"-last_activity_at", "hottest":"-answer_count", "mostvoted":"-score" }
-            try:
-                orderby = view_dic[view_id]
-            except KeyError:
-                view_id = "latest"
-                orderby = "-added_at"
-
-            def question_search(keywords, orderby):
-                objects = Question.objects.filter(deleted=False).extra(where=['title like %s'], params=['%' + keywords + '%']).order_by(orderby)
-                # RISK - inner join queries
-                return objects.select_related();
-
-            from forum.modules import get_handler
-
-            question_search = get_handler('question_search', question_search)
-            
-            objects = question_search(keywords, orderby)
-
-            objects_list = Paginator(objects, pagesize)
-            questions = objects_list.page(page)
-
-            # Get related tags from this page objects
-            related_tags = []
-            for question in questions.object_list:
-                tags = list(question.tags.all())
-                for tag in tags:
-                    if tag not in related_tags:
-                        related_tags.append(tag)
-
-            #if is_search is true in the context, prepend this string to soting tabs urls
-            search_uri = "?q=%s&page=%d&t=question" % ("+".join(keywords.split()),  page)
-
-            return render_to_response(template_file, {
-                "questions" : questions,
-                "tab_id" : view_id,
-                "questions_count" : objects_list.count,
-                "tags" : related_tags,
-                "searchtag" : None,
-                "searchtitle" : keywords,
-                "keywords" : keywords,
-                "is_unanswered" : False,
-                "is_search": True, 
-                "search_uri":  search_uri, 
-                "context" : {
-                    'is_paginated' : True,
-                    'pages': objects_list.num_pages,
-                    'page': page,
-                    'has_previous': questions.has_previous(),
-                    'has_next': questions.has_next(),
-                    'previous': questions.previous_page_number(),
-                    'next': questions.next_page_number(),
-                    'base_url' : request.path + '?t=question&q=%s&sort=%s&' % (keywords, view_id),
-                    'pagesize' : pagesize
-                }}, context_instance=RequestContext(request))
- 
+            return question_search(request, keywords)
     else:
         return render_to_response("search.html", context_instance=RequestContext(request))
 
+@decorators.render('questions.html')
+def question_search(request, keywords):
+    def question_search(keywords, orderby):
+        return Question.objects.filter(Q(title__icontains=keywords) | Q(html__icontains=keywords))
 
-def tag(request, tag):#stub generates listing of questions tagged with a single tag
-    return questions(request, tagname=tag)
+    from forum.modules import get_handler
+
+    question_search = get_handler('question_search', question_search)
+    initial = question_search(keywords)
+
+    return question_list(request, initial, _("questions matching '%(keywords)s'") % {'keywords': keywords},
+            base_path="%s?t=question&q=%s" % (reverse('search'), django_urlquote(keywords)))
+    
 
 def tags(request):#view showing a listing of available tags - plain list
     stag = ""
