@@ -3,7 +3,10 @@ from forum import const
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User as DjangoUser, AnonymousUser as DjangoAnonymousUser
 from django.db.models import Q
-from hashlib import md5
+try:
+    from hashlib import md5
+except:
+    import md5
 import string
 from random import Random
 
@@ -97,7 +100,7 @@ class User(BaseModel, DjangoUser):
 
     @property
     def gravatar(self):
-        return hashlib.md5(self.email).hexdigest()
+        return md5(self.email).hexdigest()
 
     def save(self, *args, **kwargs):
         if self.reputation < 0:
@@ -216,7 +219,7 @@ class User(BaseModel, DjangoUser):
     class Meta:
         app_label = 'forum'
 
-class Activity(MetaContent):
+class Activity(GenericContent):
     """
     We keep some history data for user activities
     """
@@ -238,20 +241,15 @@ class Activity(MetaContent):
             activity_record.send(sender=self.activity_type, instance=self)
 
     @property
-    def question(self):
-        if self.activity_type == const.TYPE_ACTIVITY_ASK_QUESTION:
-            return self.content_object
-        elif self.activity_type in (const.TYPE_ACTIVITY_ANSWER,
-                const.TYPE_ACTIVITY_MARK_ANSWER, const.TYPE_ACTIVITY_UPDATE_QUESTION):
-            return self.content_object.question
-        elif self.activity_type == const.TYPE_ACTIVITY_COMMENT_QUESTION:
-            return self.content_object.content_object
-        elif self.activity_type == const.TYPE_ACTIVITY_COMMENT_ANSWER:
-            return self.content_object.content_object.question
-        elif self.activity_type == const.TYPE_ACTIVITY_UPDATE_ANSWER:
-            return self.content_object.content_object.answer.question
-        else:
-            raise NotImplementedError()
+    def node(self):
+        if self.activity_type in (const.TYPE_ACTIVITY_ANSWER, const.TYPE_ACTIVITY_ASK_QUESTION,
+                const.TYPE_ACTIVITY_MARK_ANSWER, const.TYPE_ACTIVITY_COMMENT_QUESTION, const.TYPE_ACTIVITY_COMMENT_ANSWER):
+            return self.content_object.leaf
+
+        if self.activity_type in (const.TYPE_ACTIVITY_UPDATE_ANSWER, const.TYPE_ACTIVITY_UPDATE_QUESTION):
+            return self.content_object.node.leaf            
+            
+        raise NotImplementedError()
 
     @property
     def type_as_string(self):
@@ -262,13 +260,15 @@ class Activity(MetaContent):
         elif self.activity_type  == const.TYPE_ACTIVITY_MARK_ANSWER:
             return _("marked an answer")
         elif self.activity_type  == const.TYPE_ACTIVITY_UPDATE_QUESTION:
-            return _("edited")
+            return _("edited a question")
         elif self.activity_type == const.TYPE_ACTIVITY_COMMENT_QUESTION:
-            return _("commented")
+            return _("commented a question")
         elif self.activity_type == const.TYPE_ACTIVITY_COMMENT_ANSWER:
             return _("commented an answer")
         elif self.activity_type == const.TYPE_ACTIVITY_UPDATE_ANSWER:
             return _("edited an answer")
+        elif self.activity_type == const.TYPE_ACTIVITY_PRIZE:
+            return _("received badge")
         else:
             raise NotImplementedError()
 

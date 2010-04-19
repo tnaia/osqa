@@ -1,12 +1,16 @@
 var response_commands = {
-    update_post_score: function(type, id, inc) {
-        var $score_board = $('#' + type + '-' + id + '-score');
-        $score_board.html(parseInt($score_board.html()) + inc)
+    update_post_score: function(id, inc) {
+        var $score_board = $('#post-' + id + '-score');
+        var current = parseInt($score_board.html())
+        if (isNaN(current)){
+            current = 0;
+        }
+        $score_board.html(current + inc)
     },
 
-    update_user_post_vote: function(type, id, vote_type) {
-        var $upvote_button = $('#' + type + '-' + id + '-upvote');
-        var $downvote_button = $('#' + type + '-' + id + '-downvote');
+    update_user_post_vote: function(id, vote_type) {
+        var $upvote_button = $('#post-' + id + '-upvote');
+        var $downvote_button = $('#post-' + id + '-downvote');
 
         $upvote_button.removeClass('on');
         $downvote_button.removeClass('on');
@@ -56,31 +60,6 @@ var response_commands = {
         $answer.find('.accept-answer').removeClass('on');
     },
 
-    update_comment_score: function(id, inc) {
-        var $comment_score = $('#comment-' + id + '-score');
-        var count = parseInt($comment_score.html());
-
-        if (isNaN(count))
-            count = 0;
-
-        count += inc;
-
-        if (count == 0)
-            count = '';
-
-        $comment_score.html(count);
-    },
-
-    update_likes_comment_mark: function(id, like_type) {
-        var $comment_like_mark = $("#comment-" + id + "-like");
-
-        if (like_type == "on") {
-            $comment_like_mark.addClass("on");
-        } else {
-            $comment_like_mark.removeClass("on");    
-        }
-    },
-
     remove_comment: function(id) {
         var $comment = $('#comment-' + id);
         $comment.css('background', 'red')
@@ -89,9 +68,9 @@ var response_commands = {
         });
     },
 
-    insert_comment: function(post_type, post_id, comment_id, comment, username, profile_url, delete_url) {
-        var $container = $('#comments-container-' + post_type + '-' + post_id);
-        var skeleton = $('#new-comment-skeleton-' + post_type + '-' + post_id).html().toString();
+    insert_comment: function(post_id, comment_id, comment, username, profile_url, delete_url) {
+        var $container = $('#comments-container-' + post_id);
+        var skeleton = $('#new-comment-skeleton-' + post_id).html().toString();
 
         skeleton = skeleton.replace(new RegExp('%ID%', 'g'), comment_id)
                 .replace(new RegExp('%COMMENT%', 'g'), comment)

@@ -62,8 +62,8 @@ class CannotDoubleActionException(Exception):
 
 
 @command
-def vote_post(request, post_type, id, vote_type):
-    post = get_object_or_404(post_type == "question" and Question or Answer, id=id)
+def vote_post(request, id, vote_type):
+    post = get_object_or_404(Node, id=id)
     vote_score = vote_type == 'up' and 1 or -1
     user = request.user
 
@@ -94,27 +94,27 @@ def vote_post(request, post_type, id, vote_type):
         vote_type = 'none'
     except ObjectDoesNotExist:
         #there is no vote yet
-        vote = Vote(user=user, content_object=post, vote=vote_score)
+        vote = Vote(user=user, node=post, vote=vote_score)
         vote.save()
 
     response = {
         'commands': {
-            'update_post_score': [post_type, id, vote.vote * (vote_type == 'none' and -1 or 1)],
-            'update_user_post_vote': [post_type, id, vote_type]
+            'update_post_score': [id, vote.vote * (vote_type == 'none' and -1 or 1)],
+            'update_user_post_vote': [id, vote_type]
         }
     }
 
     votes_left = int(settings.MAX_VOTES_PER_DAY) - user_vote_count_today + (vote_type == 'none' and -1 or 1)
 
     if int(settings.START_WARN_VOTES_LEFT) >= votes_left:
-        response['message'] = _("You have %(nvotes) %(tvotes) left today.") % \
+        response['message'] = _("You have %(nvotes)s %(tvotes)s left today.") % \
                     {'nvotes': votes_left, 'tvotes': ungettext('vote', 'votes', votes_left)}
 
     return response
 
 @command
-def flag_post(request, post_type, id):
-    post = get_object_or_404(post_type == "question" and Question or Answer, id=id)
+def flag_post(request, id):
+    post = get_object_or_404(Node, id=id)
     user = request.user
 
     if not user.is_authenticated():
@@ -132,18 +132,13 @@ def flag_post(request, post_type, id):
         raise NotEnoughLeftException(_('flags'), str(settings.MAX_FLAGS_PER_DAY))
 
     try:
-        post.flagged_items.get(user=user)
+        post.flaggeditems.get(user=user)
         raise CannotDoubleActionException(_('flag'))
     except ObjectDoesNotExist:
-        #there is no vote yet
         flag = FlaggedItem(user=user, content_object=post)
         flag.save()
 
-    response = {
-
-    }
-
-    return response
+    return {}
         
 @command
 def like_comment(request, id):
@@ -218,8 +213,8 @@ def mark_favorite(request, id):
     }
 
 @command
-def comment(request, post_type, id):
-    post = get_object_or_404(post_type == "question" and Question or Answer, id=id)
+def comment(request, id):
+    post = get_object_or_404(Node, id=id)
     user = request.user
 
     if not user.is_authenticated():
@@ -237,22 +232,20 @@ def comment(request, post_type, id):
         if not user.can_comment(post):
             raise NotEnoughRepPointsException( _('comment'))
 
-        comment = Comment(user=user, content_object=post)
+        comment = Comment(parent=post)
 
     comment_text = request.POST.get('comment', '').strip()
 
     if not len(comment_text):
         raise Exception(_("Comment is empty"))
 
-    comment.comment=comment_text
-    comment.save()
+    comment.create_revision(user, body=comment_text)
 
-    if comment._is_new:
+    if comment.active_revision.revision == 1:
         return {
             'commands': {
                 'insert_comment': [
-                    post_type, id,
-                    comment.id, comment_text, user.username, user.get_profile_url(), reverse('delete_comment', kwargs={'id': comment.id})
+                    id, comment.id, comment_text, user.username, user.get_profile_url(), reverse('delete_comment', kwargs={'id': comment.id})
                 ]
             }
         }
@@ -280,15 +273,13 @@ def accept_answer(request, id):
     commands = {}
 
     if answer.accepted:
-        answer.unmark_accepted()
+        answer.unmark_accepted(user)
         commands['unmark_accepted'] = [answer.id]
     else:
-        try:
-            accepted = question.answers.get(accepted=True)
-            accepted.unmark_accepted()
+        if question.accepted_answer is not None:
+            accepted = question.accepted_answer
+            accepted.unmark_accepted(user)
             commands['unmark_accepted'] = [accepted.id]
-        except:
-            pass
 
         answer.mark_accepted(user)
         commands['mark_accepted'] = [answer.id]
@@ -296,8 +287,8 @@ def accept_answer(request, id):
     return {'commands': commands}
 
 @command    
-def delete_post(request, post_type, id):
-    post = get_object_or_404(post_type == "question" and Question or Answer, id=id)
+def delete_post(request, id):
+    post = get_object_or_404(Node, id=id)
     user = request.user
 
     if not user.is_authenticated():
@@ -310,7 +301,7 @@ def delete_post(request, post_type, id):
 
     return {
         'commands': {
-                'mark_deleted': [post_type, id]
+                'mark_deleted': [post.node_type, id]
             }
     }
 

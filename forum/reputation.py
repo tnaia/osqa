@@ -1,5 +1,6 @@
 from django.db.models.signals import post_save
-from forum.models.meta import vote_canceled
+from forum.models.base import mark_canceled
+from forum.models.answer import answer_accepted, answer_accepted_canceled
 
 from forum.models import *
 from forum.const import *
@@ -9,10 +10,10 @@ def on_flagged_item(instance, created, **kwargs):
     if not created:
         return
 
-    post = instance.content_object
+    post = instance.content_object.leaf
     question = (post.__class__ == Question) and post or post.question
 
-    user.reputes.create(value=-int(settings.REP_LOST_BY_FLAGGED), question=question,
+    post.author.reputes.create(value=-int(settings.REP_LOST_BY_FLAGGED), question=question,
                reputation_type=TYPE_REPUTATION_LOST_BY_FLAGGED)
 
 
@@ -28,29 +29,37 @@ def on_flagged_item(instance, created, **kwargs):
 
 post_save.connect(on_flagged_item, sender=FlaggedItem)
 
+def on_answer_accepted(answer, user, **kwargs):
+    if user == answer.question.author and not user == answer.author:
+        user.reputes.create(
+            value=int(settings.REP_GAIN_BY_ACCEPTING), question=answer.question,
+            reputation_type=TYPE_REPUTATION_GAIN_BY_ACCEPTING_ANSWER)
 
-def on_answer_accepted_switch(instance, created, **kwargs):
-    if not created and 'accepted' in instance.get_dirty_fields() and (
-            not instance.accepted_by == instance.question.author):
-        repute_type, repute_value = instance.accepted and (
-            TYPE_REPUTATION_GAIN_BY_ANSWER_ACCEPTED, int(settings.REP_GAIN_BY_ACCEPTED)) or (
-            TYPE_REPUTATION_LOST_BY_ACCEPTED_ANSWER_CANCELED, -int(settings.REP_LOST_BY_ACCEPTED_CANCELED))
+    if not user == answer.author:
+        answer.author.reputes.create(
+            value=int(settings.REP_GAIN_BY_ACCEPTED), question=answer.question,
+            reputation_type=TYPE_REPUTATION_GAIN_BY_ANSWER_ACCEPTED)
 
-        instance.author.reputes.create(value=repute_value, question=instance.question, reputation_type=repute_type)
-        
-        if instance.accepted_by == instance.question.author:
-            repute_type, repute_value = instance.accepted and (
-            TYPE_REPUTATION_GAIN_BY_ACCEPTING_ANSWER, int(settings.REP_GAIN_BY_ACCEPTING)) or (
-            TYPE_REPUTATION_LOST_BY_CANCELLING_ACCEPTED_ANSWER, -int(settings.REP_LOST_BY_CANCELING_ACCEPTED))
+answer_accepted.connect(on_answer_accepted)
 
-            instance.question.author.reputes.create(value=repute_value, question=instance.question, reputation_type=repute_type)
 
-post_save.connect(on_answer_accepted_switch, sender=Answer)
+def on_answer_accepted_canceled(answer, user, **kwargs):
+    if user == answer.accepted_by:
+        user.reputes.create(
+            value=-int(settings.REP_LOST_BY_CANCELING_ACCEPTED), question=answer.question,
+            reputation_type=TYPE_REPUTATION_LOST_BY_CANCELLING_ACCEPTED_ANSWER)
+
+    if not user == answer.author:
+        answer.author.reputes.create(
+            value=-int(settings.REP_LOST_BY_ACCEPTED_CANCELED), question=answer.question,
+            reputation_type=TYPE_REPUTATION_LOST_BY_ACCEPTED_ANSWER_CANCELED)
+
+answer_accepted_canceled.connect(on_answer_accepted)
 
 
 def on_vote(instance, created, **kwargs):
-    if created and not instance.content_object.wiki:
-        post = instance.content_object
+    if created and (instance.content_object.node_type in ("question", "answer") and not instance.content_object.wiki):
+        post = instance.content_object.leaf
         question = (post.__class__ == Question) and post or post.question
 
         if instance.vote == -1:
@@ -70,8 +79,8 @@ post_save.connect(on_vote, sender=Vote)
 
 
 def on_vote_canceled(instance, **kwargs):
-    if not instance.content_object.wiki:
-        post = instance.content_object
+    if instance.content_object.node_type in ("question", "answer") and not instance.content_object.wiki:
+        post = instance.content_object.leaf
         question = (post.__class__ == Question) and post or post.question
 
         if instance.vote == -1:
@@ -84,7 +93,7 @@ def on_vote_canceled(instance, **kwargs):
 
         post.author.reputes.create(value=repute_value, question=question, reputation_type=repute_type)
 
-vote_canceled.connect(on_vote_canceled)
+mark_canceled.connect(on_vote_canceled, sender=Vote)
 
 
     

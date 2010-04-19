@@ -1,5 +1,4 @@
 import datetime
-import hashlib
 from urllib import quote_plus, urlencode
 from django.db import models, IntegrityError, connection, transaction
 from django.utils.http import urlquote  as django_urlquote
@@ -79,6 +78,7 @@ class BaseModel(models.Model):
 
 
 class ActiveObjectManager(models.Manager):
+    use_for_related_fields = True
     def get_query_set(self):
         return super(ActiveObjectManager, self).get_query_set().filter(canceled=False)
 
@@ -86,13 +86,31 @@ class UndeletedObjectManager(models.Manager):
     def get_query_set(self):
         return super(UndeletedObjectManager, self).get_query_set().filter(deleted=False)
 
-class MetaContent(BaseModel):
+class GenericContent(BaseModel):
     """
         Base class for Vote, Comment and FlaggedItem
     """
     content_type   = models.ForeignKey(ContentType)
     object_id      = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+    class Meta:
+        abstract = True
+        app_label = 'forum'
+
+class MetaContent(BaseModel):
+    node = models.ForeignKey('Node', null=True, related_name='%(class)ss')
+
+    def __init__(self, *args, **kwargs):
+        if 'content_object' in kwargs:
+            kwargs['node'] = kwargs['content_object']
+            del kwargs['content_object']
+
+        super (MetaContent, self).__init__(*args, **kwargs)
+    
+    @property
+    def content_object(self):
+        return self.node.leaf
 
     class Meta:
         abstract = True
@@ -140,95 +158,41 @@ class DeletableContent(models.Model):
         else:
             return False
 
+mark_canceled = django.dispatch.Signal(providing_args=['instance'])
 
-class ContentRevision(models.Model):
-    """
-        Base class for QuestionRevision and AnswerRevision
-    """
-    revision   = models.PositiveIntegerField()
-    author     = models.ForeignKey(User, related_name='%(class)ss')
-    revised_at = models.DateTimeField()
-    summary    = models.CharField(max_length=300, blank=True)
-    text       = models.TextField()
+class CancelableContent(models.Model):
+    canceled = models.BooleanField(default=False)
 
-    class Meta:
-        abstract = True
-        app_label = 'forum'
-
-
-class AnonymousContent(models.Model):
-    """
-        Base class for AnonymousQuestion and AnonymousAnswer
-    """
-    session_key = models.CharField(max_length=40)  #session id for anonymous questions
-    wiki = models.BooleanField(default=False)
-    added_at = models.DateTimeField(default=datetime.datetime.now)
-    ip_addr = models.IPAddressField(max_length=21) #allow high port numbers
-    author = models.ForeignKey(User,null=True)
-    text = models.TextField()
-    summary = models.CharField(max_length=180)
+    def cancel(self):
+        if not self.canceled:
+            self.canceled = True
+            self.save()
+            mark_canceled.send(sender=self.__class__, instance=self)
+            return True
+            
+        return False
 
     class Meta:
         abstract = True
         app_label = 'forum'
 
 
-from meta import Comment, Vote, FlaggedItem
-from user import activity_record
+from node import Node, NodeRevision
 
-class Content(BaseModel, DeletableContent):
-    """
-        Base class for Question and Answer
-    """
-    author               = models.ForeignKey(User, related_name='%(class)ss')
-    added_at             = models.DateTimeField(default=datetime.datetime.now)
-
+class QandA(Node):
     wiki                 = models.BooleanField(default=False)
     wikified_at          = models.DateTimeField(null=True, blank=True)
 
-    #locked               = models.BooleanField(default=False)
-    #locked_by            = models.ForeignKey(User, null=True, blank=True, related_name='locked_%(class)ss')
-    #locked_at            = models.DateTimeField(null=True, blank=True)
-
-    score                = models.IntegerField(default=0)
-    vote_up_count        = models.IntegerField(default=0)
-    vote_down_count      = models.IntegerField(default=0)
-
-    comment_count        = models.PositiveIntegerField(default=0)
-    offensive_flag_count = models.SmallIntegerField(default=0)
-
-    last_edited_at       = models.DateTimeField(null=True, blank=True)
-    last_edited_by       = models.ForeignKey(User, null=True, blank=True, related_name='last_edited_%(class)ss')
-
-    html                 = models.TextField()
-    comments             = generic.GenericRelation(Comment)
-    votes                = generic.GenericRelation(Vote)
-    flagged_items        = generic.GenericRelation(FlaggedItem)
-
     class Meta:
         abstract = True
         app_label = 'forum'
 
-    def save(self, *args, **kwargs):
-        self.__dict__['score'] = self.__dict__['vote_up_count'] - self.__dict__['vote_down_count']
-        super(Content,self).save(*args, **kwargs)
-
-        try:
-            ping_google()
-        except Exception:
-            logging.debug('problem pinging google did you register you sitemap with google?')
+    def wikify(self):
+        if not self.wiki:
+            self.wiki = True
+            self.wikified_at = datetime.datetime.now()
+            self.save()
 
 
-    def post_get_last_update_info(self):
-            when = self.added_at
-            who = self.author
-            if self.last_edited_at and self.last_edited_at > when:
-                when = self.last_edited_at
-                who = self.last_edited_by
-            comments = self.comments.all()
-            if len(comments) > 0:
-                for c in comments:
-                    if c.added_at > when:
-                        when = c.added_at
-                        who = c.user
-            return when, who
+
+
