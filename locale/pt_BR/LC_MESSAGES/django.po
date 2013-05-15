@@ -1008,98 +1008,99 @@ msgstr ""
 
 #: forum/skins/default/templates/badges.html:50
 msgid "Community badges"
-msgstr "Badge levels"
+msgstr "Tipos de condecoração"
 
 #: forum/skins/default/templates/badges.html:56
 msgid "gold badge description"
 msgstr ""
-"Gold badge is the highest award in this community. To obtain it have to show "
-"profound knowledge and ability in addition to your active participation."
+"Insígnia de ouro é a maior condecoração nesta comunidade. Para obtê-la é "
+"preciso demonstrar profundo conhecimento e habilidade, além  de participação "
+"ativa."
 
 #: forum/skins/default/templates/badges.html:64
 msgid "silver badge description"
 msgstr ""
-"Obtaining silver badge requires significant patience. If you have received "
-"one, that means you have greatly contributed to this community."
+"Obter uma insígnia de prata requer paciência significativa. Se você obteve "
+"uma, isso significa que você contribuiu enormemente para a comunidade."
 
 #: forum/skins/default/templates/badges.html:67
 msgid "bronze badge: often given as a special honor"
-msgstr ""
+msgstr "insígnia de bronze: geralmente uma honra especial"
 
 #: forum/skins/default/templates/badges.html:71
 msgid "bronze badge description"
 msgstr ""
-"If you are an active participant in this community, you will be recognized "
-"with this badge."
+"Se você é um participante ativo desta comunidade, você será reconhecido "
+"com esta insígnia."
 
 #: forum/skins/default/templates/book.html:7
 msgid "reading channel"
-msgstr ""
+msgstr "canal de leitura"
 
 #: forum/skins/default/templates/book.html:26
 msgid "[author]"
-msgstr ""
+msgstr "[autor]"
 
 #: forum/skins/default/templates/book.html:30
 msgid "[publisher]"
-msgstr ""
+msgstr "[quem publicou]"
 
 #: forum/skins/default/templates/book.html:34
 msgid "[publication date]"
-msgstr ""
+msgstr "[data de publicação]"
 
 #: forum/skins/default/templates/book.html:38
 msgid "[price]"
-msgstr ""
+msgstr "[preço]"
 
 #: forum/skins/default/templates/book.html:39
 msgid "currency unit"
-msgstr ""
+msgstr "[moeda]"
 
 #: forum/skins/default/templates/book.html:42
 msgid "[pages]"
-msgstr ""
+msgstr "[páginas]"
 
 #: forum/skins/default/templates/book.html:43
 msgid "pages abbreviation"
-msgstr ""
+msgstr "abreviação de páginas"
 
 #: forum/skins/default/templates/book.html:46
 msgid "[tags]"
-msgstr ""
+msgstr "[palavras-chave]"
 
 #: forum/skins/default/templates/book.html:56
 msgid "author blog"
-msgstr ""
+msgstr "blog do autor"
 
 #: forum/skins/default/templates/book.html:62
 msgid "book directory"
-msgstr ""
+msgstr "diretório do livro"
 
 #: forum/skins/default/templates/book.html:66
 msgid "buy online"
-msgstr ""
+msgstr "comprar online"
 
 #: forum/skins/default/templates/book.html:79
 msgid "reader questions"
-msgstr ""
+msgstr "perguntas dos leitores"
 
 #: forum/skins/default/templates/book.html:82
 msgid "ask the author"
-msgstr ""
+msgstr "pergunte ao autor"
 
 #: forum/skins/default/templates/book.html:88
 #: forum/skins/default/templates/book.html:93
 #: forum/skins/default/templates/users_questions.html:18
 msgid "this question was selected as favorite"
-msgstr ""
+msgstr "esta questão foi selecionada como favorita"
 
 #: forum/skins/default/templates/book.html:88
 #: forum/skins/default/templates/book.html:93
 #: forum/skins/default/templates/users_questions.html:11
 #: forum/skins/default/templates/users_questions.html:18
 msgid "number of times"
-msgstr ""
+msgstr "número de vezes"
 
 #: forum/skins/default/templates/book.html:105
 #: forum/skins/default/templates/index.html:40
@@ -1108,11 +1109,11 @@ msgstr ""
 #: forum/skins/default/templates/questions.html:80
 #: forum/skins/default/templates/users_questions.html:32
 msgid "votes"
-msgstr ""
+msgstr "votos"
 
 #: forum/skins/default/templates/book.html:108
 msgid "the answer has been accepted to be correct"
-msgstr ""
+msgstr "a resposta foi aceita como correta"
 
 #: forum/skins/default/templates/book.html:115
 #: forum/skins/default/templates/index.html:48
@@ -1121,7 +1122,7 @@ msgstr ""
 #: forum/skins/default/templates/questions.html:81
 #: forum/skins/default/templates/users_questions.html:40
 msgid "views"
-msgstr ""
+msgstr "visualizações"
 
 #: forum/skins/default/templates/book.html:125
 #: forum/skins/default/templates/index.html:63
@@ -1132,82 +1133,87 @@ msgstr ""
 #: forum/skins/default/templates/tags.html:49
 #: forum/skins/default/templates/users_questions.html:52
 msgid "using tags"
-msgstr ""
+msgstr "usando palavras-chave"
 
 #: forum/skins/default/templates/book.html:147
 msgid "subscribe to book RSS feed"
-msgstr ""
+msgstr "assine por RSS"
 
 #: forum/skins/default/templates/book.html:147
 #: forum/skins/default/templates/index.html:114
 #: forum/skins/default/templates/index_.html:114
 msgid "subscribe to the questions feed"
-msgstr ""
+msgstr "inscreva-se para receber notificação de questões"
 
 #: forum/skins/default/templates/changepw.html:7
 #: forum/skins/default/templates/authopenid/changepw.html:7
 msgid "Account: change password"
-msgstr "Change your password"
+msgstr "Mude sua senha"
 
 #: forum/skins/default/templates/changepw.html:8
 #: forum/skins/default/templates/authopenid/changepw.html:8
 msgid "This is where you can change your password. Make sure you remember it!"
 msgstr ""
-"<span class='strong'>To change your password</span> please fill out and "
-"submit this form"
+"<span class='strong'>Para mudar sua senha</span> por favor preencha e envie "
+"este formulário"
 
 #: forum/skins/default/templates/close.html:6
 #: forum/skins/default/templates/close.html:16
 msgid "Close question"
-msgstr ""
+msgstr "Fechar a questão"
 
 #: forum/skins/default/templates/close.html:19
 msgid "Close the question"
-msgstr ""
+msgstr "Fechar a questão"
 
 #: forum/skins/default/templates/close.html:25
 msgid "Reasons"
-msgstr ""
+msgstr "Razões"
 
 #: forum/skins/default/templates/close.html:28
 msgid "OK to close"
-msgstr ""
+msgstr "OK para fechar"
 
 #: forum/skins/default/templates/faq.html:11
 msgid "Frequently Asked Questions "
-msgstr ""
+msgstr "Perguntas Frequentes"
 
 #: forum/skins/default/templates/faq.html:16
 msgid "What kinds of questions can I ask here?"
-msgstr ""
+msgstr "Que tipo de questão eu posso perguntar aqui?"
 
 #: forum/skins/default/templates/faq.html:17
 msgid ""
 "Most importanly - questions should be <strong>relevant</strong> to this "
 "community."
 msgstr ""
+"Mais importante - questões devem ser <strong>relevantes</strong> para esta "
+"comunidade."
 
 #: forum/skins/default/templates/faq.html:18
 msgid ""
 "Before asking the question - please make sure to use search to see whether "
 "your question has alredy been answered."
 msgstr ""
-"Before you ask - please make sure to search for a similar question. You can "
-"search questions by their title or tags."
+"Antes de perguntar - por favor busque questões similares. Você pode buscar "
+"questões por seu título ou palavras-chave."
 
 #: forum/skins/default/templates/faq.html:21
 msgid "What questions should I avoid asking?"
-msgstr "What kinds of questions should be avoided?"
+msgstr "Que tipo de questões devem ser evitadas?"
 
 #: forum/skins/default/templates/faq.html:22
 msgid ""
 "Please avoid asking questions that are not relevant to this community, too "
 "subjective and argumentative."
 msgstr ""
+"Por favor evite questões que não sejam relevantes para esta comunidade, que "
+"sejam muito subjetivas ou muito polêmicas, há outros espaços para tratar de "
+"tais tipos de assuntos."
 
 #: forum/skins/default/templates/faq.html:27
 msgid "What should I avoid in my answers?"
-msgstr ""
+msgstr "O que eu deveria evitar em minhas respostas?"
 
 #: forum/skins/default/templates/faq.html:28
 msgid ""
@@ -1215,42 +1221,42 @@ msgid ""
 "discussions in your answers, comment facility allows some space for brief "
 "discussions."
 msgstr ""
-"is a <strong>question and answer</strong> site - <strong>it is not a "
-"discussion group</strong>. Please avoid holding debates in your answers as "
-"they tend to dilute the essense of questions and answers. For the brief "
-"discussions please use commenting facility."
+"é um site de <strong>perguntas e respsotas</strong> - <strong>não é um grupo "
+"de discussão</strong>. Por favor evite debater em suas respostas, já que isso "
+"tende a diluir a essência das questões e respostas. Para discussòes curtas, por "
+"favor deixe comentários."
 
 #: forum/skins/default/templates/faq.html:32
 msgid "Who moderates this community?"
-msgstr ""
+msgstr "Quem é modera esta comunidade?"
 
 #: forum/skins/default/templates/faq.html:33
 msgid "The short answer is: <strong>you</strong>."
-msgstr ""
+msgstr "A resposta curta é: <strong>você</strong>."
 
 #: forum/skins/default/templates/faq.html:34
 msgid "This website is moderated by the users."
-msgstr ""
+msgstr "Este site é moderado pelos seus usuários."
 
 #: forum/skins/default/templates/faq.html:35
 msgid ""
 "The reputation system allows users earn the authorization to perform a "
 "variety of moderation tasks."
 msgstr ""
-"Karma system allows users to earn rights to perform a variety of moderation "
-"tasks"
+"Um sistema de Carma permite aos usuários adquirir o direito de realizar "
+"uma série de tarefas de moderação"
 
 #: forum/skins/default/templates/faq.html:40
 msgid "How does reputation system work?"
-msgstr "How does karma system work?"
+msgstr "Como o sistema de carma funciona?"
 
 #: forum/skins/default/templates/faq.html:41
 msgid "Rep system summary"
 msgstr ""
-"When a question or answer is upvoted, the user who posted them will gain "
-"some points, which are called \"karma points\". These points serve as a "
-"rough measure of the community trust to him/her. Various moderation tasks "
-"are gradually assigned to the users based on those points."
+"Quando uma questão ou resposta recebe um voto positivo, o usuário que a "
+"postou recebe alguns pontos, que são chamados \"pontos de carma\". Estes "
+"pontos são uma medida aproximada de o quanto a comunidade confia no usuário. "
+"Tarefas de moderaçã são atribuídas aos usuários baseando-se nesses pontos."
 
 #: forum/skins/default/templates/faq.html:42
 msgid ""
@@ -1262,56 +1268,62 @@ msgid ""
 "or answer. The table below explains reputation point requirements for each "
 "type of moderation task."
 msgstr ""
+"Por exemplo, se você faz uma pergunta interessante, ou fornece uma resposta, "
+"boa, sua contribuição receberá votos favoráveis. Por outro lado se uma resposta "
+"é enganadora, ela receberá votos desfavoráveis. Cada voto a favor gera "
+"<strong>10</strong> pontos. Há um limite de <strong>200</strong> pontos que podem "
+"ser acumulados por questão ou resposta. A tabela abaixo explica os requisitos de "
+"pontuação para cada tipo de tarefa de moderação."
 
 #: forum/skins/default/templates/faq.html:53
 #: forum/skins/default/templates/user_votes.html:15
 msgid "upvote"
-msgstr ""
+msgstr "votar a favor"
 
 #: forum/skins/default/templates/faq.html:57
 msgid "use tags"
-msgstr ""
+msgstr "usar palavras-chave"
 
 #: forum/skins/default/templates/faq.html:62
 msgid "add comments"
-msgstr ""
+msgstr "comentar"
 
 #: forum/skins/default/templates/faq.html:66
 #: forum/skins/default/templates/user_votes.html:17
 msgid "downvote"
-msgstr ""
+msgstr "votar contra"
 
 #: forum/skins/default/templates/faq.html:69
 msgid "open and close own questions"
-msgstr ""
+msgstr "abrir ou fechar minhas questões "
 
 #: forum/skins/default/templates/faq.html:73
 msgid "retag questions"
-msgstr ""
+msgstr "alterar as palavras-chave de questões"
 
 #: forum/skins/default/templates/faq.html:78
 msgid "edit community wiki questions"
-msgstr ""
+msgstr "editar questões do wiki da comunidade"
 
 #: forum/skins/default/templates/faq.html:83
 msgid "edit any answer"
-msgstr ""
+msgstr "editar minha resposta"
 
 #: forum/skins/default/templates/faq.html:87
 msgid "open any closed question"
-msgstr ""
+msgstr "abrir qualquer questão fechada"
 
 #: forum/skins/default/templates/faq.html:91
 msgid "delete any comment"
-msgstr ""
+msgstr "remover um comentário qualquer"
 
 #: forum/skins/default/templates/faq.html:95
 msgid "delete any questions and answers and perform other moderation tasks"
-msgstr ""
+msgstr "remover qualquer questão ou resposta e realizar outras tarefas de moderação"
 
 #: forum/skins/default/templates/faq.html:103
 msgid "how to validate email title"
-msgstr "How to validate email and why?"
+msgstr "Como validar meu email e por que?"
 
 #: forum/skins/default/templates/faq.html:105
 #, python-format
@@ -1319,54 +1331,57 @@ msgid ""
 "how to validate email info with %(send_email_key_url)s %(gravatar_faq_url)s"
 msgstr ""
 "<form style='margin:0;padding:0;' action='%(send_email_key_url)s'><p><span "
-"class=\"bigger strong\">How?</span> If you have just set or changed your "
-"email address - <strong>check your email and click the included link</"
-"strong>.<br>The link contains a key generated specifically for you. You can "
-"also <button style='display:inline' type='submit'><strong>get a new key</"
-"strong></button> and check your email again.</p></form><span class=\"bigger "
-"strong\">Why?</span> Email validation is required to make sure that "
-"<strong>only you can post messages</strong> on your behalf and to "
-"<strong>minimize spam</strong> posts.<br>With email you can "
-"<strong>subscribe for updates</strong> on the most interesting questions. "
-"Also, when you sign up for the first time - create a unique <a href='%"
-"(gravatar_faq_url)s'><strong>gravatar</strong></a> personal image.</p>"
+"class=\"bigger strong\">Como?</span> Se acabou de escolher ou alterar seu "
+"endereço de email - <strong>verifique seu email e clique no link que lhe "
+"enviamos</strong>.<br>O link contém uma chave gerada especialmente para "
+"você. Você também pode <button style='display:inline' type='submit'><strong>"
+"obter uma nova chave</strong></button> e verificar seu email novamente.</p>"
+"</form><span class=\"bigger strong\">Por que?</span> Validação por email "
+"é importante para assegurar que <strong>somente  você pode postar mensagens"
+"</strong> em seu nome e para <strong>minimizar a quantidade de spam</strong>."
+"<br/>Com email você pode se <strong>inscrever para receber notícias</strong> "
+"sobre as questões mais interessantes. Ademais, ao se inscrever, você cria um "
+"<a href='%(gravatar_faq_url)s'><strong>gravatar</strong></a> único, uma imagem "
+"pessoal.</p>"
 
 #: forum/skins/default/templates/faq.html:110
 msgid "what is gravatar"
-msgstr "What is gravatar?"
+msgstr "O que é um gravatar?"
 
 #: forum/skins/default/templates/faq.html:111
 msgid "gravatar faq info"
 msgstr ""
-"<strong>Gravatar</strong> means <strong>g</strong>lobally <strong>r</"
-"strong>ecognized <strong>avatar</strong> - your unique avatar image "
-"associated with your email address. It's simply a picture that shows next to "
-"your posts on the websites that support gravatar protocol. By default gravar "
-"appears as a square filled with a snowflake-like figure. You can <strong>set "
-"your image</strong> at <a href='http://gravatar.com'><strong>gravatar.com</"
-"strong></a>"
+"<strong>Gravatar</strong> significa <strong>avatar</strong> <strong>g</"
+"strong>lobalmente <strong>r</strong>econhecido (a ordem vem do inglês) - "
+"é seu avatar (imagem) único, associado ao seu endereço de email. É simplesmente "
+"uma imagem mostrada junto a suas postagens em sites que usem o protocolo "
+"gravatar. O avatar padrão aparece como um quadrado preenchido com imagens "
+"parecidas a flocos de neve. Você pode <strong>escolher sua imagem</strong> "
+"em <a href='http://gravatar.com'><strong>gravatar.com</strong></a>"
 
 #: forum/skins/default/templates/faq.html:114
 msgid "To register, do I need to create new password?"
-msgstr ""
+msgstr "Para registrar, e preciso criar uma senha nova?"
 
 #: forum/skins/default/templates/faq.html:115
 msgid ""
 "No, you don't have to. You can login through any service that supports "
 "OpenID, e.g. Google, Yahoo, AOL, etc."
 msgstr ""
+"Não, isso não é necessário. Você pode entrar no sistema por meio de qualquer "
+"serviço qu suporte OpenID, como Google, Yahoo, AOL, etc."
 
 #: forum/skins/default/templates/faq.html:116
 msgid "Login now!"
-msgstr ""
+msgstr "Entre agora!"
 
 #: forum/skins/default/templates/faq.html:121
 msgid "Why other people can edit my questions/answers?"
-msgstr ""
+msgstr "Por que outras pessoas podem editar minhas perguntas e respostas?"
 
 #: forum/skins/default/templates/faq.html:122
 msgid "Goal of this site is..."
-msgstr ""
+msgstr "O objetivo deste site é..."
 
 #: forum/skins/default/templates/faq.html:122
 msgid ""
@@ -1374,14 +1389,17 @@ msgid ""
 "of this site and this improves the overall quality of the knowledge base "
 "content."
 msgstr ""
+"Assim questões e respostas podem ser editadas como páginas wiki por usuários "
+"experientes deste site, e isso melhora a qualidade global do repositório de "
+"conhecimento."
 
 #: forum/skins/default/templates/faq.html:123
 msgid "If this approach is not for you, we respect your choice."
-msgstr ""
+msgstr "Se esta abordagem não é para você, respeitamos a sua escolha."
 
 #: forum/skins/default/templates/faq.html:127
 msgid "Still have questions?"
-msgstr ""
+msgstr "Mais perguntas?"
 
 #: forum/skins/default/templates/faq.html:128
 #, python-format
@@ -1389,20 +1407,20 @@ msgid ""
 "Please ask your question at %(ask_question_url)s, help make our community "
 "better!"
 msgstr ""
-"Please <a href='%(ask_question_url)s'>ask</a> your question, help make our "
-"community better!"
+"Por favor <a href='%(ask_question_url)s'>faça</a> sua pergunta, nos ajude a "
+"fazer nossa comunidade melhor!"
 
 #: forum/skins/default/templates/faq.html:130
 #: forum/skins/default/templates/header.html:27
 #: forum/skins/default/templates/header.html:55
 msgid "questions"
-msgstr ""
+msgstr "questões"
 
 #: forum/skins/default/templates/faq.html:130
 #: forum/skins/default/templates/index.html:121
 #: forum/skins/default/templates/index_.html:121
 msgid "."
-msgstr ""
+msgstr "."
 
 #: forum/skins/default/templates/feedback.html:6
 msgid "Feedback"
@@ -1410,7 +1428,7 @@ msgstr ""
 
 #: forum/skins/default/templates/feedback.html:11
 msgid "Give us your feedback!"
-msgstr ""
+msgstr "Dê sua opinião!"
 
 #: forum/skins/default/templates/feedback.html:17
 #, python-format
@@ -1421,6 +1439,11 @@ msgid ""
 "            Please type and send us your message below.\n"
 "            "
 msgstr ""
+"\n"
+"            <span class='big strong'>Caro %(user_name)s</span>, gostaríamos "
+"de saber sua opinião.\n"
+"            Por favor escreva (abaixo) e envie-nos sua mensagem.\n"
+"            "
 
 #: forum/skins/default/templates/feedback.html:24
 msgid ""
@@ -1430,14 +1453,18 @@ msgid ""
 "            Please type and send us your message below.\n"
 "            "
 msgstr ""
-
+"\n"
+"            <span class='big strong'>Caro visitante</span>, gostaríamos "
+"de saber sua opinião.\n"
+"            Por favor escreva (abaixo) e envie-nos sua mensagem.\n"
+"            "
 #: forum/skins/default/templates/feedback.html:41
 msgid "(this field is required)"
-msgstr ""
+msgstr "(este campo é obrigatório)"
 
 #: forum/skins/default/templates/feedback.html:49
 msgid "Send Feedback"
-msgstr ""
+msgstr "Enviar Opinião"
 
 #: forum/skins/default/templates/feedback_email.txt:3
 #, python-format
@@ -1445,10 +1472,12 @@ msgid ""
 "\n"
 "Hello, this is a %(site_title)s forum feedback message\n"
 msgstr ""
+"\n"
+"Olá, esta é uma mensagem de opinião do fórum %(site_title)s\n"
 
 #: forum/skins/default/templates/feedback_email.txt:9
 msgid "Sender is"
-msgstr ""
+msgstr "Remetente é"
 
 #: forum/skins/default/templates/feedback_email.txt:11
 #: forum/skins/default/templates/feedback_email.txt:14
@@ -1457,18 +1486,18 @@ msgstr ""
 
 #: forum/skins/default/templates/feedback_email.txt:13
 msgid "anonymous"
-msgstr ""
+msgstr "anônimo"
 
 #: forum/skins/default/templates/feedback_email.txt:19
 msgid "Message body:"
-msgstr ""
+msgstr "Mensagem:"
 
 #: forum/skins/default/templates/footer.html:8
 #: forum/skins/default/templates/header.html:13
 #: forum/skins/default/templates/index.html:77
 #: forum/skins/default/templates/index_.html:77
 msgid "about"
-msgstr ""
+msgstr "sobre"
 
 #: forum/skins/default/templates/footer.html:9
 #: forum/skins/default/templates/header.html:14
@@ -1476,110 +1505,110 @@ msgstr ""
 #: forum/skins/default/templates/index_.html:78
 #: forum/skins/default/templates/question_edit_tips.html:17
 msgid "faq"
-msgstr ""
+msgstr "perguntas frequentes"
 
 #: forum/skins/default/templates/footer.html:10
 msgid "privacy policy"
-msgstr ""
+msgstr "política de privacidade"
 
 #: forum/skins/default/templates/footer.html:19
 msgid "give feedback"
-msgstr ""
+msgstr "dar opinião"
 
 #: forum/skins/default/templates/header.html:9
 msgid "logout"
-msgstr ""
+msgstr "sair"
 
 #: forum/skins/default/templates/header.html:11
 msgid "login"
-msgstr ""
+msgstr "entrar"
 
 #: forum/skins/default/templates/header.html:21
 msgid "back to home page"
-msgstr ""
+msgstr "voltar à página inicial"
 
 #: forum/skins/default/templates/header.html:29
 #: forum/skins/default/templates/header.html:57
 msgid "users"
-msgstr ""
+msgstr "usuários"
 
 #: forum/skins/default/templates/header.html:31
 msgid "books"
-msgstr ""
+msgstr "livros"
 
 #: forum/skins/default/templates/header.html:33
 #: forum/templatetags/extra_tags.py:165 forum/templatetags/extra_tags.py:194
 msgid "badges"
-msgstr ""
+msgstr "condecorações"
 
 #: forum/skins/default/templates/header.html:34
 msgid "unanswered questions"
-msgstr "unanswered"
+msgstr "sem resposta"
 
 #: forum/skins/default/templates/header.html:36
 msgid "ask a question"
-msgstr ""
+msgstr "fazer uma pergunta"
 
 #: forum/skins/default/templates/header.html:51
 msgid "search"
-msgstr ""
+msgstr "buscar"
 
 #: forum/skins/default/templates/index.html:8
 #: forum/skins/default/templates/index_.html:8
 msgid "Home"
-msgstr ""
+msgstr "Página inicial"
 
 #: forum/skins/default/templates/index.html:25
 #: forum/skins/default/templates/index_.html:25
 #: forum/skins/default/templates/questions.html:8
 msgid "Questions"
-msgstr ""
+msgstr "Questões"
 
 #: forum/skins/default/templates/index.html:27
 #: forum/skins/default/templates/index_.html:27
 msgid "last updated questions"
-msgstr ""
+msgstr "questões atualizadas recentemente"
 
 #: forum/skins/default/templates/index.html:27
 #: forum/skins/default/templates/index_.html:27
 #: forum/skins/default/templates/questions.html:47
 msgid "newest"
-msgstr ""
+msgstr "mais recente"
 
 #: forum/skins/default/templates/index.html:28
 #: forum/skins/default/templates/index_.html:28
 #: forum/skins/default/templates/questions.html:49
 msgid "hottest questions"
-msgstr ""
+msgstr "questões mais populares"
 
 #: forum/skins/default/templates/index.html:28
 #: forum/skins/default/templates/index_.html:28
 #: forum/skins/default/templates/questions.html:49
 msgid "hottest"
-msgstr ""
+msgstr "popular"
 
 #: forum/skins/default/templates/index.html:29
 #: forum/skins/default/templates/index_.html:29
 #: forum/skins/default/templates/questions.html:50
 msgid "most voted questions"
-msgstr ""
+msgstr "questões mais votadas "
 
 #: forum/skins/default/templates/index.html:29
 #: forum/skins/default/templates/index_.html:29
 #: forum/skins/default/templates/questions.html:50
 msgid "most voted"
-msgstr ""
+msgstr "mais votada"
 
 #: forum/skins/default/templates/index.html:30
 #: forum/skins/default/templates/index_.html:30
 msgid "all questions"
-msgstr ""
+msgstr "todas as questões"
 
 #: forum/skins/default/templates/index.html:42
 #: forum/skins/default/templates/index_.html:42
 #: forum/skins/default/templates/users_questions.html:34
 msgid "this answer has been accepted to be correct"
-msgstr ""
+msgstr "esta resposta foi aceita como correta"
 
 #: forum/skins/default/templates/index.html:44
 #: forum/skins/default/templates/index_.html:44
@@ -1587,7 +1616,7 @@ msgstr ""
 #: forum/skins/default/templates/questions.html:79
 #: forum/skins/default/templates/users_questions.html:36
 msgid "answers"
-msgstr ""
+msgstr "respostas"
 
 #: forum/skins/default/templates/index.html:63
 #: forum/skins/default/templates/index_.html:63
@@ -1597,130 +1626,130 @@ msgstr ""
 #: forum/skins/default/templates/tags.html:49
 #: forum/skins/default/templates/users_questions.html:52
 msgid "see questions tagged"
-msgstr ""
+msgstr "veja questòes com palavra-chave"
 
 #: forum/skins/default/templates/index.html:74
 #: forum/skins/default/templates/index_.html:74
 msgid "welcome to website"
-msgstr "Welcome to Q&amp;A forum"
+msgstr "Bem-vindo ap fórum de Perguntas &amp; Respostas"
 
 #: forum/skins/default/templates/index.html:85
 #: forum/skins/default/templates/index_.html:85
 msgid "Recent tags"
-msgstr ""
+msgstr "Palavras-chave recentes"
 
 #: forum/skins/default/templates/index.html:90
 #: forum/skins/default/templates/index_.html:90
 #: forum/skins/default/templates/question.html:133
 #, python-format
 msgid "see questions tagged '%(tagname)s'"
-msgstr ""
+msgstr "veja questões com palavra-chave '%(tagname)s'"
 
 #: forum/skins/default/templates/index.html:93
 #: forum/skins/default/templates/index.html:121
 #: forum/skins/default/templates/index_.html:93
 #: forum/skins/default/templates/index_.html:121
 msgid "popular tags"
-msgstr "tags"
+msgstr "palavras-chave"
 
 #: forum/skins/default/templates/index.html:98
 #: forum/skins/default/templates/index_.html:98
 msgid "Recent awards"
-msgstr "Recent badges"
+msgstr "Condecorações recentes"
 
 #: forum/skins/default/templates/index.html:104
 msgid "given to"
-msgstr ""
+msgstr "dadas a"
 
 #: forum/skins/default/templates/index.html:109
 #: forum/skins/default/templates/index_.html:109
 msgid "all awards"
-msgstr "all badges"
+msgstr "todas as condecorações"
 
 #: forum/skins/default/templates/index.html:114
 #: forum/skins/default/templates/index_.html:114
 msgid "subscribe to last 30 questions by RSS"
-msgstr ""
+msgstr "inscreva-se para receber as últimas 30 questões por RSS"
 
 #: forum/skins/default/templates/index.html:121
 #: forum/skins/default/templates/index_.html:121
 msgid "Still looking for more? See"
-msgstr ""
+msgstr "Buscando mais? Veja"
 
 #: forum/skins/default/templates/index.html:121
 #: forum/skins/default/templates/index_.html:121
 msgid "complete list of questions"
-msgstr "list of all questions"
+msgstr "lista de todas as questões"
 
 #: forum/skins/default/templates/index.html:121
 #: forum/skins/default/templates/index_.html:121
 #: forum/skins/default/templates/auth/signup.html:28
 #: forum/skins/default/templates/authopenid/signup.html:28
 msgid "or"
-msgstr ""
+msgstr "ou"
 
 #: forum/skins/default/templates/index.html:121
 #: forum/skins/default/templates/index_.html:121
 msgid "Please help us answer"
-msgstr ""
+msgstr "Por favor ajude-nos a responder"
 
 #: forum/skins/default/templates/index.html:121
 #: forum/skins/default/templates/index_.html:121
 msgid "list of unanswered questions"
-msgstr "unanswered questions"
+msgstr "questõe sem resposta"
 
 #: forum/skins/default/templates/logout.html:6
 #: forum/skins/default/templates/logout.html:16
 msgid "Logout"
-msgstr ""
+msgstr "Sair"
 
 #: forum/skins/default/templates/logout.html:19
 msgid ""
 "As a registered user you can login with your OpenID, log out of the site or "
 "permanently remove your account."
 msgstr ""
-"Clicking <strong>Logout</strong> will log you out from the forumbut will not "
-"sign you off from your OpenID provider.</p><p>If you wish to sign off "
-"completely - please make sure to log out from your OpenID provider as well."
+"Clicar em <strong>Sair</strong> não o desconecta do seu provedor de OpenID.</p>"
+"<p>Se você deseja desconectar completamente - certifique-se de desconectar também "
+"do seu provedor de OpenID."
 
 #: forum/skins/default/templates/logout.html:20
 msgid "Logout now"
-msgstr "Logout Now"
+msgstr "Sair Agora"
 
 #: forum/skins/default/templates/notarobot.html:3
 msgid "Please prove that you are a Human Being"
-msgstr ""
+msgstr "Por favor prove que você é um Ser Humano (e não um computador)"
 
 #: forum/skins/default/templates/notarobot.html:10
 msgid "I am a Human Being"
-msgstr ""
+msgstr "Eu sou um Ser Humano"
 
 #: forum/skins/default/templates/pagesize.html:6
 msgid "posts per page"
-msgstr ""
+msgstr "postagens por página"
 
 #: forum/skins/default/templates/paginator.html:6
 #: forum/skins/default/templates/paginator.html:7
 msgid "previous"
-msgstr ""
+msgstr "anterior"
 
 #: forum/skins/default/templates/paginator.html:19
 msgid "current page"
-msgstr ""
+msgstr "página atual"
 
 #: forum/skins/default/templates/paginator.html:22
 #: forum/skins/default/templates/paginator.html:29
 msgid "page number "
-msgstr ""
+msgstr "número da página"
 
 #: forum/skins/default/templates/paginator.html:22
 #: forum/skins/default/templates/paginator.html:29
 msgid "number - make blank in english"
-msgstr ""
+msgstr "número - deixe em branco em inglês"
 
 #: forum/skins/default/templates/paginator.html:33
 msgid "next page"
-msgstr ""
+msgstr "próxima página"
 
 #: forum/skins/default/templates/post_contributor_info.html:9
 #, python-format
@@ -1730,159 +1759,162 @@ msgid ""
 "            "
 msgid_plural ""
 "\n"
-"                %(rev_count)s revisions\n"
+"                %(rev_count)s revisões\n"
 "            "
 msgstr[0] ""
 msgstr[1] ""
 
 #: forum/skins/default/templates/post_contributor_info.html:19
 msgid "asked"
-msgstr ""
+msgstr "perguntou"
 
 #: forum/skins/default/templates/post_contributor_info.html:22
 msgid "answered"
-msgstr ""
+msgstr "respondeu"
 
 #: forum/skins/default/templates/post_contributor_info.html:24
 msgid "posted"
-msgstr ""
+msgstr "postou"
 
 #: forum/skins/default/templates/post_contributor_info.html:45
 msgid "updated"
-msgstr ""
+msgstr "atualizou"
 
 #: forum/skins/default/templates/privacy.html:6
 #: forum/skins/default/templates/privacy.html:11
 msgid "Privacy policy"
-msgstr ""
+msgstr "Política de privacidade"
 
 #: forum/skins/default/templates/privacy.html:15
 msgid "general message about privacy"
 msgstr ""
-"Respecting users privacy is an important core principle of this Q&amp;A "
-"forum. Information on this page details how this forum protects your "
-"privacy, and what type of information is collected."
+"Respeitar a privadicade dos usuários é um dos princípios centrais deste "
+"fórum de Perguntas &amp; Respostas. Informação nesta página contém os "
+"detalhes de como este fórum protege sua privacidade, e que tipo de "
+"informação é coletada."
 
 #: forum/skins/default/templates/privacy.html:18
 msgid "Site Visitors"
-msgstr ""
+msgstr "Visitantes do site"
 
 #: forum/skins/default/templates/privacy.html:20
 msgid "what technical information is collected about visitors"
 msgstr ""
-"Information on question views, revisions of questions and answers - both "
-"times and content are recorded for each user in order to correctly count "
-"number of views, maintain data integrity and report relevant updates."
+"Informação sobre a visualização das perguntas, revisões de questões e "
+"respostas - tanto número de vezes quanto conteúdo são armazenadas para "
+"cada usuário de modo a corretamente contar o número de visualizações e "
+"Assegurar integridade das informações, e relatar atualizações importantes."
 
 #: forum/skins/default/templates/privacy.html:23
 msgid "Personal Information"
-msgstr ""
+msgstr "Informação Pessoal"
 
 #: forum/skins/default/templates/privacy.html:25
 msgid "details on personal information policies"
 msgstr ""
-"Members of this community may choose to display personally identifiable "
-"information in their profiles. Forum will never display such information "
-"without a request from the user."
+"Membros desta comunidade podem optar por exibir informação que os identifique "
+"pessoalmente em seu perfil. O Fórum jamais exibe tais informações sem que "
+"tal tenha sido solicitado pelo próprio usuário."
 
 #: forum/skins/default/templates/privacy.html:28
 msgid "Other Services"
-msgstr ""
+msgstr "Outros Serviços"
 
 #: forum/skins/default/templates/privacy.html:30
 msgid "details on sharing data with third parties"
 msgstr ""
-"None of the data that is not openly shown on the forum by the choice of the "
-"user is shared with any third party."
+"Nenhum dado que não seja abertamente exibido pelo fórum por escolha do usuário "
+"é exposto abertamente ou compartilhado com terceiros."
 
 #: forum/skins/default/templates/privacy.html:35
 msgid "cookie policy details"
 msgstr ""
-"Forum software relies on the internet cookie technology to keep track of "
-"user sessions. Cookies must be enabled in your browser so that forum can "
-"work for you."
+"O software do fórum depende de da tecnologia chamada cookies para manter "
+"registro das sessões dos usuários. Cookies devem ser permitidos pelo seu "
+"navegador para que o fórum funcione para você."
 
 #: forum/skins/default/templates/privacy.html:37
 msgid "Policy Changes"
-msgstr ""
+msgstr "Mudanças na Política"
 
 #: forum/skins/default/templates/privacy.html:38
 msgid "how privacy policies can be changed"
 msgstr ""
-"These policies may be adjusted to improve protection of user's privacy. "
-"Whenever such changes occur, users will be notified via the internal "
-"messaging system. "
+"Estas políticas podem ser ajustadas para melhorar a proteção da privacidade "
+"dos usuários do site. Sempre que tais mudanças ocorrerem, os usuários serão "
+"notificados pelo sistema interno de mensagens. "
+
 
 #: forum/skins/default/templates/question.html:77
 #: forum/skins/default/templates/question.html:78
 #: forum/skins/default/templates/question.html:94
 #: forum/skins/default/templates/question.html:96
 msgid "i like this post (click again to cancel)"
-msgstr ""
+msgstr "eu gostei desta postagem (clique novamente para cancelar)"
 
 #: forum/skins/default/templates/question.html:80
 #: forum/skins/default/templates/question.html:98
 #: forum/skins/default/templates/question.html:255
 msgid "current number of votes"
-msgstr ""
+msgstr "número atual de votos favoráveis"
 
 #: forum/skins/default/templates/question.html:89
 #: forum/skins/default/templates/question.html:90
 #: forum/skins/default/templates/question.html:103
 #: forum/skins/default/templates/question.html:104
 msgid "i dont like this post (click again to cancel)"
-msgstr ""
+msgstr "eu não gosto desta postagem (clique novamente para cancelar)"
 
 #: forum/skins/default/templates/question.html:108
 #: forum/skins/default/templates/question.html:109
 msgid "mark this question as favorite (click again to cancel)"
-msgstr ""
+msgstr "marcar a questão como favorita (clique novament para cancelar)"
 
 #: forum/skins/default/templates/question.html:115
 #: forum/skins/default/templates/question.html:116
 msgid "remove favorite mark from this question (click again to restore mark)"
-msgstr ""
+msgstr "remover marca de favorita da questão (clique novamente para restaurar a marcação)"
 
 #: forum/skins/default/templates/question.html:138
 #: forum/skins/default/templates/question.html:292
 #: forum/skins/default/templates/revisions_answer.html:58
 #: forum/skins/default/templates/revisions_question.html:58
 msgid "edit"
-msgstr ""
+msgstr "editar"
 
 #: forum/skins/default/templates/question.html:143
 msgid "reopen"
-msgstr ""
+msgstr "reabrir"
 
 #: forum/skins/default/templates/question.html:147
 msgid "close"
-msgstr ""
+msgstr "fechar"
 
 #: forum/skins/default/templates/question.html:153
 #: forum/skins/default/templates/question.html:297
 msgid ""
 "report as offensive (i.e containing spam, advertising, malicious text, etc.)"
-msgstr ""
+msgstr "relatar como ofensivo (por exemplo, contendo spam, propaganda, texto malicioso, etc.)"
 
 #: forum/skins/default/templates/question.html:154
 #: forum/skins/default/templates/question.html:298
 msgid "flag offensive"
-msgstr ""
+msgstr "marcar como ofensivo"
 
 #: forum/skins/default/templates/question.html:162
 #: forum/skins/default/templates/question.html:309
 msgid "delete"
-msgstr ""
+msgstr "remover"
 
 #: forum/skins/default/templates/question.html:180
 #: forum/skins/default/templates/question.html:329
 msgid "delete this comment"
-msgstr ""
+msgstr "remover este comentário"
 
 #: forum/skins/default/templates/question.html:191
 #: forum/skins/default/templates/question.html:340
 msgid "add comment"
-msgstr "post a comment"
+msgstr "postar um comentário"
 
 #: forum/skins/default/templates/question.html:195
 #, python-format
@@ -1892,8 +1924,8 @@ msgid ""
 "                                            "
 msgid_plural ""
 "\n"
-"                                            see <strong>%(counter)s</strong> "
-"more\n"
+"                                            veja mais<strong>%(counter)s</strong> "
+"\n"
 "                                            "
 msgstr[0] ""
 msgstr[1] ""
@@ -1907,8 +1939,8 @@ msgid ""
 "                                            "
 msgid_plural ""
 "\n"
-"                                            see <strong>%(counter)s</strong> "
-"more comments\n"
+"                                            veja mais <strong>%(counter)s</strong> "
+"comentários\n"
 "                                            "
 msgstr[0] ""
 msgstr[1] ""
@@ -1918,11 +1950,12 @@ msgstr[1] ""
 msgid ""
 "The question has been closed for the following reason \"%(close_reason)s\" by"
 msgstr ""
+"A questão foi fechada pela seguinte razão \"%(close_reason)s\" por"
 
 #: forum/skins/default/templates/question.html:219
 #, python-format
 msgid "close date %(closed_at)s"
-msgstr ""
+msgstr "data de fechamento %(closed_at)s"
 
 #: forum/skins/default/templates/question.html:227
 #, python-format
@@ -1932,58 +1965,62 @@ msgid ""
 "                    "
 msgid_plural ""
 "\n"
-"                    %(counter)s Answers:\n"
+"                    %(counter)s Respostas:\n"
 "                    "
 msgstr[0] ""
+"\n"
+"                    Uma Resposta:\n"
+"                    "
+
 msgstr[1] ""
 
 #: forum/skins/default/templates/question.html:235
 msgid "oldest answers will be shown first"
-msgstr ""
+msgstr "respostas mais antigas serão exibidas primeiro"
 
 #: forum/skins/default/templates/question.html:235
 msgid "oldest answers"
-msgstr "oldest"
+msgstr "mais antigas"
 
 #: forum/skins/default/templates/question.html:237
 msgid "newest answers will be shown first"
-msgstr ""
+msgstr "respostas mais novas serão exibidas primeiro"
 
 #: forum/skins/default/templates/question.html:237
 msgid "newest answers"
-msgstr "newest"
+msgstr "mais novas"
 
 #: forum/skins/default/templates/question.html:239
 msgid "most voted answers will be shown first"
-msgstr ""
+msgstr "respostass mais novas "
 
 #: forum/skins/default/templates/question.html:239
 msgid "popular answers"
-msgstr "most voted"
+msgstr "mais votadas"
 
 #: forum/skins/default/templates/question.html:253
 #: forum/skins/default/templates/question.html:254
 msgid "i like this answer (click again to cancel)"
-msgstr ""
+msgstr "eu gosto desta resposta (clique novamente para cancelar)"
 
 #: forum/skins/default/templates/question.html:260
 #: forum/skins/default/templates/question.html:261
-msgid "i dont like this answer (click again to cancel)"
+msgid "eu não gosto desta resposta (clique novamente para cancelar)"
 msgstr ""
 
 #: forum/skins/default/templates/question.html:266
 #: forum/skins/default/templates/question.html:267
 msgid "mark this answer as favorite (click again to undo)"
-msgstr ""
+msgstr "marque esta resposta como favorita (clique novamente para desfazer)"
 
 #: forum/skins/default/templates/question.html:272
 #: forum/skins/default/templates/question.html:273
 msgid "the author of the question has selected this answer as correct"
-msgstr ""
+msgstr "o autor a questão selecionou esta resposta como correta"
 
 #: forum/skins/default/templates/question.html:286
 msgid "answer permanent link"
-msgstr ""
+msgstr "link permanente para a resposta"
 
 #: forum/skins/default/templates/question.html:287
 msgid "permanent link"
@@ -1991,7 +2028,7 @@ msgstr "link"
 
 #: forum/skins/default/templates/question.html:309
 msgid "undelete"
-msgstr ""
+msgstr "desfazer remoção"
 
 #: forum/skins/default/templates/question.html:344
 #, python-format
@@ -2002,8 +2039,8 @@ msgid ""
 "                                                        "
 msgid_plural ""
 "\n"
-"                                                        see <strong>%"
-"(counter)s</strong> more\n"
+"                                                        ver mais <strong>%"
+"(counter)s</strong>\n"
 "                                                        "
 msgstr[0] ""
 msgstr[1] ""
@@ -2017,8 +2054,8 @@ msgid ""
 "                                                        "
 msgid_plural ""
 "\n"
-"                                                        see <strong>%"
-"(counter)s</strong> more comments\n"
+"                                                        ver mais <strong>%"
+"(counter)s</strong> comentários\n"
 "                                                        "
 msgstr[0] ""
 msgstr[1] ""
@@ -2027,13 +2064,13 @@ msgstr[1] ""
 #: forum/skins/default/templates/question.html:379
 msgid "Notify me once a day when there are any new answers"
 msgstr ""
-"<strong>Notify me</strong> once a day by email when there are any new "
-"answers or updates"
+"<strong>Notifique-me</strong> uma vez ao dia por email quando houver alguma nova "
+"resposta ou atualizações"
 
 #: forum/skins/default/templates/question.html:382
 msgid "Notify me weekly when there are any new answers"
 msgstr ""
-"<strong>Notify me</strong> weekly when there are any new answers or updates"
+"<strong>Notifique-me</strong> semanalmente quando houver alguma nova resposta ou atualizações"
 
 #: forum/skins/default/templates/question.html:387
 #, python-format
@@ -2044,179 +2081,179 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"(note: you can always <a href='%(profile_url)s?"
-"sort=email_subscriptions'>adjust frequency</a> of email updates)"
+"(nota: você sempre pode <a href='%(profile_url)s?"
+"sort=email_subscriptions'>ajustar a frequência</a> das notificações por email)"
 
 #: forum/skins/default/templates/question.html:394
 msgid "once you sign in you will be able to subscribe for any updates here"
 msgstr ""
-"<span class='strong'>Here</span> (once you log in) you will be able to sign "
-"up for the periodic email updates about this question."
+"<span class='strong'>Aqui</span> (uma vez que você esteja cadastrado no fórum) "
+"você poderá you entrar no fórum e solicitar atualizações de email a respeito desta "
+"questão."
 
 #: forum/skins/default/templates/question.html:405
 msgid "Your answer"
-msgstr ""
+msgstr "Sua resposta"
 
 #: forum/skins/default/templates/question.html:407
 msgid "Be the first one to answer this question!"
-msgstr ""
+msgstr "Seja o primeiro a responder esta questão!"
 
 #: forum/skins/default/templates/question.html:413
 msgid "you can answer anonymously and then login"
 msgstr ""
-"<span class='strong big'>Please start posting your answer anonymously</span> "
-"- your answer will be saved within the current session and published after "
-"you log in or create a new account. Please try to give a <strong>substantial "
-"answer</strong>, for discussions, <strong>please use comments</strong> and "
-"<strong>please do remember to vote</strong> (after you log in)!"
+"<span class='strong big'>Por favor comece a postar sua questão anonimamente</span> "
+"- sua resposta será salva nesta sessão e será publicada depois que você entrar ou "
+"criar uma nova conta. Por favor tente dar uma resposta <strong>substancial"
+"</strong>. Para discussões, <strong>por favor use os comentários</strong> e "
+"<strong>lembre-se de votar a questão</strong> (depois de entrar no fórum)!"
 
 #: forum/skins/default/templates/question.html:417
 msgid "answer your own question only to give an answer"
 msgstr ""
-"<span class='big strong'>You are welcome to answer your own question</span>, "
-"but please make sure to give an <strong>answer</strong>. Remember that you "
-"can always <strong>revise your original question</strong>. Please "
-"<strong>use comments for discussions</strong>  and <strong>please don't "
-"forget to vote :)</strong> for the answers that you liked (or perhaps did "
-"not like)! "
+"<span class='big strong'>Fique à vontade para responder sua própria questão</span>, "
+"mas certifique-se de dar uma <strong>resposta</strong>. Lembre-se que você sempre pode "
+"<strong>revisar sua questão original</strong>. Por favor <strong>use comentários para "
+"discutir</strong> e <strong>por favor não esqueça de votar :)</strong> para as respostas "
+"que gostou (ou, talvez, não gostou)! "
 
 #: forum/skins/default/templates/question.html:419
 msgid "please only give an answer, no discussions"
 msgstr ""
-"<span class='big strong'>Please try to give a substantial answer</span>. If "
-"you wanted to comment on the question or answer, just <strong>use the "
-"commenting tool</strong>. Please remember that you can always <strong>revise "
-"your answers</strong> - no need to answer the same question twice. Also, "
-"please <strong>don't forget to vote</strong> - it really helps to select the "
-"best questions and answers!"
+"<span class='big strong'>Por favor tente dar uma resposta substancial</span>. Se "
+"você gostaria de comentar a questão ou a resposta, <strong>use a ferramenta para "
+"deixar comentários</strong>. Por favor lembre-se de que você pode sempre "
+"<strong>revisarsuas respostas</strong> - não é preciso responder a mesma pergunta "
+"duas vezes. Além disso, por favor <strong>não esqueça de votar</strong> - isso "
+"realmente ajuda a selecionar as melhores questões e respostas!"
 
 #: forum/skins/default/templates/question.html:455
 msgid "Login/Signup to Post Your Answer"
-msgstr ""
+msgstr "Entre ou Inscreva-se para Postar sua Resposta"
 
 #: forum/skins/default/templates/question.html:458
 msgid "Answer Your Own Question"
-msgstr ""
+msgstr "Responder Minha Própria Questão"
 
 #: forum/skins/default/templates/question.html:460
 msgid "Answer the question"
-msgstr "Post Your Answer"
+msgstr "Postar sua Resposta"
 
 #: forum/skins/default/templates/question.html:473
 msgid "Question tags"
-msgstr "Tags"
+msgstr "Palavras-chave"
 
 #: forum/skins/default/templates/question.html:483
 msgid "question asked"
-msgstr "Asked"
+msgstr "Questão feita"
 
 #: forum/skins/default/templates/question.html:486
 msgid "question was seen"
-msgstr "Seen"
+msgstr "Vista"
 
 #: forum/skins/default/templates/question.html:486
 msgid "times"
-msgstr ""
+msgstr "vezes"
 
 #: forum/skins/default/templates/question.html:489
 msgid "last updated"
-msgstr "Last updated"
+msgstr "Última atualização"
 
 #: forum/skins/default/templates/question.html:494
 msgid "Related questions"
-msgstr ""
+msgstr "Questões relacionadas"
 
 #: forum/skins/default/templates/question_edit.html:5
 #: forum/skins/default/templates/question_edit.html:66
 msgid "Edit question"
-msgstr ""
+msgstr "Editar questão"
 
 #: forum/skins/default/templates/question_edit_tips.html:4
 msgid "question tips"
-msgstr "Tips"
+msgstr "Dicas"
 
 #: forum/skins/default/templates/question_edit_tips.html:7
 msgid "please ask a relevant question"
-msgstr "ask a question relevant to the CNPROG community"
+msgstr "faça uma pergunta relevante à comunidade"
 
 #: forum/skins/default/templates/question_edit_tips.html:10
 msgid "please try provide enough details"
-msgstr "provide enough details"
+msgstr "por favor tente fornecer detalhes o bastante"
 
 #: forum/skins/default/templates/question_retag.html:4
 #: forum/skins/default/templates/question_retag.html:53
 msgid "Change tags"
-msgstr ""
+msgstr "Mudar palavras-chave"
 
 #: forum/skins/default/templates/question_retag.html:40
 msgid "up to 5 tags, less than 20 characters each"
-msgstr ""
+msgstr "até 5 palavras-chave, com menos de 20 caracteres cada"
 
 #: forum/skins/default/templates/question_retag.html:83
 msgid "Why use and modify tags?"
-msgstr ""
+msgstr "Por que usar e modificar palavras-chave?"
 
 #: forum/skins/default/templates/question_retag.html:86
 msgid "tags help us keep Questions organized"
-msgstr ""
+msgstr "palavras-chave nos ajudam a manter as Questões organizadas"
 
 #: forum/skins/default/templates/question_retag.html:94
 msgid "tag editors receive special awards from the community"
-msgstr ""
+msgstr "editores de palavras-chave recebem condecorações da comunidade"
 
 #: forum/skins/default/templates/questions.html:29
 msgid "Found by tags"
-msgstr "Tagged questions"
+msgstr "Questões marcadas com as palavras-chave"
 
 #: forum/skins/default/templates/questions.html:33
 msgid "Search results"
-msgstr ""
+msgstr "Resultados da busca"
 
 #: forum/skins/default/templates/questions.html:35
 msgid "Found by title"
-msgstr ""
+msgstr "Questões encontradas com o título"
 
 #: forum/skins/default/templates/questions.html:39
 msgid "Unanswered questions"
-msgstr ""
+msgstr "Questões sem resposta"
 
 #: forum/skins/default/templates/questions.html:41
 msgid "All questions"
-msgstr ""
+msgstr "Todas as questões"
 
 #: forum/skins/default/templates/questions.html:47
 msgid "most recently asked questions"
-msgstr ""
+msgstr "questões mais recentes"
 
 #: forum/skins/default/templates/questions.html:48
 msgid "most recently updated questions"
-msgstr ""
+msgstr "questões atualizadas mais recentemente"
 
 #: forum/skins/default/templates/questions.html:48
 msgid "active"
-msgstr ""
+msgstr "ativa"
 
 #: forum/skins/default/templates/questions.html:111
 #: forum/skins/default/templates/questions.html:125
 msgid "Posted:"
-msgstr ""
+msgstr "Postada:"
 
 #: forum/skins/default/templates/questions.html:114
 #: forum/skins/default/templates/questions.html:119
 msgid "Updated:"
-msgstr ""
+msgstr "Atualizada:"
 
 #: forum/skins/default/templates/questions.html:144
 msgid "Did not find anything?"
-msgstr ""
+msgstr "Não encontrou nada?"
 
 #: forum/skins/default/templates/questions.html:147
 msgid "Did not find what you were looking for?"
-msgstr ""
+msgstr "Não encontrou o que estava buscando?"
 
 #: forum/skins/default/templates/questions.html:149
 msgid "Please, post your question!"
-msgstr ""
+msgstr "Por favor, poste sua questão!"
 
 #: forum/skins/default/templates/questions.html:163
 #, python-format
