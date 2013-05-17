@@ -2263,15 +2263,15 @@ msgid ""
 "            "
 msgid_plural ""
 "\n"
-"            have total %(q_num)s questions tagged %(tagname)s\n"
+"            tem um total de %(q_num)s questões marcadas como %(tagname)s\n"
 "            "
 msgstr[0] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>question tagged</p><p><span "
+"<div class=\"questions-count\">%(q_num)s</div><p>questões marcadas como </p><p><span "
 "class=\"tag\">%(tagname)s</span></p>"
 msgstr[1] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>questions tagged</p><div "
+"<div class=\"questions-count\">%(q_num)s</div><p>questões marcadas com</p><div "
 "class=\"tags\"><span class=\"tag\">%(tagname)s</span></div>"
 
 #: forum/skins/default/templates/questions.html:171
@@ -2283,16 +2283,16 @@ msgid ""
 "                    "
 msgid_plural ""
 "\n"
-"                    have total %(q_num)s questions containing %(searchtitle)"
-"s in full text\n"
+"                    tem um total de %(q_num)s questões contendo %(searchtitle)"
+"s no texto\n"
 "                    "
 msgstr[0] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>question containing "
+"<div class=\"questions-count\">%(q_num)s</div><p>questões contendo "
 "<strong><span class=\"darkred\">%(searchtitle)s</span></strong></p>"
 msgstr[1] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>questions containing "
+"<div class=\"questions-count\">%(q_num)s</div><p>questões contendo "
 "<strong><span class=\"darkred\">%(searchtitle)s</span></strong></p>"
 
 #: forum/skins/default/templates/questions.html:177
@@ -2304,18 +2304,18 @@ msgid ""
 "                    "
 msgid_plural ""
 "\n"
-"                    have total %(q_num)s questions containing %(searchtitle)"
+"                    tem um total de %(q_num)s questões contendo %(searchtitle)"
 "s\n"
 "                    "
 msgstr[0] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>question with title "
-"containing <strong><span class=\"darkred\">%(searchtitle)s</span></strong></"
+"<div class=\"questions-count\">%(q_num)s</div><p>questão com o título "
+"contendo <strong><span class=\"darkred\">%(searchtitle)s</span></strong></"
 "p>"
 msgstr[1] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>questions with title "
-"containing <strong><span class=\"darkred\">%(searchtitle)s</span></strong></"
+"<div class=\"questions-count\">%(q_num)s</div><p>questões com o título "
+"contendo <strong><span class=\"darkred\">%(searchtitle)s</span></strong></"
 "p>"
 
 #: forum/skins/default/templates/questions.html:185
@@ -2326,16 +2326,16 @@ msgid ""
 "                    "
 msgid_plural ""
 "\n"
-"                    have total %(q_num)s unanswered questions\n"
+"                    tem um total de %(q_num)s questões sem resposta\n"
 "                    "
 msgstr[0] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>question without an "
-"accepted answer</p>"
+"<div class=\"questions-count\">%(q_num)s</div><p>questões sem uma "
+"resposta aceita</p>"
 msgstr[1] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>questions without an "
-"accepted answer</p>"
+"<div class=\"questions-count\">%(q_num)s</div><p>questões sem uma reposta "
+"aceita</p>"
 
 #: forum/skins/default/templates/questions.html:191
 #, python-format
@@ -2345,166 +2345,166 @@ msgid ""
 "                    "
 msgid_plural ""
 "\n"
-"                    have total %(q_num)s questions\n"
+"                    tem um total de %(q_num)s questões\n"
 "                    "
 msgstr[0] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>question</p>"
+"<div class=\"questions-count\">%(q_num)s</div><p>questão</p>"
 msgstr[1] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>questions<p>"
+"<div class=\"questions-count\">%(q_num)s</div><p>questões<p>"
 
 #: forum/skins/default/templates/questions.html:201
 msgid "latest questions info"
-msgstr "<strong>Newest</strong> questions are shown first."
+msgstr "<strong>Questões recentes</strong> exibidas primeiro."
 
 #: forum/skins/default/templates/questions.html:205
 msgid "Questions are sorted by the <strong>time of last update</strong>."
-msgstr ""
+msgstr "Questões ordenadas pela data da <strong>última modificação</strong>."
 
 #: forum/skins/default/templates/questions.html:206
 msgid "Most recently answered ones are shown first."
-msgstr "<strong>Most recently answered</strong> questions are shown first."
+msgstr "<strong>Questões respondidas recentemente</strong> são exibidas primeiro."
 
 #: forum/skins/default/templates/questions.html:210
 msgid "Questions sorted by <strong>number of responses</strong>."
-msgstr "Questions sorted by the <strong>number of answers</strong>."
+msgstr "Questões ordenadas pelo <strong>número de respostas</strong>."
 
 #: forum/skins/default/templates/questions.html:211
 msgid "Most answered questions are shown first."
-msgstr " "
+msgstr "Questões mais respondidas são exibidas primeiro"
 
 #: forum/skins/default/templates/questions.html:215
 msgid "Questions are sorted by the <strong>number of votes</strong>."
-msgstr ""
+msgstr "Questòes ordenadas pelo <strong>número de votos</strong>."
 
 #: forum/skins/default/templates/questions.html:216
 msgid "Most voted questions are shown first."
-msgstr ""
+msgstr "Questões mais votadas são exibidas primeiro."
 
 #: forum/skins/default/templates/questions.html:224
 msgid "Related tags"
-msgstr "Tags"
+msgstr "Palavras-chave"
 
 #: forum/skins/default/templates/questions.html:227
 #: forum/skins/default/templates/tag_selector.html:10
 #: forum/skins/default/templates/tag_selector.html:27
 #, python-format
 msgid "see questions tagged '%(tag_name)s'"
-msgstr ""
+msgstr "veja questões marcadas com '%(tag_name)s'"
 
 #: forum/skins/default/templates/reopen.html:6
 #: forum/skins/default/templates/reopen.html:16
 msgid "Reopen question"
-msgstr ""
+msgstr "Reabrir questão"
 
 #: forum/skins/default/templates/reopen.html:19
 msgid "Open the previously closed question"
-msgstr ""
+msgstr "Abrir questão previamente fechada"
 
 #: forum/skins/default/templates/reopen.html:22
 msgid "The question was closed for the following reason "
-msgstr ""
+msgstr "A questão foi fechada pela seguinte razão "
 
 #: forum/skins/default/templates/reopen.html:22
 msgid "reason - leave blank in english"
-msgstr ""
+msgstr "razão - deixar vazio em inglês"
 
 #: forum/skins/default/templates/reopen.html:22
 msgid "on "
-msgstr ""
+msgstr "em "
 
 #: forum/skins/default/templates/reopen.html:22
 msgid "date closed"
-msgstr ""
+msgstr "data de fechamento"
 
 #: forum/skins/default/templates/reopen.html:29
 msgid "Reopen this question"
-msgstr ""
+msgstr "Reabrir esta questão"
 
 #: forum/skins/default/templates/revisions_answer.html:7
 #: forum/skins/default/templates/revisions_answer.html:38
 #: forum/skins/default/templates/revisions_question.html:8
 #: forum/skins/default/templates/revisions_question.html:38
 msgid "Revision history"
-msgstr ""
+msgstr "Histórico de revisoes"
 
 #: forum/skins/default/templates/revisions_answer.html:50
 #: forum/skins/default/templates/revisions_question.html:50
 msgid "click to hide/show revision"
-msgstr ""
+msgstr "clique para mostrar/esconder a revisão"
 
 #: forum/skins/default/templates/tag_selector.html:4
 msgid "Interesting tags"
-msgstr ""
+msgstr "Palavras-chave interessantes"
 
 #: forum/skins/default/templates/tag_selector.html:14
 #, python-format
 msgid "remove '%(tag_name)s' from the list of interesting tags"
-msgstr ""
+msgstr "remover '%(tag_name)s' da lista de palavras-chave interessantes"
 
 #: forum/skins/default/templates/tag_selector.html:20
 #: forum/skins/default/templates/tag_selector.html:37
 msgid "Add"
-msgstr ""
+msgstr "Adicionar"
 
 #: forum/skins/default/templates/tag_selector.html:21
 msgid "Ignored tags"
-msgstr ""
+msgstr "Palavras-chave ignoradas"
 
 #: forum/skins/default/templates/tag_selector.html:31
 #, python-format
 msgid "remove '%(tag_name)s' from the list of ignored tags"
-msgstr ""
+msgstr "remover '%(tag_name)s' da lista de palavras-chave ignoradas"
 
 #: forum/skins/default/templates/tag_selector.html:40
 msgid "keep ingored questions hidden"
-msgstr ""
+msgstr "não exibir questões ignoradas"
 
 #: forum/skins/default/templates/tags.html:6
 #: forum/skins/default/templates/tags.html:30
 msgid "Tag list"
-msgstr ""
+msgstr "Lista de palavras-chave"
 
 #: forum/skins/default/templates/tags.html:32
 msgid "sorted alphabetically"
-msgstr ""
+msgstr "em ordem alfabética"
 
 #: forum/skins/default/templates/tags.html:32
 msgid "by name"
-msgstr ""
+msgstr "por nome"
 
 #: forum/skins/default/templates/tags.html:33
 msgid "sorted by frequency of tag use"
-msgstr ""
+msgstr "ordenado pela frequência de uso da palavra-chave"
 
 #: forum/skins/default/templates/tags.html:33
 msgid "by popularity"
-msgstr ""
+msgstr "por popularidade"
 
 #: forum/skins/default/templates/tags.html:39
 msgid "All tags matching query"
-msgstr ""
+msgstr "Todas as palavras-chave da pesquisa"
 
 #: forum/skins/default/templates/tags.html:39
 msgid "all tags - make this empty in english"
-msgstr ""
+msgstr "todas as palaras-chave - deixe aqui vazio em inglês"
 
 #: forum/skins/default/templates/tags.html:42
 msgid "Nothing found"
-msgstr ""
+msgstr "Nada encontrado"
 
 #: forum/skins/default/templates/user_edit.html:6
 msgid "Edit user profile"
-msgstr ""
+msgstr "Editar perfil de usuário"
 
 #: forum/skins/default/templates/user_edit.html:19
 msgid "edit profile"
-msgstr ""
+msgstr "editar perfil"
 
 #: forum/skins/default/templates/user_edit.html:31
 msgid "image associated with your email address"
-msgstr ""
+msgstr "imagem associada com o seu email"
 
 #: forum/skins/default/templates/user_edit.html:31
 #, python-format
@@ -2514,82 +2514,82 @@ msgstr "<a href='%(gravatar_faq_url)s'>gravatar</a>"
 #: forum/skins/default/templates/user_edit.html:36
 #: forum/skins/default/templates/user_info.html:60
 msgid "Registered user"
-msgstr ""
+msgstr "Usuário registrado"
 
 #: forum/skins/default/templates/user_edit.html:43
 msgid "Screen Name"
-msgstr ""
+msgstr "Nome na tela"
 
 #: forum/skins/default/templates/user_edit.html:86
 #: forum/skins/default/templates/user_email_subscriptions.html:20
 msgid "Update"
-msgstr ""
+msgstr "Atualizar"
 
 #: forum/skins/default/templates/user_email_subscriptions.html:8
 msgid "Email subscription settings"
-msgstr ""
+msgstr "Opções de email"
 
 #: forum/skins/default/templates/user_email_subscriptions.html:9
 msgid "email subscription settings info"
 msgstr ""
-"<span class='big strong'>Adjust frequency of email updates.</span> Receive "
-"updates on interesting questions by email, <strong><br/>help the community</"
-"strong> by answering questions of your colleagues. If you do not wish to "
-"receive emails - select 'no email' on all items below.<br/>Updates are only "
-"sent when there is any new activity on selected items."
+"<span class='big strong'>Ajuste a frequência das notificações enviadas por email.</span> Receba "
+"novidades sobre questões de seu interesse, <strong><br/>ajude a comunidade</"
+"strong> respondendo questões de outros. Se você não deseja receber emails "
+"- selecione 'não enviar email' em todos os itens abaixo.<br/>Notificações são enviadas "
+"apenas quando houver atividade associada a algum dos itens selecionados."
 
 #: forum/skins/default/templates/user_email_subscriptions.html:21
 msgid "Stop sending email"
-msgstr "Stop Email"
+msgstr "Parar os emails"
 
 #: forum/skins/default/templates/user_info.html:22
 #: forum/skins/default/templates/users.html:26 forum/views/users.py:916
 msgid "reputation"
-msgstr "karma"
+msgstr "carma"
 
 #: forum/skins/default/templates/user_info.html:32
 msgid "Moderate this user"
-msgstr ""
+msgstr "Moderar este usuário"
 
 #: forum/skins/default/templates/user_info.html:45
 msgid "update profile"
-msgstr ""
+msgstr "atualizar pergil"
 
 #: forum/skins/default/templates/user_info.html:64
 msgid "real name"
-msgstr ""
+msgstr "nome real"
 
 #: forum/skins/default/templates/user_info.html:69
 msgid "member for"
-msgstr "member since"
+msgstr "membro desde"
 
 #: forum/skins/default/templates/user_info.html:74
 msgid "last seen"
-msgstr ""
+msgstr "última visita"
 
 #: forum/skins/default/templates/user_info.html:80
 msgid "user website"
-msgstr ""
+msgstr "página pessoal"
 
 #: forum/skins/default/templates/user_info.html:86
 msgid "location"
-msgstr ""
+msgstr "localização"
 
 #: forum/skins/default/templates/user_info.html:93
 msgid "age"
-msgstr ""
+msgstr "idade"
 
 #: forum/skins/default/templates/user_info.html:94
 msgid "age unit"
-msgstr "years old"
+msgstr "anos de idade"
 
 #: forum/skins/default/templates/user_info.html:100
 msgid "todays unused votes"
-msgstr ""
+msgstr "votos não usados hoje"
 
 #: forum/skins/default/templates/user_info.html:101
 msgid "votes left"
-msgstr ""
+msgstr "votos restantes"
 
 #: forum/skins/default/templates/user_stats.html:12
 #, python-format
@@ -2599,10 +2599,13 @@ msgid ""
 "                "
 msgid_plural ""
 "\n"
-"                <span class=\"count\">%(counter)s</span> Questions\n"
+"                <span class=\"count\">%(counter)s</span> Qeustões\n"
 "                "
 msgstr[0] ""
 msgstr[1] ""
+"\n"
+"                <span class=\"count\">1</span> Questão\n"
+"                "
 
 #: forum/skins/default/templates/user_stats.html:23
 #, python-format
@@ -2612,19 +2615,22 @@ msgid ""
 "                "
 msgid_plural ""
 "\n"
-"                <span class=\"count\">%(counter)s</span> Answers\n"
+"                <span class=\"count\">%(counter)s</span> Respostas\n"
 "                "
 msgstr[0] ""
 msgstr[1] ""
+"\n"
+"                <span class=\"count\">1</span> Resposta\n"
+"                "
 
 #: forum/skins/default/templates/user_stats.html:36
 #, python-format
 msgid "the answer has been voted for %(vote_count)s times"
-msgstr ""
+msgstr "a resposta recebeu %(vote_count)s votos favoráveis"
 
 #: forum/skins/default/templates/user_stats.html:36
 msgid "this answer has been selected as correct"
-msgstr ""
+msgstr "esta respsota foi selecionada como correta"
 
 #: forum/skins/default/templates/user_stats.html:46
 #, python-format
@@ -2634,14 +2640,14 @@ msgid ""
 "                    "
 msgid_plural ""
 "\n"
-"                    the answer has been commented %(comment_count)s times\n"
+"                    a resposta foi comentada %(comment_count)s vezes\n"
 "                    "
 msgstr[0] ""
 "\n"
-"(one comment)"
+"(um comentário)"
 msgstr[1] ""
 "\n"
-"(%(comment_count)s comments)"
+"(%(comment_count)s comentários)"
 
 #: forum/skins/default/templates/user_stats.html:61
 #, python-format
@@ -2651,26 +2657,29 @@ msgid ""
 "                "
 msgid_plural ""
 "\n"
-"                    <span class=\"count\">%(cnt)s</span> Votes\n"
+"                    <span class=\"count\">%(cnt)s</span> Votos\n"
 "                "
 msgstr[0] ""
 msgstr[1] ""
+"\n"
+"                    <span class=\"count\">1</span> Voto\n"
+"                "
 
 #: forum/skins/default/templates/user_stats.html:72
 msgid "thumb up"
-msgstr ""
+msgstr "votos favoráveis"
 
 #: forum/skins/default/templates/user_stats.html:73
 msgid "user has voted up this many times"
-msgstr ""
+msgstr "quantidade de votos favoráveis do usuário"
 
 #: forum/skins/default/templates/user_stats.html:77
 msgid "thumb down"
-msgstr ""
+msgstr "votos desfavoráveis"
 
 #: forum/skins/default/templates/user_stats.html:78
 msgid "user voted down this many times"
-msgstr ""
+msgstr "quantidade de votos desfavoráveis do usuário"
 
 #: forum/skins/default/templates/user_stats.html:87
 #, python-format
@@ -2680,16 +2689,20 @@ msgid ""
 "                "
 msgid_plural ""
 "\n"
-"                    <span class=\"count\">%(counter)s</span> Tags\n"
+"                    <span class=\"count\">%(counter)s</span> Palavras-chave\n"
 "                "
 msgstr[0] ""
 msgstr[1] ""
+"\n"
+"                    <span class=\"count\">1</span> Palavra-chave\n"
+"                "
 
 #: forum/skins/default/templates/user_stats.html:100
 #, python-format
 msgid ""
 "see other questions with %(view_user)s's contributions tagged '%(tag_name)s' "
 msgstr ""
+"veja outras contribuições de %(view_user)s's marcadas como '%(tag_name)s' "
 
 #: forum/skins/default/templates/user_stats.html:115
 #, python-format
@@ -2699,114 +2712,117 @@ msgid ""
 "            "
 msgid_plural ""
 "\n"
-"            <span class=\"count\">%(counter)s</span> Badges\n"
+"            <span class=\"count\">%(counter)s</span> Condecorações\n"
 "            "
 msgstr[0] ""
 msgstr[1] ""
+"\n"
+"            <span class=\"count\">1</span> Condecoração\n"
+"            "
 
 #: forum/skins/default/templates/user_tabs.html:7
 msgid "User profile"
-msgstr ""
+msgstr "Perfil de usuário"
 
 #: forum/skins/default/templates/user_tabs.html:7 forum/views/users.py:890
 msgid "overview"
-msgstr ""
+msgstr "resumo"
 
 #: forum/skins/default/templates/user_tabs.html:9 forum/views/users.py:898
 msgid "recent activity"
-msgstr ""
+msgstr "atividade recente"
 
 #: forum/skins/default/templates/user_tabs.html:12 forum/views/users.py:908
 msgid "comments and answers to others questions"
-msgstr ""
+msgstr "comentários e respostas a outras questões"
 
 #: forum/skins/default/templates/user_tabs.html:13 forum/views/users.py:907
 msgid "responses"
-msgstr ""
+msgstr "respostas"
 
 #: forum/skins/default/templates/user_tabs.html:16
 msgid "graph of user reputation"
-msgstr "Graph of user karma"
+msgstr "Gráfico do carma do usuário"
 
 #: forum/skins/default/templates/user_tabs.html:17
 msgid "reputation history"
-msgstr "karma history"
+msgstr "histórico do carma"
 
 #: forum/skins/default/templates/user_tabs.html:20 forum/views/users.py:934
 msgid "user vote record"
-msgstr ""
+msgstr "relatório dos votos do usuário"
 
 #: forum/skins/default/templates/user_tabs.html:20 forum/views/users.py:933
 msgid "casted votes"
-msgstr "votes"
+msgstr "votos"
 
 #: forum/skins/default/templates/user_tabs.html:23
 msgid "questions that user selected as his/her favorite"
-msgstr ""
+msgstr "questões que usuários favoritaram"
 
 #: forum/skins/default/templates/user_tabs.html:24
 msgid "favorites"
-msgstr ""
+msgstr "favoritas"
 
 #: forum/skins/default/templates/user_tabs.html:27 forum/views/users.py:943
 msgid "email subscription settings"
-msgstr ""
+msgstr "configuração das notificações por email"
 
 #: forum/skins/default/templates/user_tabs.html:28 forum/views/users.py:942
 msgid "email subscriptions"
-msgstr ""
+msgstr "notificações por email"
 
 #: forum/skins/default/templates/users.html:6
 #: forum/skins/default/templates/users.html:24
 msgid "Users"
-msgstr ""
+msgstr "Usuários"
 
 #: forum/skins/default/templates/users.html:27
 msgid "recent"
-msgstr ""
+msgstr "recente"
 
 #: forum/skins/default/templates/users.html:28
 msgid "oldest"
-msgstr ""
+msgstr "mais antigos"
 
 #: forum/skins/default/templates/users.html:29
 msgid "by username"
-msgstr ""
+msgstr "por nome de usuário"
 
 #: forum/skins/default/templates/users.html:35
 #, python-format
 msgid "users matching query %(suser)s:"
-msgstr ""
+msgstr "resultados da busca por %(suser)s:"
 
 #: forum/skins/default/templates/users.html:39
 msgid "Nothing found."
-msgstr ""
+msgstr "Nada encontrado."
 
 #: forum/skins/default/templates/users_questions.html:11
 msgid "this questions was selected as favorite"
-msgstr ""
+msgstr "esta questão foi selecionada como favorita"
 
 #: forum/skins/default/templates/users_questions.html:12
 msgid "thumb-up on"
-msgstr ""
+msgstr "com voto favorável"
 
 #: forum/skins/default/templates/users_questions.html:19
 msgid "thumb-up off"
-msgstr ""
+msgstr "com voto contra"
 
 #: forum/skins/default/templates/auth/complete.html:5
 #: forum/skins/default/templates/authopenid/complete.html:19
 msgid "Connect your OpenID with this site"
-msgstr "New user signup"
+msgstr "Cadastro de novo usuário"
 
 #: forum/skins/default/templates/auth/complete.html:8
 #: forum/skins/default/templates/authopenid/complete.html:22
 msgid "Connect your OpenID with your account on this site"
-msgstr "New user signup"
+msgstr "Cadastro de novo usuário"
 
 #: forum/skins/default/templates/auth/complete.html:12
 msgid "You are here for the first time with "
-msgstr ""
+msgstr "Você está aqui pela primeira vez com "
 
 #: forum/skins/default/templates/auth/complete.html:13
 msgid ""
@@ -2814,28 +2830,31 @@ msgid ""
 "address will let you subscribe for the updates on the most interesting "
 "questions and will be used to create and retrieve your unique avatar image. "
 msgstr ""
+"Por favor crie um nome de usuário e preencha seu endereço de email. Esse "
+"endereço de email lhe permite receber notificações de questões interessantes "
+"e será usado para criar e recuperar sua imagem (avatar). "
 
 #: forum/skins/default/templates/auth/complete.html:15
 #: forum/skins/default/templates/authopenid/complete.html:42
 msgid "This account already exists, please use another."
-msgstr ""
+msgstr "Esta conta de usuário já existe, por favor escolha outra."
 
 #: forum/skins/default/templates/auth/complete.html:30
 #: forum/skins/default/templates/authopenid/complete.html:57
 msgid "Sorry, looks like we have some errors:"
-msgstr ""
+msgstr "Desculpe, parece que encontramos alguns problemas:"
 
 #: forum/skins/default/templates/auth/complete.html:47
 #: forum/skins/default/templates/authopenid/complete.html:82
 msgid "Screen name label"
-msgstr "<strong>Screen Name</strong> (<i>will be shown to others</i>)"
+msgstr "<strong>Nome de usuário</strong> (<i>será exibido a outras pessoas</i>)"
 
 #: forum/skins/default/templates/auth/complete.html:54
 #: forum/skins/default/templates/authopenid/complete.html:89
 msgid "Email address label"
 msgstr ""
-"<strong>Email Address</strong> (<i>will <strong>not</strong> be shared with "
-"anyone, must be valid</i>)"
+"<strong>Endereço de email</strong> (<i><strong>não</strong> será compartilhado "
+"com terceiros, precisa ser válido</i>)"
 
 #: forum/skins/default/templates/auth/complete.html:60
 #: forum/skins/default/templates/auth/signup.html:18
@@ -2843,138 +2862,138 @@ msgstr ""
 #: forum/skins/default/templates/authopenid/signup.html:18
 msgid "receive updates motivational blurb"
 msgstr ""
-"<strong>Receive forum updates by email</strong> - this will help our "
-"community grow and become more useful.<br/>By default <span "
-"class='orange'>Q&amp;A</span> forum sends up to <strong>one email digest per "
-"week</strong>  - only when there is anything new.<br/>If you like, please "
-"adjust this now or any time later from your user account."
+"<strong>Receba notificações de novidades por emais</strong> - isto ajuda nossa "
+"comunidade a crescer e se tornar cada vez mais útil.<br/>Em geral, fóruns de <span "
+"class='orange'>Perguntas &amp; Respostas</span> enviam até <strong>um email com a compilação "
+"das novidades da semana</strong>  - e apenas quando há algo novo.<br/>Se voce quiser, pode ajustar "
+"agora (ou depois) a frequência das notificações, acessando a sua conta de usuário."
 
 #: forum/skins/default/templates/auth/complete.html:64
 #: forum/skins/default/templates/auth/signup.html:22
 #: forum/skins/default/templates/authopenid/complete.html:99
 #: forum/skins/default/templates/authopenid/signup.html:22
 msgid "please select one of the options above"
-msgstr ""
+msgstr "por favor selecione alguma das opções acima"
 
 #: forum/skins/default/templates/auth/complete.html:67
 #: forum/skins/default/templates/authopenid/complete.html:102
 msgid "Tag filter tool will be your right panel, once you log in."
-msgstr ""
+msgstr "Um filtro de palavras-chave está no painel à direita, quando você entra no site."
 
 #: forum/skins/default/templates/auth/complete.html:68
 #: forum/skins/default/templates/authopenid/complete.html:103
 msgid "create account"
-msgstr "Signup"
+msgstr "Criar uma conta"
 
 #: forum/skins/default/templates/auth/complete.html:77
 #: forum/skins/default/templates/authopenid/complete.html:112
 msgid "Existing account"
-msgstr ""
+msgstr "conta existente"
 
 #: forum/skins/default/templates/auth/complete.html:78
 #: forum/skins/default/templates/authopenid/complete.html:113
 msgid "user name"
-msgstr ""
+msgstr "nome de usuário"
 
 #: forum/skins/default/templates/auth/complete.html:79
 #: forum/skins/default/templates/authopenid/complete.html:114
 msgid "password"
-msgstr ""
+msgstr "senha"
 
 #: forum/skins/default/templates/auth/complete.html:86
 #: forum/skins/default/templates/authopenid/complete.html:121
 msgid "Register"
-msgstr ""
+msgstr "Registrar"
 
 #: forum/skins/default/templates/auth/complete.html:87
 #: forum/skins/default/templates/authopenid/complete.html:122
 #: forum/skins/default/templates/authopenid/signin.html:151
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Esqueceu sua senha?"
 
 #: forum/skins/default/templates/auth/signin.html:22
 #: forum/skins/default/templates/authopenid/signin.html:5
 #: forum/skins/default/templates/authopenid/signin.html:21
 msgid "User login"
-msgstr "User login"
+msgstr "Login de usuário"
 
 #: forum/skins/default/templates/auth/signin.html:29
 #: forum/skins/default/templates/authopenid/signin.html:42
 msgid "Click to sign in through any of these services."
 msgstr ""
-"<p><span class=\"big strong\">Please select your favorite login method below."
-"</span></p><p><font color=\"gray\">External login services use <a href="
-"\"http://openid.net\"><b>OpenID</b></a> technology, where your password "
-"always stays confidential between you and your login provider and you don't "
-"have to remember another one. CNPROG option requires your login name and "
-"password entered here.</font></p>"
+"<p><span class=\"big strong\">Por favor escolha o seu método preferido para entrar no site."
+"</span></p><p><font color=\"gray\">Serviços externos usam a tecnologia <a href="
+"\"http://openid.net\"><b>OpenID</b></a>, na qual a sua senha permanece sempre secreta "
+"entre você e o seu provedor, e você não precisa lembrar mais uma senha "
+"a opção CNPROG requer que você escreva aqui seu nome de usuário (login) e senha.</font></p>"
 
 #: forum/skins/default/templates/auth/signin.html:34
 msgid ""
 "Take the opurtunity to validate my email next to the external provider I "
 "choose."
 msgstr ""
+"Aproveite para validar seu email."
 
 #: forum/skins/default/templates/auth/signin.html:84
 msgid "Enter your "
-msgstr ""
+msgstr "Escolha seu "
 
 #: forum/skins/default/templates/auth/signin.html:140
 #: forum/skins/default/templates/authopenid/signin.html:160
 msgid "Why use OpenID?"
-msgstr ""
+msgstr "Por que usar OpenID"
 
 #: forum/skins/default/templates/auth/signin.html:143
 #: forum/skins/default/templates/authopenid/signin.html:163
 msgid "with openid it is easier"
-msgstr "With the OpenID you don't need to create new username and password."
+msgstr "Com o OpenID não é preciso criar um nome de usuário (login) e senha."
 
 #: forum/skins/default/templates/auth/signin.html:146
 #: forum/skins/default/templates/authopenid/signin.html:166
 msgid "reuse openid"
-msgstr "You can safely re-use the same login for all OpenID-enabled websites."
+msgstr "Você pode reutilizar com segurança o mesmo login para todos os sites com OpenID habilitado."
 
 #: forum/skins/default/templates/auth/signin.html:149
 #: forum/skins/default/templates/authopenid/signin.html:169
 msgid "openid is widely adopted"
 msgstr ""
-"There are > 160,000,000 OpenID account in use. Over 10,000 sites are OpenID-"
-"enabled."
+"Existem mais de 160 milhões de contas OpenID em uso. Mais de 10 mil  páginas possuem OpenID "
+"habilitado."
 
 #: forum/skins/default/templates/auth/signin.html:152
 #: forum/skins/default/templates/authopenid/signin.html:172
 msgid "openid is supported open standard"
-msgstr "OpenID is based on an open standard, supported by many organizations."
+msgstr "OpenID baseia-se num padrão aberto, apoiado por muitas organizações."
 
 #: forum/skins/default/templates/auth/signin.html:157
 #: forum/skins/default/templates/authopenid/signin.html:177
 msgid "Find out more"
-msgstr ""
+msgstr "Aprenda mais"
 
 #: forum/skins/default/templates/auth/signin.html:158
 #: forum/skins/default/templates/authopenid/signin.html:178
 msgid "Get OpenID"
-msgstr ""
+msgstr "Obter OpenID"
 
 #: forum/skins/default/templates/auth/signup.html:4
 #: forum/skins/default/templates/authopenid/signup.html:4
 msgid "Signup"
-msgstr ""
+msgstr "Cadastrar-se"
 
 #: forum/skins/default/templates/auth/signup.html:8
 #: forum/skins/default/templates/authopenid/signup.html:8
 msgid "Create login name and password"
-msgstr ""
+msgstr "Criar um nome de usuário (login) e senha"
 
 #: forum/skins/default/templates/auth/signup.html:10
 #: forum/skins/default/templates/authopenid/signup.html:10
 msgid "Traditional signup info"
 msgstr ""
-"<span class='strong big'>If you prefer, create your forum login name and "
-"password here. However</span>, please keep in mind that we also support "
-"<strong>OpenID</strong> login method. With <strong>OpenID</strong> you can "
-"simply reuse your external login (e.g. Gmail or AOL) without ever sharing "
-"your login details with anyone and having to remember yet another password."
+"<span class='strong big'>Se você preferrir, escolha seu nome de usuário (login) "
+"e senha aqui. Contudo</span>, por favor tenha em mente que nos também apoiamos "
+"o método de autenticação por <strong>OpenID</strong>. Com o  <strong>OpenID</strong> você pode "
+"simplemente reutilizar seu nome de usuário (login) externo  (por exemplo, Gmail or AOL) sem precisar "
+"jamais compartilhar os detalhes do seu ou ter que memorizar mais senhas."
 
 #: forum/skins/default/templates/auth/signup.html:25
 #: forum/skins/default/templates/authopenid/signup.html:25
@@ -2982,63 +3001,66 @@ msgid ""
 "Please read and type in the two words below to help us prevent automated "
 "account creation."
 msgstr ""
+"Por gentileza leia e escreva as duas palavras abaixo para nos ajudar a impedir criação "
+"automatizada de contas de usuário."
 
 #: forum/skins/default/templates/auth/signup.html:27
 #: forum/skins/default/templates/authopenid/signup.html:27
 msgid "Create Account"
-msgstr ""
+msgstr "Criar conta de Usuário"
 
 #: forum/skins/default/templates/auth/signup.html:29
 msgid "return to login page"
-msgstr ""
+msgstr "retornar à página de entrada (login)"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:3
 #: forum/skins/default/templates/authopenid/changeemail.html:9
 #: forum/skins/default/templates/authopenid/changeemail.html:38
 msgid "Change email"
-msgstr "Change Email"
+msgstr "Mudar Email"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:11
 msgid "Save your email address"
-msgstr ""
+msgstr "Salvar seu endereço de email"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:16
 #, python-format
 msgid "change %(email)s info"
 msgstr ""
-"<span class=\"strong big\">Enter your new email into the box below</span> if "
-"you'd like to use another email for <strong>update subscriptions</strong>."
-"<br>Currently you are using <strong>%(email)s</strong>"
+"<span class=\"strong big\">Escreva seu endereço de email na caixa abaixo</span> se "
+"você gostaria de usar algum outro email para <strong>receber notificações</strong>."
+"<br>Atualmente você está usando <strong>%(email)s</strong>"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:18
 #, python-format
 msgid "here is why email is required, see %(gravatar_faq_url)s"
 msgstr ""
-"<span class='strong big'>Please enter your email address in the box below.</"
-"span> Valid email address is required on this Q&amp;A forum. If you like, "
-"you can <strong>receive updates</strong> on interesting questions or entire "
-"forum via email. Also, your email is used to create a unique <a href='%"
-"(gravatar_faq_url)s'><strong>gravatar</strong></a> image for your account. "
-"Email addresses are never shown or otherwise shared with anybody else."
+"<span class='strong big'>Por gentileza escreva seu endereço de email na caixa abaixo.</"
+"span> Previsamos de um email válido par este fórum de Perguntas &amp; Respostas. "
+"Se você quiser, você pode <strong>receber notificações</strong> sobre questões de "
+" seu interesse, ou sobre a atividade geral do fórum, por email. "
+"Além disso, seu email é usado para criar uma imagem <a href='%(gravatar_faq_url)s'><strong>"
+"gravatar</strong></a> única para sua conta de usuário. "
+"Afora isso, endereços de email nunca são exibidos ou compartilhados com terceiros."
 
 #: forum/skins/default/templates/authopenid/changeemail.html:31
 msgid "Your new Email"
 msgstr ""
-"<strong>Your new Email:</strong> (will <strong>not</strong> be shown to "
-"anyone, must be valid)"
+"<strong>Seu novo email:</strong> (<strong>não</strong> será exibido para ninguém, "
+"e precisa ser válido)"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:31
 msgid "Your Email"
 msgstr ""
-"<strong>Your Email</strong> (<i>must be valid, never shown to others</i>)"
+"<strong>Seu email</strong> (<i>precisa ser válido, não é exibido a terceiros</i>)"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:38
 msgid "Save Email"
-msgstr ""
+msgstr "Salvar email"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:49
 msgid "Validate email"
-msgstr ""
+msgstr "Validar email"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:52
 #, python-format
