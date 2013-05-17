@@ -950,9 +950,9 @@ msgid ""
 "                            "
 msgstr ""
 "<span class='strong big'>Parece que seu endereço de email, %(email)s ainda "
-"não foi validado.</span> Para postar mensagens você precisa confirmar seu email, "
+"não foi confirmado.</span> Para postar mensagens você precisa confirmar seu email, "
 "mais detalhes <a href='%(email_validation_faq_url)s'>aqui</a>."
-"<br>Você pode submeter sua questão agora e validar o email depois. Sua questão "
+"<br>Você pode submeter sua questão agora e confirmar o email depois. Sua questão "
 "será mantida pendente enquanto isso. "
 
 #: forum/skins/default/templates/ask.html:112
@@ -1323,7 +1323,7 @@ msgstr "remover qualquer questão ou resposta e realizar outras tarefas de moder
 
 #: forum/skins/default/templates/faq.html:103
 msgid "how to validate email title"
-msgstr "Como validar meu email e por que?"
+msgstr "Como confirmar meu email e por que?"
 
 #: forum/skins/default/templates/faq.html:105
 #, python-format
@@ -1336,7 +1336,7 @@ msgstr ""
 "enviamos</strong>.<br>O link contém uma chave gerada especialmente para "
 "você. Você também pode <button style='display:inline' type='submit'><strong>"
 "obter uma nova chave</strong></button> e verificar seu email novamente.</p>"
-"</form><span class=\"bigger strong\">Por que?</span> Validação por email "
+"</form><span class=\"bigger strong\">Por que?</span> Confirmação do email "
 "é importante para assegurar que <strong>somente  você pode postar mensagens"
 "</strong> em seu nome e para <strong>minimizar a quantidade de spam</strong>."
 "<br/>Com email você pode se <strong>inscrever para receber notícias</strong> "
@@ -2932,7 +2932,7 @@ msgid ""
 "Take the opurtunity to validate my email next to the external provider I "
 "choose."
 msgstr ""
-"Aproveite para validar seu email."
+"Aproveite para confirmar seu email."
 
 #: forum/skins/default/templates/auth/signin.html:84
 msgid "Enter your "
@@ -3060,98 +3060,99 @@ msgstr "Salvar email"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:49
 msgid "Validate email"
-msgstr "Validar email"
+msgstr "Confirmar email"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:52
 #, python-format
 msgid "validate %(email)s info or go to %(change_email_url)s"
 msgstr ""
-"<span class=\"strong big\">An email with a validation link has been sent to %"
-"(email)s.</span> Please <strong>follow the emailed link</strong> with your "
-"web browser. Email validation is necessary to help insure the proper use of "
-"email on <span class=\"orange\">Q&amp;A</span>. If you would like to use "
-"<strong>another email</strong>, please <a href='%(change_email_url)"
-"s'><strong>change it again</strong></a>."
+"<span class=\"strong big\">Um email com um link de confirmação foi enviado para %"
+"(email)s.</span> Por gentileza <strong>siga o link contido no email</strong> usando o seu "
+"navegador web. Confirmação do email é necessária para garantir o uso adequado do email "
+"no <span class=\"orange\">Perguntas &amp; Respostas</span>. Se você gostaria de usar "
+"<strong>outro email</strong>, por gentileza <a href='%(change_email_url)"
+"s'><strong>altere-o novamente</strong></a>."
 
 #: forum/skins/default/templates/authopenid/changeemail.html:57
 msgid "Email not changed"
-msgstr ""
+msgstr "O email não foi alterado"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:60
 #, python-format
 msgid "old %(email)s kept, if you like go to %(change_email_url)s"
 msgstr ""
-"<span class=\"strong big\">Your email address %(email)s has not been changed."
-"</span> If you decide to change it later - you can always do it by editing "
-"it in your user profile or by using the <a href='%(change_email_url)"
-"s'><strong>previous form</strong></a> again."
+"<span class=\"strong big\">Seu endereço de email %(email)s não foi alterado."
+"</span> Se você decidir alterar o email depois - você pode sempre fazê-lo "
+"na página do seu perfil, ou usando o <a href='%(change_email_url)"
+"s'><strong>formulário anterior</strong></a> novamente."
 
 #: forum/skins/default/templates/authopenid/changeemail.html:65
 msgid "Email changed"
-msgstr ""
+msgstr "Email alterado"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:68
 #, python-format
 msgid "your current %(email)s can be used for this"
 msgstr ""
-"<span class='big strong'>Your email address is now set to %(email)s.</span> "
-"Updates on the questions that you like most will be sent to this address. "
-"Email notifications are sent once a day or less frequently - only when there "
-"are any news."
+"<span class='big strong'>Seu endereço de email está configurado: %(email)s.</span> "
+"Modificações nas questões em que você votou serão enviadas para este endereço. "
+"Notificações por email são enviadas uma vez por dia ou menos frequentemente - apenas quando "
+"notícias."
 
 #: forum/skins/default/templates/authopenid/changeemail.html:73
 msgid "Email verified"
-msgstr ""
+msgstr "Email verificado"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:76
 msgid "thanks for verifying email"
 msgstr ""
-"<span class=\"big strong\">Thank you for verifying your email!</span> Now "
-"you can <strong>ask</strong> and <strong>answer</strong> questions. Also if "
-"you find a very interesting question you can <strong>subscribe for the "
-"updates</strong> - then will be notified about changes <strong>once a day</"
-"strong> or less frequently."
+"<span class=\"big strong\">Obrigado por confirmar seu endereço de email!</span> Agora "
+"você pode <strong>perguntar</strong> e <strong>responder</strong> questões. Além disso, se "
+"se você encontrar uma questão interessante você pode <strong>inscrever-se para notificações</strong>"
+" - então você receberá notícias sobre mudanças nelas (sempre que houver) <strong>até uma vez ao dia</"
+"strong>."
 
 #: forum/skins/default/templates/authopenid/changeemail.html:81
 msgid "email key not sent"
-msgstr "Validation email not sent"
+msgstr "Email de confirmação não foi enviado"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:84
 #, python-format
 msgid "email key not sent %(email)s change email here %(change_link)s"
 msgstr ""
-"<span class='big strong'>Your current email address %(email)s has been "
-"validated before</span> so the new key was not sent. You can <a href='%"
-"(change_link)s'>change</a> email used for update subscriptions if necessary."
+"<span class='big strong'>Seu endereço de email atual %(email)s foi confirmado "
+"antes</span> então a nova chave não foi enviada. Você pode <a href='%"
+"(change_link)s'>alterar</a> o email usado para notificações se quiser."
 
 #: forum/skins/default/templates/authopenid/changeopenid.html:8
 msgid "Account: change OpenID URL"
-msgstr ""
+msgstr "Conta: alterar endereço URL do OpenID"
 
 #: forum/skins/default/templates/authopenid/changeopenid.html:12
 msgid ""
 "This is where you can change your OpenID URL. Make sure you remember it!"
 msgstr ""
+"É aqui que você pode alterar seu endereço URL de OpenID. Make sure you remember it!"
 
 #: forum/skins/default/templates/authopenid/changeopenid.html:14
 #: forum/skins/default/templates/authopenid/delete.html:14
 #: forum/skins/default/templates/authopenid/delete.html:24
 msgid "Please correct errors below:"
-msgstr ""
+msgstr "Por favor corrija os erros abaixo:"
 
 #: forum/skins/default/templates/authopenid/changeopenid.html:29
 msgid "OpenID URL:"
-msgstr ""
+msgstr "endereço URL do OpenID"
 
 #: forum/skins/default/templates/authopenid/complete.html:27
 #, python-format
 msgid "register new %(provider)s account info, see %(gravatar_faq_url)s"
 msgstr ""
-"<p><span class=\"big strong\">You are here for the first time with your %"
-"(provider)s login.</span> Please create your <strong>screen name</strong> "
-"and save your <strong>email</strong> address. Saved email address will let "
-"you <strong>subscribe for the updates</strong> on the most interesting "
-"questions and will be used to create and retrieve your unique avatar image - "
+"<p><span class=\"big strong\">Você está aqui pela primeira vez via seu login %"
+"(provider)s.</span> Por favor crie seu <strong>nome de usuário</strong> "
+"e salve seu endereço de <strong>email</strong>. Endereços de email salvos permitem a "
+"você <strong>inscrever-se para receber notificações</strong> sobre as questões mais  "
+"interessantes e será usado para criar e recuperar sua imagem (avatar) - "
 "<a href='%(gravatar_faq_url)s'><strong>gravatar</strong></a>.</p>"
 
 #: forum/skins/default/templates/authopenid/complete.html:31
@@ -3162,14 +3163,15 @@ msgid ""
 "(gravatar_faq_url)s\n"
 "                        "
 msgstr ""
-"<p><span class='strong big'>Oops... looks like screen name %(username)s is "
-"already used in another account.</span></p><p>Please choose another screen "
-"name to use with your %(provider)s login. Also, a valid email address is "
-"required on the <span class='orange'>Q&amp;A</span> forum. Your email is "
-"used to create a unique <a href='%(gravatar_faq_url)s'><strong>gravatar</"
-"strong></a> image for your account. If you like, you can <strong>receive "
-"updates</strong> on the interesting questions or entire forum by email. "
-"Email addresses are never shown or otherwise shared with anybody else.</p>"
+"<p><span class='strong big'>Oops... parece que o nome de usuário %(username)s já "
+"está em uso por alguém.</span></p><p>Por favor escolha outro nome "
+"para usar com o login de %(provider)s. Além disso, um endereço de email válido "
+"é necessário para este fórum de <span class='orange'>Perguntas &amp; Respostas</span>. "
+"Seu email é usado para criar uma única imagem <a href='%(gravatar_faq_url)s'><strong>gravatar</"
+"strong></a> para sua conta de usuário. Se você quiser, você pode <strong>receber "
+"notificações</strong> sobre questões interessantes, ou sobre as atividades do fórum em geral "
+"por email. Os endereços de email nunca são exibidos ou de outra forma compartilhados com "
+"terceiros.</p>"
 
 #: forum/skins/default/templates/authopenid/complete.html:35
 #, python-format
