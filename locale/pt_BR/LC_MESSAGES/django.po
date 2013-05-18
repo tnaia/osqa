@@ -18,7 +18,7 @@ msgstr ""
 
 #: forum/auth.py:484
 msgid "Your question and all of it's answers have been deleted"
-msgstr ""
+msgstr "Sua questão e todas as suas respostas foram removidas"
 
 #: forum/auth.py:486
 msgid "Your question has been deleted"
@@ -98,11 +98,11 @@ msgstr "escolhida melhor resposta"
 
 #: forum/const.py:65
 msgid "upvoted"
-msgstr ""
+msgstr "recebeu voto favorável"
 
 #: forum/const.py:66
 msgid "downvoted"
-msgstr ""
+msgstr "recebeu voto contra"
 
 #: forum/const.py:67
 msgid "canceled vote"
@@ -3178,46 +3178,46 @@ msgstr ""
 msgid ""
 "register new external %(provider)s account info, see %(gravatar_faq_url)s"
 msgstr ""
-"<p><span class=\"big strong\">You are here for the first time with your %"
-"(provider)s login.</span></p><p>You can either keep your <strong>screen "
-"name</strong> the same as your %(provider)s login name  or choose some other "
-"nickname.</p><p>Also, please save a valid <strong>email</strong> address. "
-"With the email you can <strong>subscribe for the updates</strong> on the "
-"most interesting questions. Email address is also used to create and "
-"retrieve your unique avatar image - <a href='%(gravatar_faq_url)"
+"<p><span class=\"big strong\">Você está aqui pela primeira vez como seu login %"
+"(provider)s.</span></p><p>Você pode manter seu  <strong>nome de tela "
+"</strong> como está no login %(provider)s ou escolher algum outro apelido.</p>"
+"<p>Por favor escolha um <strong>endereço de email</strong> válido. "
+"Com o email você pode <strong>inscrever-se para receber notificações</strong> sobre "
+"as questões mais interessantes. O endereço de email também é usado para criar e "
+"recuperar sua imagem (avatar) -  <a href='%(gravatar_faq_url)"
 "s'><strong>gravatar</strong></a>.</p>"
 
 #: forum/skins/default/templates/authopenid/complete.html:38
 #, python-format
 msgid "register new Facebook connect account info, see %(gravatar_faq_url)s"
 msgstr ""
-"<p><span class=\"big strong\">You are here for the first time with your "
-"Facebook login.</span> Please create your <strong>screen name</strong> and "
-"save your <strong>email</strong> address. Saved email address will let you "
-"<strong>subscribe for the updates</strong> on the most interesting questions "
-"and will be used to create and retrieve your unique avatar image - <a href='%"
-"(gravatar_faq_url)s'><strong>gravatar</strong></a>.</p>"
+"<p><span class=\"big strong\">Você está aqui pela primeira vez com sua "
+"conta do Facebook.</span> Por favor crie seu <strong>nome de tela</strong> e "
+"escolha seu <strong>endereço de email</strong>. O email escolhid vai permitir que "
+"você <strong>inscreva-se para receber notificações</strong> sobre as questões mais interessantes "
+"é usado para criar e recuperar sua imagem (avatar) -  <a href='%(gravatar_faq_url)"
+"s'><strong>gravatar</strong></a>.</p>"
 
 #: forum/skins/default/templates/authopenid/confirm_email.txt:2
 msgid "Thank you for registering at our Q&A forum!"
-msgstr ""
+msgstr "Obrigado por se juntar ao nosso fórum de Perguntas & Respostas!"
 
 #: forum/skins/default/templates/authopenid/confirm_email.txt:4
 msgid "Your account details are:"
-msgstr ""
+msgstr "As informações da sua conta são:"
 
 #: forum/skins/default/templates/authopenid/confirm_email.txt:6
 msgid "Username:"
-msgstr ""
+msgstr "Nome de usuário:"
 
 #: forum/skins/default/templates/authopenid/confirm_email.txt:7
 #: forum/skins/default/templates/authopenid/delete.html:19
 msgid "Password:"
-msgstr ""
+msgstr "Senha:"
 
 #: forum/skins/default/templates/authopenid/confirm_email.txt:9
 msgid "Please sign in here:"
-msgstr ""
+msgstr "Por favor acesse por aqui:"
 
 #: forum/skins/default/templates/authopenid/confirm_email.txt:12
 #: forum/skins/default/templates/authopenid/email_validation.txt:14
@@ -3226,50 +3226,52 @@ msgid ""
 "Sincerely,\n"
 "Forum Administrator"
 msgstr ""
-"Sincerely,\n"
-"Q&A Forum Administrator"
+"Atenciosamente,\n"
+"Administradores do fórum de Perguntas & Respostas"
 
 #: forum/skins/default/templates/authopenid/delete.html:8
 msgid "Account: delete account"
-msgstr ""
+msgstr "Conta de usuário: remover conta"
 
 #: forum/skins/default/templates/authopenid/delete.html:12
 msgid ""
 "Note: After deleting your account, anyone will be able to register this "
 "username."
 msgstr ""
+"Nota: Depois de remover sua conta, o seu nome de usuário ficará disponível "
+"para uso por outras pessoas."
 
 #: forum/skins/default/templates/authopenid/delete.html:16
 msgid "Check confirm box, if you want delete your account."
-msgstr ""
+msgstr "Marque a caixa de confirmação se quiser remover sua conta de usuário."
 
 #: forum/skins/default/templates/authopenid/delete.html:31
 msgid "I am sure I want to delete my account."
-msgstr ""
+msgstr "Estou certo de que desejo remover minha conta"
 
 #: forum/skins/default/templates/authopenid/delete.html:32
 msgid "Password/OpenID URL"
-msgstr ""
+msgstr "Senha/endereço URL OpenID"
 
 #: forum/skins/default/templates/authopenid/delete.html:32
 msgid "(required for your security)"
-msgstr ""
+msgstr "(requerido para sua segurança)"
 
 #: forum/skins/default/templates/authopenid/delete.html:34
 msgid "Delete account permanently"
-msgstr ""
+msgstr "Remover a conta permanentemente"
 
 #: forum/skins/default/templates/authopenid/email_validation.txt:2
 msgid "Greetings from the Q&A forum"
-msgstr ""
+msgstr "Saudações do fórum de Perguntas & Respostas"
 
 #: forum/skins/default/templates/authopenid/email_validation.txt:4
 msgid "To make use of the Forum, please follow the link below:"
-msgstr ""
+msgstr "Para usar o fórum, por favor siga o link a seguir:"
 
 #: forum/skins/default/templates/authopenid/email_validation.txt:8
 msgid "Following the link above will help us verify your email address."
-msgstr ""
+msgstr "Seguindo o link acima você nos ajuda a confirmar o seu endereço de email"
 
 #: forum/skins/default/templates/authopenid/email_validation.txt:10
 msgid ""
@@ -3277,11 +3279,13 @@ msgid ""
 "no further action is needed. Just ingore this email, we apologize\n"
 "for any inconvenience"
 msgstr ""
-
+"Se você acredita que esta mensagem foi enviada por engano - \n"
+"nenhuma outra ação é necessária. Apenas ignore este email, pedimos desculpas\n"
+"por qualquer inconveniente que esta mensagem possa ter causado"
 #: forum/skins/default/templates/authopenid/external_legacy_login_info.html:4
 #: forum/skins/default/templates/authopenid/external_legacy_login_info.html:7
 msgid "Traditional login information"
-msgstr ""
+msgstr "Informação tradicional de login"
 
 #: forum/skins/default/templates/authopenid/external_legacy_login_info.html:12
 #, python-format
@@ -3289,29 +3293,31 @@ msgid ""
 "how to login with password through external login website or use %"
 "(feedback_url)s"
 msgstr ""
+"como acessar com a senha de algu outro site ou usar %"
+"(feedback_url)s"
 
 #: forum/skins/default/templates/authopenid/sendpw.html:4
 #: forum/skins/default/templates/authopenid/sendpw.html:7
 msgid "Send new password"
-msgstr "Recover password"
+msgstr "Recuperar a senha"
 
 #: forum/skins/default/templates/authopenid/sendpw.html:10
 msgid "password recovery information"
 msgstr ""
-"<span class='big strong'>Forgot you password? No problems - just get a new "
-"one!</span><br/>Please follow the following steps:<br/>&bull; submit your "
-"user name below and check your email<br/>&bull; <strong>follow the "
-"activation link</strong> for the new password - sent to you by email and "
-"login with the suggested password<br/>&bull; at this you might want to "
-"change your password to something you can remember better"
+"<span class='big strong'>Esqueceu sua senha? Sem problemas - obtenha uma nova "
+"senha!</span><br/>Por favor siga os passos a seguir:<br/>&bull; escreva seu nome "
+"de usuário abaixo e verifique seu email<br/>&bull; <strong>siga o link de  "
+"ativação</strong> para a nova senha - enviado por email e "
+"acesse o site com a senha sugerida<br/>&bull; neste ponto você pode querer mudar "
+"sua senha para algo que seja mais fácil de lembrar"
 
 #: forum/skins/default/templates/authopenid/sendpw.html:21
 msgid "Reset password"
-msgstr "Send me a new password"
+msgstr "Envie-me uma nova senha"
 
 #: forum/skins/default/templates/authopenid/sendpw.html:22
 msgid "return to login"
-msgstr ""
+msgstr "retornar ao login"
 
 #: forum/skins/default/templates/authopenid/sendpw_email.txt:2
 #, python-format
@@ -3319,6 +3325,8 @@ msgid ""
 "Someone has requested to reset your password on %(site_url)s.\n"
 "If it were not you, it is safe to ignore this email."
 msgstr ""
+"Alguém solicitou a alteração da sua senha de %(site_url)s.\n"
+"Se não foi você quem fez isso, você pode simplesmente ignorar este email."
 
 #: forum/skins/default/templates/authopenid/sendpw_email.txt:5
 #, python-format
@@ -3326,10 +3334,10 @@ msgid ""
 "email explanation how to use new %(password)s for %(username)s\n"
 "with the %(key_link)s"
 msgstr ""
-"To change your password, please follow these steps:\n"
-"* visit this link: %(key_link)s\n"
-"* login with user name %(username)s and password %(password)s\n"
-"* go to your user profile and set the password to something you can remember"
+"Para mudar sua senha, por favor siga os passos a seguir:\n"
+"* visite este link: %(key_link)s\n"
+"* acesse o site com o nome de usuário %(username)s e senha %(password)s\n"
+"* vá até o seu perfil de usuário e escolha uma nova senha"
 
 #: forum/skins/default/templates/authopenid/signin.html:28
 #, python-format
@@ -3340,9 +3348,9 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"<span class=\"strong big\">Your answer to </span> <i>\"<strong>%(title)s</"
-"strong> %(summary)s...\"</i> <span class=\"strong big\">is saved and will be "
-"posted once you log in.</span>"
+"<span class=\"strong big\">Sua resposta para </span> <i>\"<strong>%(title)s</"
+"strong> %(summary)s...\"</i> <span class=\"strong big\">foi gravada e será postada "
+"quando você entrar no site (acessar usando login).</span>"
 
 #: forum/skins/default/templates/authopenid/signin.html:35
 #, python-format
@@ -3351,271 +3359,274 @@ msgid ""
 "                %(title)s %(summary)s will be posted once you log in\n"
 "                "
 msgstr ""
-"<span class=\"strong big\">Your question</span> <i>\"<strong>%(title)s</"
-"strong> %(summary)s...\"</i> <span class=\"strong big\">is saved and will be "
-"posted once you log in.</span>"
+"<span class=\"strong big\">Sua questão</span> <i>\"<strong>%(title)s</"
+"strong> %(summary)s...\"</i> <span class=\"strong big\">está gravada e será postada "
+"quando você se conectar ao site.</span>"
 
 #: forum/skins/default/templates/authopenid/signin.html:128
 msgid "Enter your <span id=\"enter_your_what\">Provider user name</span>"
 msgstr ""
-"<span class=\"big strong\">Enter your </span><span id=\"enter_your_what\" "
-"class='big strong'>Provider user name</span><br/><span class='grey'>(or "
-"select another login method above)</span>"
+"<span class=\"big strong\">Selecione seu </span><span id=\"enter_your_what\" "
+"class='big strong'>usuário no provedor</span><br/><span class='grey'>(ou "
+"escolha outro dos métodos de login acima)</span>"
 
 #: forum/skins/default/templates/authopenid/signin.html:135
 msgid ""
 "Enter your <a class=\"openid_logo\" href=\"http://openid.net\">OpenID</a> "
 "web address"
 msgstr ""
-"<span class=\"big strong\">Enter your <a class=\"openid_logo\" href=\"http://"
-"openid.net\">OpenID</a> web address</span><br/><span class='grey'>(or choose "
-"another login method above)</span>"
+"<span class=\"big strong\">Entre seu endereço <a class=\"openid_logo\" href=\"http://"
+"openid.net\">OpenID</a> </span><br/><span class='grey'>(ou escolha "
+"outro dos métodos de login acima)</span>"
 
 #: forum/skins/default/templates/authopenid/signin.html:137
 #: forum/skins/default/templates/authopenid/signin.html:149
 msgid "Login"
-msgstr ""
+msgstr "Conectar-se"
 
 #: forum/skins/default/templates/authopenid/signin.html:140
 msgid "Enter your login name and password"
 msgstr ""
-"<span class='big strong'>Enter your CNPROG login and password</span><br/"
-"><span class='grey'>(or select your OpenID provider above)</span>"
+"<span class='big strong'>Entre seu login CNPROG e senha</span><br/"
+"><span class='grey'>(ou selecione seu provedor de OpenID acima)</span>"
 
 #: forum/skins/default/templates/authopenid/signin.html:144
 msgid "Login name"
-msgstr ""
+msgstr "Nome de usuário"
 
 #: forum/skins/default/templates/authopenid/signin.html:146
 msgid "Password"
-msgstr ""
+msgstr "Senha"
 
 #: forum/skins/default/templates/authopenid/signin.html:150
 msgid "Create account"
-msgstr ""
+msgstr "Criar conta"
 
 #: forum/skins/default/templates/authopenid/signup.html:29
 msgid "return to OpenID login"
-msgstr ""
+msgstr "retorne para login OpenID"
 
 #: forum/skins/default/templates/fbconnect/xd_receiver.html:5
 #, python-format
 msgid "Connect to %(APP_SHORT_NAME)s with Facebook!"
-msgstr ""
+msgstr "Conectar a %(APP_SHORT_NAME)s com o Facebook!"
 
 #: forum/templatetags/extra_tags.py:166 forum/templatetags/extra_tags.py:193
 msgid "reputation points"
-msgstr "karma"
+msgstr "carma"
 
 #: forum/templatetags/extra_tags.py:253
 msgid "2 days ago"
-msgstr ""
+msgstr "2 dias atrás"
 
 #: forum/templatetags/extra_tags.py:255
 msgid "yesterday"
-msgstr ""
+msgstr "ontem"
 
 #: forum/templatetags/extra_tags.py:257
 #, python-format
 msgid "%(hr)d hour ago"
-msgid_plural "%(hr)d hours ago"
+msgid_plural "%(hr)d horas atrás"
 msgstr[0] ""
-msgstr[1] ""
+msgstr[1] "há 1 hora"
 
 #: forum/templatetags/extra_tags.py:259
 #, python-format
 msgid "%(min)d min ago"
-msgid_plural "%(min)d mins ago"
+msgid_plural "%(min)d minutos atrás"
 msgstr[0] ""
-msgstr[1] ""
+msgstr[1] "há 1 minuto"
 
 #: forum/utils/forms.py:27
 msgid "this field is required"
-msgstr ""
+msgstr "é preciso preencher este campo"
 
 #: forum/utils/forms.py:42
 msgid "choose a username"
-msgstr "Choose screen name"
+msgstr "Escolha um nome de tela"
 
 #: forum/utils/forms.py:47
 msgid "user name is required"
-msgstr ""
+msgstr "você precisa preencher o nome de usuário"
 
 #: forum/utils/forms.py:48
 msgid "sorry, this name is taken, please choose another"
-msgstr ""
+msgstr "desculpe, este nome de usuário já foi escolhido por alguém, por favor escolha outro"
 
 #: forum/utils/forms.py:49
 msgid "sorry, this name is not allowed, please choose another"
-msgstr ""
+msgstr "desculpe, este nome não pode ser usado, por favor escolha outro"
 
 #: forum/utils/forms.py:50
 msgid "sorry, there is no user with this name"
-msgstr ""
+msgstr "desculpe, não existe usuário com este nome"
 
 #: forum/utils/forms.py:51
 msgid "sorry, we have a serious error - user name is taken by several users"
-msgstr ""
+msgstr "desculpe, temos um erro sério - um nome de usuário usado por mais de uma pessoa"
 
 #: forum/utils/forms.py:52
 msgid "user name can only consist of letters, empty space and underscore"
-msgstr ""
+msgstr "um nome de usuário só pode conter letras, espaços em branco e underscores "
 
 #: forum/utils/forms.py:100
 msgid "your email address"
-msgstr "Your email <i>(never shared)</i>"
+msgstr "Seu email <i>(nunca é exibido)</i>"
 
 #: forum/utils/forms.py:101
 msgid "email address is required"
-msgstr ""
+msgstr "endereço de email requerido"
 
 #: forum/utils/forms.py:102
 msgid "please enter a valid email address"
-msgstr ""
+msgstr "por favor entre um endereço de email válido"
 
 #: forum/utils/forms.py:103
 msgid "this email is already used by someone else, please choose another"
-msgstr ""
+msgstr "este email já está sendo usado por alguém, por favor escolha outro"
 
 #: forum/utils/forms.py:128
 msgid "choose password"
-msgstr "Password"
+msgstr "Senha"
 
 #: forum/utils/forms.py:129
 msgid "password is required"
-msgstr ""
+msgstr "escolha uma senha"
 
 #: forum/utils/forms.py:132
 msgid "retype password"
-msgstr "Password <i>(please retype)</i>"
+msgstr "Senha <i>(por favor escreva novamente)</i>"
 
 #: forum/utils/forms.py:133
 msgid "please, retype your password"
-msgstr ""
+msgstr "por favor digite novamente sua senha"
 
 #: forum/utils/forms.py:134
 msgid "sorry, entered passwords did not match, please try again"
-msgstr ""
+msgstr "desculpe, as senhas digitadas não conferem, por favor tente novamente"
 
 #: forum/views/auth.py:94 forum/views/auth.py:103
 msgid ""
 "Sorry, these login credentials belong to anoother user. Plese terminate your "
 "current session and try again."
 msgstr ""
+"Desculpe, essas credenciais pertencem a outro usuário. Por favor termine sua seção atual "
+"e tent novamente."
 
 #: forum/views/auth.py:96
 msgid "You are already logged in with that user."
-msgstr ""
+msgstr "Você já está conectado com este usuário. "
 
 #: forum/views/auth.py:101
 msgid "These login credentials are already associated with your account."
-msgstr ""
+msgstr "Estas credenciais já estão associadas com a sua conta."
 
 #: forum/views/auth.py:107
 msgid "These new credentials are now associated with your account."
-msgstr ""
+msgstr "Estas novas credenciais estão agora associadas com a sua conta."
 
 #: forum/views/commands.py:217
 #, python-format
 msgid "subscription saved, %(email)s needs validation, see %(details_url)s"
 msgstr ""
-"Your subscription is saved, but email address %(email)s needs to be "
-"validated, please see <a href='%(details_url)s'>more details here</a>"
+"Sua inscrição está gravada, mas o endereço de email precisa ser validado, "
+"por favor veja <a href='%(details_url)s'>mais detalhes aqui</a>"
 
 #: forum/views/commands.py:225
 msgid "email update frequency has been set to daily"
-msgstr ""
+msgstr "você receberá diárias por email"
 
 #: forum/views/meta.py:34
 msgid "Q&A forum feedback"
-msgstr ""
+msgstr "Dar opinião ao fórum de Perguntas & Respostas "
 
 #: forum/views/meta.py:35
 msgid "Thanks for the feedback!"
-msgstr ""
+msgstr "Obrigado pela contribuição!"
 
 #: forum/views/meta.py:43
 msgid "We look forward to hearing your feedback! Please, give it next time :)"
-msgstr ""
+msgstr "Gostaríamos de ouvir sua opinião! Por favor não deixe de enviá-la!"
 
 #: forum/views/users.py:851 forum/views/users.py:855
 msgid "changes saved"
-msgstr ""
+msgstr "alterações gravadas"
 
 #: forum/views/users.py:861
 msgid "email updates canceled"
-msgstr ""
+msgstr "notificações por email foram canceladas"
 
 #: forum/views/users.py:891
 msgid "user profile"
-msgstr ""
+msgstr "perfil de usuário"
 
 #: forum/views/users.py:892
 msgid "user profile overview"
-msgstr ""
+msgstr "resumo do perfil de usuário"
 
 #: forum/views/users.py:899
 msgid "recent user activity"
-msgstr ""
+msgstr "atividade recente do usuário"
 
 #: forum/views/users.py:900
 msgid "profile - recent activity"
-msgstr ""
+msgstr "perfil - atividade recente"
 
 #: forum/views/users.py:909
 msgid "profile - responses"
-msgstr ""
+msgstr "perfil - respostas"
 
 #: forum/views/users.py:917
 msgid "user reputation in the community"
-msgstr "user karma"
+msgstr "carma do usuário"
 
 #: forum/views/users.py:918
 msgid "profile - user reputation"
-msgstr "Profile - User's Karma"
+msgstr "Perfil - carma do usuário"
 
 #: forum/views/users.py:924
 msgid "favorite questions"
-msgstr ""
+msgstr "questões favoritas"
 
 #: forum/views/users.py:925
 msgid "users favorite questions"
-msgstr ""
+msgstr "questões favoritas do usuário"
 
 #: forum/views/users.py:926
 msgid "profile - favorite questions"
-msgstr ""
+msgstr "perfil - questões favoritas"
 
 #: forum/views/users.py:935
 msgid "profile - votes"
-msgstr ""
+msgstr "perfil - votos"
 
 #: forum/views/users.py:944
 msgid "profile - email subscriptions"
-msgstr ""
+msgstr "perfil - notificações por email"
 
 #: forum/views/users.py:977
 msgid "Password changed."
-msgstr ""
+msgstr "Senha alterada."
 
 #: forum/views/writers.py:74
 msgid "uploading images is limited to users with >60 reputation points"
-msgstr "sorry, file uploading requires karma >60"
+msgstr "desculpe, enviar arquivos requer carma >60"
 
 #: forum/views/writers.py:76
 msgid "allowed file types are 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'"
-msgstr ""
+msgstr "tipos de arquivo permitidos são 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'"
 
 #: forum/views/writers.py:78
 #, python-format
 msgid "maximum upload file size is %sK"
-msgstr ""
+msgstr "tamanho máximo para arquivos enviados é %sK"
 
 #: forum/views/writers.py:80
 #, python-format
 msgid ""
 "Error uploading file. Please contact the site administrator. Thank you. %s"
 msgstr ""
+"Problemas ao enviar o arquivo. Por favor avise algum dos administradores do site. Obrigado. %s"
 
 #: forum_modules/books/urls.py:7 forum_modules/books/urls.py:8
 #: forum_modules/books/urls.py:9
@@ -3624,42 +3635,45 @@ msgstr ""
 
 #: forum_modules/facebookauth/authentication.py:29
 msgid "Sorry, your Facebook session has expired, please try again"
-msgstr ""
+msgstr "Desculpe, sua seção do Facebook expirou, por favor tente novamente"
 
 #: forum_modules/facebookauth/authentication.py:31
 msgid ""
 "The authentication with Facebook connect failed due to an invalid signature"
 msgstr ""
+"A autenticação com a conta do Facebook falhou por causa de uma assinatura incorreta"
 
 #: forum_modules/facebookauth/authentication.py:33
 msgid ""
 "The authentication with Facebook connect failed, cannot find authentication "
 "tokens"
 msgstr ""
+"A autenticação com a conta do Facebook falhou, não consigo encontrar autenticação "
+"tokens"
 
 #: forum_modules/localauth/forms.py:59
 msgid "Please enter valid username and password (both are case-sensitive)."
-msgstr ""
+msgstr "Por favor entre nome de usuário e senha válidos."
 
 #: forum_modules/localauth/forms.py:62
 msgid "This account is inactive."
-msgstr ""
+msgstr "Esta conta está desativada"
 
 #: forum_modules/localauth/forms.py:64
 msgid "Login failed."
-msgstr ""
+msgstr "Login falhou."
 
 #: forum_modules/localauth/forms.py:66
 msgid "Please enter username and password"
-msgstr ""
+msgstr "Por favor entre o nome de usuário e senha"
 
 #: forum_modules/localauth/forms.py:68
 msgid "Please enter your password"
-msgstr ""
+msgstr "Por favor entre sua senha"
 
 #: forum_modules/localauth/forms.py:70
 msgid "Please enter user name"
-msgstr ""
+msgstr "Por favor entre seu nome de usuário"
 
 #: forum_modules/localauth/urls.py:7
 msgid "local/"
@@ -3667,69 +3681,32 @@ msgstr ""
 
 #: forum_modules/oauthauth/consumer.py:33
 msgid "Error, the oauth token is not on the server"
-msgstr ""
+msgstr "Erro, o token oauth não está no servidor"
 
 #: forum_modules/oauthauth/consumer.py:38
 msgid "Something went wrong! Auth tokens do not match"
-msgstr ""
+msgstr "Algum problema aconteceu! Os tokens de oauth não casam"
 
 #: forum_modules/openidauth/consumer.py:40
 msgid "Sorry, but your input is not a valid OpenId"
-msgstr ""
+msgstr "Desculpe, mas sua entrada não é um OpenID válido"
 
 #: forum_modules/openidauth/consumer.py:92
 msgid "The OpenId authentication request was canceled"
-msgstr ""
+msgstr "A autenticação do OpenID foi cancelada"
 
 #: forum_modules/openidauth/consumer.py:94
 msgid "The OpenId authentication failed: "
-msgstr ""
+msgstr "A autenticação do OpenID falhou: "
 
 #: forum_modules/openidauth/consumer.py:96
 msgid "Setup needed"
-msgstr ""
+msgstr "Configuração necessária"
 
 #: forum_modules/openidauth/consumer.py:98
 msgid "The OpenId authentication failed with an unknown status: "
-msgstr ""
+msgstr "A autenticação OpenID falhou cmo estado desconhecido: "
 
 #: forum_modules/openidauth/templates/openidurl.html:7
 msgid "Enter your OpenId Url"
-msgstr ""
-
-#~ msgid "Incorrect username."
-#~ msgstr "sorry, there is no such user name"
-
-#~ msgid "Welcome email subject line"
-#~ msgstr "Welcome to the Q&A forum"
-
-#~ msgid "your email needs to be validated see %(details_url)s"
-#~ msgstr ""
-#~ "Your email needs to be validated. Please see details <a "
-#~ "id='validate_email_alert' href='%(details_url)s'>here</a>."
-
-#~ msgid "Email verification subject line"
-#~ msgstr "Verification Email from Q&A forum"
-
-#~ msgid "first time greeting with %(url)s"
-#~ msgstr "Hello and welcome to OSQA - <a href='%(url)s'>please join us</a>!"
-
-#~ msgid "have %(num_q)s unanswered questions"
-#~ msgstr ""
-#~ "<div class=\"questions-count\">%(num_q)s</div>questions <strong>without "
-#~ "accepted answers</strong>"
-
-#~ msgid ""
-#~ "\n"
-#~ "\t\t\t\thave total %(q_num)s questions\n"
-#~ "\t\t\t\t"
-#~ msgid_plural ""
-#~ "\n"
-#~ "\t\t\t\thave total %(q_num)s questions\n"
-#~ "\t\t\t\t"
-#~ msgstr[0] ""
-#~ "\n"
-#~ "<div class=\"questions-count\">%(q_num)s</div><p>question</p>"
-#~ msgstr[1] ""
-#~ "\n"
-#~ "<div class=\"questions-count\">%(q_num)s</div><p>questions</p>"
+msgstr "Entre seu endereço URL de OpenID"
