@@ -1,20 +1,17 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-01 19:51-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Project-Id-Version: OSQA\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: PoliGNU <contato@polignu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+"Language: pt_BR\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
 #: forum/auth.py:484
 msgid "Your question and all of it's answers have been deleted"
@@ -43,10 +40,6 @@ msgstr "questão que foge do assunto ou é irrelevante"
 #: forum/const.py:10
 msgid "too subjective and argumentative"
 msgstr "subjetiva ou agressiva demais"
-
-#: forum/const.py:11
-msgid ""
-msgstr "não responde a questão"
 
 #: forum/const.py:12
 msgid "the question is answered, right answer was accepted"
@@ -215,7 +208,9 @@ msgstr "palavras-chave"
 #: forum/forms.py:55
 msgid ""
 "Tags are short keywords, with no spaces within. Up to five tags can be used."
-msgstr "Palavras-chave são rótulos curtos, que não contêm espaços. Até cinco palavras-chave podem ser usadas."
+msgstr ""
+"Palavras-chave são rótulos curtos, que não contêm espaços. Até cinco "
+"palavras-chave podem ser usadas."
 
 #: forum/forms.py:62 forum/skins/default/templates/question_retag.html:39
 msgid "tags are required"
@@ -234,8 +229,8 @@ msgid ""
 "please use following characters in tags: letters 'a-z', numbers, and "
 "characters '.-_#'"
 msgstr ""
-"por favor use os seguintes caracteres em palavras-chave: letras 'a-z', números, e "
-"os caracteres '.-_#'"
+"por favor use os seguintes caracteres em palavras-chave: letras 'a-z', "
+"números, e os caracteres '.-_#'"
 
 #: forum/forms.py:85
 #: forum/skins/default/templates/post_contributor_info.html:7
@@ -251,8 +246,8 @@ msgid ""
 "if you choose community wiki option, the question and answer do not generate "
 "points and name of author will not be shown"
 msgstr ""
-"se você escolher a opção do wiki da comunidade, a questão e resposta não geram "
-"pontos e o nome do autor não será exibido"
+"se você escolher a opção do wiki da comunidade, a questão e resposta não "
+"geram pontos e o nome do autor não será exibido"
 
 #: forum/forms.py:102
 msgid "update summary:"
@@ -263,12 +258,14 @@ msgid ""
 "enter a brief summary of your revision (e.g. fixed spelling, grammar, "
 "improved style, this field is optional)"
 msgstr ""
-"escreeva um breve resumo da sua revisão (por exemplo, erro de digitação, de gramática, "
-"melhora no estilo, este campo é opcional)"
+"escreeva um breve resumo da sua revisão (por exemplo, erro de digitação, de "
+"gramática, melhora no estilo, este campo é opcional)"
 
 #: forum/forms.py:106
 msgid "Automatically accept user's contributions for the email updates"
-msgstr "Aceitar automaticamente contribuições do usuário para as atualizações de email"
+msgstr ""
+"Aceitar automaticamente contribuições do usuário para as atualizações de "
+"email"
 
 #: forum/forms.py:122
 msgid "Your name:"
@@ -333,7 +330,6 @@ msgid ""
 "password."
 msgstr ""
 "A senha antiga está incorreta.                 Por favor use a senha correta."
-""
 
 #: forum/forms.py:285 forum/forms.py:286
 msgid "weekly"
@@ -548,8 +544,8 @@ msgstr[0] ""
 "<p>Car@ %(name)s,</p></p>A seguinte questão foi atualizada no fórum de "
 "Perguntas & Respostas:</p>"
 msgstr[1] ""
-"<p>Car@ %(name)s,</p><p>As seguintes %(num)d questões foram atualizadas "
-"no fórum de Perguntas & Respostas:</p>"
+"<p>Car@ %(name)s,</p><p>As seguintes %(num)d questões foram atualizadas no "
+"fórum de Perguntas & Respostas:</p>"
 
 #: forum/management/commands/send_email_alerts.py:169
 msgid "new question"
@@ -567,7 +563,8 @@ msgstr[1] "Há ainda %(num)d outras questões atualizadas recentemente "
 msgid ""
 "Perhaps you could look up previously sent forum reminders in your mailbox."
 msgstr ""
-"Talvez você poderia verificar lembretes do fórum que foram enviados ao seu email."
+"Talvez você poderia verificar lembretes do fórum que foram enviados ao seu "
+"email."
 
 #: forum/management/commands/send_email_alerts.py:188
 #, python-format
@@ -576,10 +573,10 @@ msgid ""
 "administrator"
 msgstr ""
 "<p>Por favo lembre-se de que você pode sempre <a href='%(link)s'>ajustar</a> "
-"a frequência das atualizações de email, ou mesmo desligá-las.<br/>Se você acredita "
-"que esta mensagem foi enviada por engano, por favor nos escreva para o administrador "
-"do fórum em %(email)s.</p><p>Atenciosamente,</p><p>Seu amigável fórum de Perguntas "
-"& Respostas.</p>"
+"a frequência das atualizações de email, ou mesmo desligá-las.<br/>Se você "
+"acredita que esta mensagem foi enviada por engano, por favor nos escreva "
+"para o administrador do fórum em %(email)s.</p><p>Atenciosamente,</p><p>Seu "
+"amigável fórum de Perguntas & Respostas.</p>"
 
 #: forum/middleware/anon_user.py:34
 #, python-format
@@ -680,8 +677,8 @@ msgid ""
 "the page you tried to visit is protected or you don't have sufficient "
 "points, see"
 msgstr ""
-"a página que você tentou visitar é protegida ou você não possui pontos "
-"o bastante, veja"
+"a página que você tentou visitar é protegida ou você não possui pontos o "
+"bastante, veja"
 
 #: forum/skins/default/templates/404.html:31
 msgid "if you believe this error 404 should not have occured, please"
@@ -710,7 +707,9 @@ msgstr "desculpe, houve aconteceu um erro aqui"
 
 #: forum/skins/default/templates/500.html:24
 msgid "system error log is recorded, error will be fixed as soon as possible"
-msgstr "o relatório do erro foi armazenado, corrrigiremos o problema assim que possível"
+msgstr ""
+"o relatório do erro foi armazenado, corrrigiremos o problema assim que "
+"possível"
 
 #: forum/skins/default/templates/500.html:25
 msgid "please report the error to the site administrators if you wish"
@@ -861,7 +860,8 @@ msgstr "Dicas"
 
 #: forum/skins/default/templates/answer_edit_tips.html:7
 msgid "please make your answer relevant to this community"
-msgstr "por favor faça sua resposta de modo que seja relevante para esta comunidade"
+msgstr ""
+"por favor faça sua resposta de modo que seja relevante para esta comunidade"
 
 #: forum/skins/default/templates/answer_edit_tips.html:10
 msgid "try to give an answer, rather than engage into a discussion"
@@ -938,9 +938,10 @@ msgid "login to post question info"
 msgstr ""
 "<span class=\"strong big\">Você pode enviar sua questão anonimamente</span>. "
 "Quando você envia a postagem, você será redirecionado para a página de login "
-"e cadastro (signup). Sua questão será armazenada na sessão atual e será publicada "
-"depois que você entrar no sistema. O processo deLogin/signup é muito simples. "
-"O Login leva cerca de 30 segundos, o cadastro inicial menos de um minuto."
+"e cadastro (signup). Sua questão será armazenada na sessão atual e será "
+"publicada depois que você entrar no sistema. O processo deLogin/signup é "
+"muito simples. O Login leva cerca de 30 segundos, o cadastro inicial menos "
+"de um minuto."
 
 #: forum/skins/default/templates/ask.html:74
 #, python-format
@@ -950,10 +951,10 @@ msgid ""
 "                            "
 msgstr ""
 "<span class='strong big'>Parece que seu endereço de email, %(email)s ainda "
-"não foi confirmado.</span> Para postar mensagens você precisa confirmar seu email, "
-"mais detalhes <a href='%(email_validation_faq_url)s'>aqui</a>."
-"<br>Você pode submeter sua questão agora e confirmar o email depois. Sua questão "
-"será mantida pendente enquanto isso. "
+"não foi confirmado.</span> Para postar mensagens você precisa confirmar seu "
+"email, mais detalhes <a href='%(email_validation_faq_url)s'>aqui</a>."
+"<br>Você pode submeter sua questão agora e confirmar o email depois. Sua "
+"questão será mantida pendente enquanto isso. "
 
 #: forum/skins/default/templates/ask.html:112
 msgid "(required)"
@@ -989,22 +990,22 @@ msgid "Community gives you awards for your questions, answers and votes."
 msgstr ""
 "Se suas questões e respostas foram bem votadas, sua contribuição a esta "
 "comunidade de Perguntas & Respostas será reconhecida com uma série de "
-"condecorações." 
+"condecorações."
 
 #: forum/skins/default/templates/badges.html:22
 #, python-format
 msgid ""
 "Below is the list of available badges and number \n"
-"    of times each type of badge has been awarded. Give us feedback at %"
-"(feedback_faq_url)s.\n"
+"    of times each type of badge has been awarded. Give us feedback at "
+"%(feedback_faq_url)s.\n"
 "    "
 msgstr ""
 "As condecorações diferem apenas pelo seu tipo: <strong>ouro</strong>, "
-"<strong>prata</strong> e <strong>bronze</strong> (seus significados estão estão "
-"descritos à direita). Io futuro haverá muitos tipos de condecorações de cada "
-"tipo.. <strong><a href='%(feedback_faq_url)s'>Comentários e sugestões</a></strong> "
-" são bem-vindos - que tipos de condecorações você gostaria de ver e que atividades "
-"você gostaria de ver condecoradas."
+"<strong>prata</strong> e <strong>bronze</strong> (seus significados estão "
+"estão descritos à direita). Io futuro haverá muitos tipos de condecorações "
+"de cada tipo.. <strong><a href='%(feedback_faq_url)s'>Comentários e "
+"sugestões</a></strong>  são bem-vindos - que tipos de condecorações você "
+"gostaria de ver e que atividades você gostaria de ver condecoradas."
 
 #: forum/skins/default/templates/badges.html:50
 msgid "Community badges"
@@ -1030,8 +1031,8 @@ msgstr "insígnia de bronze: geralmente uma honra especial"
 #: forum/skins/default/templates/badges.html:71
 msgid "bronze badge description"
 msgstr ""
-"Se você é um participante ativo desta comunidade, você será reconhecido "
-"com esta insígnia."
+"Se você é um participante ativo desta comunidade, você será reconhecido com "
+"esta insígnia."
 
 #: forum/skins/default/templates/book.html:7
 msgid "reading channel"
@@ -1222,9 +1223,9 @@ msgid ""
 "discussions."
 msgstr ""
 "é um site de <strong>perguntas e respsotas</strong> - <strong>não é um grupo "
-"de discussão</strong>. Por favor evite debater em suas respostas, já que isso "
-"tende a diluir a essência das questões e respostas. Para discussòes curtas, por "
-"favor deixe comentários."
+"de discussão</strong>. Por favor evite debater em suas respostas, já que "
+"isso tende a diluir a essência das questões e respostas. Para discussòes "
+"curtas, por favor deixe comentários."
 
 #: forum/skins/default/templates/faq.html:32
 msgid "Who moderates this community?"
@@ -1243,8 +1244,8 @@ msgid ""
 "The reputation system allows users earn the authorization to perform a "
 "variety of moderation tasks."
 msgstr ""
-"Um sistema de Carma permite aos usuários adquirir o direito de realizar "
-"uma série de tarefas de moderação"
+"Um sistema de Carma permite aos usuários adquirir o direito de realizar uma "
+"série de tarefas de moderação"
 
 #: forum/skins/default/templates/faq.html:40
 msgid "How does reputation system work?"
@@ -1269,11 +1270,11 @@ msgid ""
 "type of moderation task."
 msgstr ""
 "Por exemplo, se você faz uma pergunta interessante, ou fornece uma resposta, "
-"boa, sua contribuição receberá votos favoráveis. Por outro lado se uma resposta "
-"é enganadora, ela receberá votos desfavoráveis. Cada voto a favor gera "
-"<strong>10</strong> pontos. Há um limite de <strong>200</strong> pontos que podem "
-"ser acumulados por questão ou resposta. A tabela abaixo explica os requisitos de "
-"pontuação para cada tipo de tarefa de moderação."
+"boa, sua contribuição receberá votos favoráveis. Por outro lado se uma "
+"resposta é enganadora, ela receberá votos desfavoráveis. Cada voto a favor "
+"gera <strong>10</strong> pontos. Há um limite de <strong>200</strong> pontos "
+"que podem ser acumulados por questão ou resposta. A tabela abaixo explica os "
+"requisitos de pontuação para cada tipo de tarefa de moderação."
 
 #: forum/skins/default/templates/faq.html:53
 #: forum/skins/default/templates/user_votes.html:15
@@ -1319,7 +1320,8 @@ msgstr "remover um comentário qualquer"
 
 #: forum/skins/default/templates/faq.html:95
 msgid "delete any questions and answers and perform other moderation tasks"
-msgstr "remover qualquer questão ou resposta e realizar outras tarefas de moderação"
+msgstr ""
+"remover qualquer questão ou resposta e realizar outras tarefas de moderação"
 
 #: forum/skins/default/templates/faq.html:103
 msgid "how to validate email title"
@@ -1334,14 +1336,15 @@ msgstr ""
 "class=\"bigger strong\">Como?</span> Se acabou de escolher ou alterar seu "
 "endereço de email - <strong>verifique seu email e clique no link que lhe "
 "enviamos</strong>.<br>O link contém uma chave gerada especialmente para "
-"você. Você também pode <button style='display:inline' type='submit'><strong>"
-"obter uma nova chave</strong></button> e verificar seu email novamente.</p>"
-"</form><span class=\"bigger strong\">Por que?</span> Confirmação do email "
-"é importante para assegurar que <strong>somente  você pode postar mensagens"
-"</strong> em seu nome e para <strong>minimizar a quantidade de spam</strong>."
-"<br/>Com email você pode se <strong>inscrever para receber notícias</strong> "
-"sobre as questões mais interessantes. Ademais, ao se inscrever, você cria um "
-"<a href='%(gravatar_faq_url)s'><strong>gravatar</strong></a> único, uma imagem "
+"você. Você também pode <button style='display:inline' "
+"type='submit'><strong>obter uma nova chave</strong></button> e verificar seu "
+"email novamente.</p></form><span class=\"bigger strong\">Por que?</span> "
+"Confirmação do email é importante para assegurar que <strong>somente  você "
+"pode postar mensagens</strong> em seu nome e para <strong>minimizar a "
+"quantidade de spam</strong>.<br/>Com email você pode se <strong>inscrever "
+"para receber notícias</strong> sobre as questões mais interessantes. "
+"Ademais, ao se inscrever, você cria um <a "
+"href='%(gravatar_faq_url)s'><strong>gravatar</strong></a> único, uma imagem "
 "pessoal.</p>"
 
 #: forum/skins/default/templates/faq.html:110
@@ -1352,12 +1355,12 @@ msgstr "O que é um gravatar?"
 msgid "gravatar faq info"
 msgstr ""
 "<strong>Gravatar</strong> significa <strong>avatar</strong> <strong>g</"
-"strong>lobalmente <strong>r</strong>econhecido (a ordem vem do inglês) - "
-"é seu avatar (imagem) único, associado ao seu endereço de email. É simplesmente "
-"uma imagem mostrada junto a suas postagens em sites que usem o protocolo "
-"gravatar. O avatar padrão aparece como um quadrado preenchido com imagens "
-"parecidas a flocos de neve. Você pode <strong>escolher sua imagem</strong> "
-"em <a href='http://gravatar.com'><strong>gravatar.com</strong></a>"
+"strong>lobalmente <strong>r</strong>econhecido (a ordem vem do inglês) - é "
+"seu avatar (imagem) único, associado ao seu endereço de email. É "
+"simplesmente uma imagem mostrada junto a suas postagens em sites que usem o "
+"protocolo gravatar. O avatar padrão aparece como um quadrado preenchido com "
+"imagens parecidas a flocos de neve. Você pode <strong>escolher sua imagem</"
+"strong> em <a href='http://gravatar.com'><strong>gravatar.com</strong></a>"
 
 #: forum/skins/default/templates/faq.html:114
 msgid "To register, do I need to create new password?"
@@ -1454,10 +1457,11 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"            <span class='big strong'>Caro visitante</span>, gostaríamos "
-"de saber sua opinião.\n"
+"            <span class='big strong'>Caro visitante</span>, gostaríamos de "
+"saber sua opinião.\n"
 "            Por favor escreva (abaixo) e envie-nos sua mensagem.\n"
 "            "
+
 #: forum/skins/default/templates/feedback.html:41
 msgid "(this field is required)"
 msgstr "(este campo é obrigatório)"
@@ -1708,9 +1712,9 @@ msgid ""
 "As a registered user you can login with your OpenID, log out of the site or "
 "permanently remove your account."
 msgstr ""
-"Clicar em <strong>Sair</strong> não o desconecta do seu provedor de OpenID.</p>"
-"<p>Se você deseja desconectar completamente - certifique-se de desconectar também "
-"do seu provedor de OpenID."
+"Clicar em <strong>Sair</strong> não o desconecta do seu provedor de OpenID.</"
+"p><p>Se você deseja desconectar completamente - certifique-se de desconectar "
+"também do seu provedor de OpenID."
 
 #: forum/skins/default/templates/logout.html:20
 msgid "Logout now"
@@ -1801,9 +1805,9 @@ msgstr "Visitantes do site"
 msgid "what technical information is collected about visitors"
 msgstr ""
 "Informação sobre a visualização das perguntas, revisões de questões e "
-"respostas - tanto número de vezes quanto conteúdo são armazenadas para "
-"cada usuário de modo a corretamente contar o número de visualizações e "
-"Assegurar integridade das informações, e relatar atualizações importantes."
+"respostas - tanto número de vezes quanto conteúdo são armazenadas para cada "
+"usuário de modo a corretamente contar o número de visualizações e Assegurar "
+"integridade das informações, e relatar atualizações importantes."
 
 #: forum/skins/default/templates/privacy.html:23
 msgid "Personal Information"
@@ -1812,9 +1816,9 @@ msgstr "Informação Pessoal"
 #: forum/skins/default/templates/privacy.html:25
 msgid "details on personal information policies"
 msgstr ""
-"Membros desta comunidade podem optar por exibir informação que os identifique "
-"pessoalmente em seu perfil. O Fórum jamais exibe tais informações sem que "
-"tal tenha sido solicitado pelo próprio usuário."
+"Membros desta comunidade podem optar por exibir informação que os "
+"identifique pessoalmente em seu perfil. O Fórum jamais exibe tais "
+"informações sem que tal tenha sido solicitado pelo próprio usuário."
 
 #: forum/skins/default/templates/privacy.html:28
 msgid "Other Services"
@@ -1823,8 +1827,8 @@ msgstr "Outros Serviços"
 #: forum/skins/default/templates/privacy.html:30
 msgid "details on sharing data with third parties"
 msgstr ""
-"Nenhum dado que não seja abertamente exibido pelo fórum por escolha do usuário "
-"é exposto abertamente ou compartilhado com terceiros."
+"Nenhum dado que não seja abertamente exibido pelo fórum por escolha do "
+"usuário é exposto abertamente ou compartilhado com terceiros."
 
 #: forum/skins/default/templates/privacy.html:35
 msgid "cookie policy details"
@@ -1843,7 +1847,6 @@ msgstr ""
 "Estas políticas podem ser ajustadas para melhorar a proteção da privacidade "
 "dos usuários do site. Sempre que tais mudanças ocorrerem, os usuários serão "
 "notificados pelo sistema interno de mensagens. "
-
 
 #: forum/skins/default/templates/question.html:77
 #: forum/skins/default/templates/question.html:78
@@ -1873,7 +1876,9 @@ msgstr "marcar a questão como favorita (clique novament para cancelar)"
 #: forum/skins/default/templates/question.html:115
 #: forum/skins/default/templates/question.html:116
 msgid "remove favorite mark from this question (click again to restore mark)"
-msgstr "remover marca de favorita da questão (clique novamente para restaurar a marcação)"
+msgstr ""
+"remover marca de favorita da questão (clique novamente para restaurar a "
+"marcação)"
 
 #: forum/skins/default/templates/question.html:138
 #: forum/skins/default/templates/question.html:292
@@ -1894,7 +1899,9 @@ msgstr "fechar"
 #: forum/skins/default/templates/question.html:297
 msgid ""
 "report as offensive (i.e containing spam, advertising, malicious text, etc.)"
-msgstr "relatar como ofensivo (por exemplo, contendo spam, propaganda, texto malicioso, etc.)"
+msgstr ""
+"relatar como ofensivo (por exemplo, contendo spam, propaganda, texto "
+"malicioso, etc.)"
 
 #: forum/skins/default/templates/question.html:154
 #: forum/skins/default/templates/question.html:298
@@ -1924,8 +1931,8 @@ msgid ""
 "                                            "
 msgid_plural ""
 "\n"
-"                                            veja mais<strong>%(counter)s</strong> "
-"\n"
+"                                            veja mais<strong>%(counter)s</"
+"strong> \n"
 "                                            "
 msgstr[0] ""
 msgstr[1] ""
@@ -1939,8 +1946,8 @@ msgid ""
 "                                            "
 msgid_plural ""
 "\n"
-"                                            veja mais <strong>%(counter)s</strong> "
-"comentários\n"
+"                                            veja mais <strong>%(counter)s</"
+"strong> comentários\n"
 "                                            "
 msgstr[0] ""
 msgstr[1] ""
@@ -1949,8 +1956,7 @@ msgstr[1] ""
 #, python-format
 msgid ""
 "The question has been closed for the following reason \"%(close_reason)s\" by"
-msgstr ""
-"A questão foi fechada pela seguinte razão \"%(close_reason)s\" por"
+msgstr "A questão foi fechada pela seguinte razão \"%(close_reason)s\" por"
 
 #: forum/skins/default/templates/question.html:219
 #, python-format
@@ -1971,8 +1977,10 @@ msgstr[0] ""
 "\n"
 "                    Uma Resposta:\n"
 "                    "
-
 msgstr[1] ""
+"\n"
+"                    %(counter)s respostas:\n"
+"                    "
 
 #: forum/skins/default/templates/question.html:235
 msgid "oldest answers will be shown first"
@@ -2039,8 +2047,8 @@ msgid ""
 "                                                        "
 msgid_plural ""
 "\n"
-"                                                        ver mais <strong>%"
-"(counter)s</strong>\n"
+"                                                        ver mais <strong>"
+"%(counter)s</strong>\n"
 "                                                        "
 msgstr[0] ""
 msgstr[1] ""
@@ -2054,8 +2062,8 @@ msgid ""
 "                                                        "
 msgid_plural ""
 "\n"
-"                                                        ver mais <strong>%"
-"(counter)s</strong> comentários\n"
+"                                                        ver mais <strong>"
+"%(counter)s</strong> comentários\n"
 "                                                        "
 msgstr[0] ""
 msgstr[1] ""
@@ -2064,32 +2072,34 @@ msgstr[1] ""
 #: forum/skins/default/templates/question.html:379
 msgid "Notify me once a day when there are any new answers"
 msgstr ""
-"<strong>Notifique-me</strong> uma vez ao dia por email quando houver alguma nova "
-"resposta ou atualizações"
+"<strong>Notifique-me</strong> uma vez ao dia por email quando houver alguma "
+"nova resposta ou atualizações"
 
 #: forum/skins/default/templates/question.html:382
 msgid "Notify me weekly when there are any new answers"
 msgstr ""
-"<strong>Notifique-me</strong> semanalmente quando houver alguma nova resposta ou atualizações"
+"<strong>Notifique-me</strong> semanalmente quando houver alguma nova "
+"resposta ou atualizações"
 
 #: forum/skins/default/templates/question.html:387
 #, python-format
 msgid ""
 "\n"
-"                You can always adjust frequency of email updates from your %"
-"(profile_url)s\n"
+"                You can always adjust frequency of email updates from your "
+"%(profile_url)s\n"
 "                "
 msgstr ""
 "\n"
 "(nota: você sempre pode <a href='%(profile_url)s?"
-"sort=email_subscriptions'>ajustar a frequência</a> das notificações por email)"
+"sort=email_subscriptions'>ajustar a frequência</a> das notificações por "
+"email)"
 
 #: forum/skins/default/templates/question.html:394
 msgid "once you sign in you will be able to subscribe for any updates here"
 msgstr ""
-"<span class='strong'>Aqui</span> (uma vez que você esteja cadastrado no fórum) "
-"você poderá you entrar no fórum e solicitar atualizações de email a respeito desta "
-"questão."
+"<span class='strong'>Aqui</span> (uma vez que você esteja cadastrado no "
+"fórum) você poderá you entrar no fórum e solicitar atualizações de email a "
+"respeito desta questão."
 
 #: forum/skins/default/templates/question.html:405
 msgid "Your answer"
@@ -2102,30 +2112,33 @@ msgstr "Seja o primeiro a responder esta questão!"
 #: forum/skins/default/templates/question.html:413
 msgid "you can answer anonymously and then login"
 msgstr ""
-"<span class='strong big'>Por favor comece a postar sua questão anonimamente</span> "
-"- sua resposta será salva nesta sessão e será publicada depois que você entrar ou "
-"criar uma nova conta. Por favor tente dar uma resposta <strong>substancial"
-"</strong>. Para discussões, <strong>por favor use os comentários</strong> e "
-"<strong>lembre-se de votar a questão</strong> (depois de entrar no fórum)!"
+"<span class='strong big'>Por favor comece a postar sua questão anonimamente</"
+"span> - sua resposta será salva nesta sessão e será publicada depois que "
+"você entrar ou criar uma nova conta. Por favor tente dar uma resposta "
+"<strong>substancial</strong>. Para discussões, <strong>por favor use os "
+"comentários</strong> e <strong>lembre-se de votar a questão</strong> (depois "
+"de entrar no fórum)!"
 
 #: forum/skins/default/templates/question.html:417
 msgid "answer your own question only to give an answer"
 msgstr ""
-"<span class='big strong'>Fique à vontade para responder sua própria questão</span>, "
-"mas certifique-se de dar uma <strong>resposta</strong>. Lembre-se que você sempre pode "
-"<strong>revisar sua questão original</strong>. Por favor <strong>use comentários para "
-"discutir</strong> e <strong>por favor não esqueça de votar :)</strong> para as respostas "
-"que gostou (ou, talvez, não gostou)! "
+"<span class='big strong'>Fique à vontade para responder sua própria questão</"
+"span>, mas certifique-se de dar uma <strong>resposta</strong>. Lembre-se que "
+"você sempre pode <strong>revisar sua questão original</strong>. Por favor "
+"<strong>use comentários para discutir</strong> e <strong>por favor não "
+"esqueça de votar :)</strong> para as respostas que gostou (ou, talvez, não "
+"gostou)! "
 
 #: forum/skins/default/templates/question.html:419
 msgid "please only give an answer, no discussions"
 msgstr ""
-"<span class='big strong'>Por favor tente dar uma resposta substancial</span>. Se "
-"você gostaria de comentar a questão ou a resposta, <strong>use a ferramenta para "
-"deixar comentários</strong>. Por favor lembre-se de que você pode sempre "
-"<strong>revisarsuas respostas</strong> - não é preciso responder a mesma pergunta "
-"duas vezes. Além disso, por favor <strong>não esqueça de votar</strong> - isso "
-"realmente ajuda a selecionar as melhores questões e respostas!"
+"<span class='big strong'>Por favor tente dar uma resposta substancial</"
+"span>. Se você gostaria de comentar a questão ou a resposta, <strong>use a "
+"ferramenta para deixar comentários</strong>. Por favor lembre-se de que você "
+"pode sempre <strong>revisarsuas respostas</strong> - não é preciso responder "
+"a mesma pergunta duas vezes. Além disso, por favor <strong>não esqueça de "
+"votar</strong> - isso realmente ajuda a selecionar as melhores questões e "
+"respostas!"
 
 #: forum/skins/default/templates/question.html:455
 msgid "Login/Signup to Post Your Answer"
@@ -2267,24 +2280,24 @@ msgid_plural ""
 "            "
 msgstr[0] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>questões marcadas como </p><p><span "
-"class=\"tag\">%(tagname)s</span></p>"
+"<div class=\"questions-count\">%(q_num)s</div><p>questões marcadas como </"
+"p><p><span class=\"tag\">%(tagname)s</span></p>"
 msgstr[1] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>questões marcadas com</p><div "
-"class=\"tags\"><span class=\"tag\">%(tagname)s</span></div>"
+"<div class=\"questions-count\">%(q_num)s</div><p>questões marcadas com</"
+"p><div class=\"tags\"><span class=\"tag\">%(tagname)s</span></div>"
 
 #: forum/skins/default/templates/questions.html:171
 #, python-format
 msgid ""
 "\n"
-"                    have total %(q_num)s questions containing %(searchtitle)"
-"s in full text\n"
+"                    have total %(q_num)s questions containing "
+"%(searchtitle)s in full text\n"
 "                    "
 msgid_plural ""
 "\n"
-"                    tem um total de %(q_num)s questões contendo %(searchtitle)"
-"s no texto\n"
+"                    tem um total de %(q_num)s questões contendo "
+"%(searchtitle)s no texto\n"
 "                    "
 msgstr[0] ""
 "\n"
@@ -2299,24 +2312,22 @@ msgstr[1] ""
 #, python-format
 msgid ""
 "\n"
-"                    have total %(q_num)s questions containing %(searchtitle)"
-"s\n"
+"                    have total %(q_num)s questions containing "
+"%(searchtitle)s\n"
 "                    "
 msgid_plural ""
 "\n"
-"                    tem um total de %(q_num)s questões contendo %(searchtitle)"
-"s\n"
+"                    tem um total de %(q_num)s questões contendo "
+"%(searchtitle)s\n"
 "                    "
 msgstr[0] ""
 "\n"
 "<div class=\"questions-count\">%(q_num)s</div><p>questão com o título "
-"contendo <strong><span class=\"darkred\">%(searchtitle)s</span></strong></"
-"p>"
+"contendo <strong><span class=\"darkred\">%(searchtitle)s</span></strong></p>"
 msgstr[1] ""
 "\n"
 "<div class=\"questions-count\">%(q_num)s</div><p>questões com o título "
-"contendo <strong><span class=\"darkred\">%(searchtitle)s</span></strong></"
-"p>"
+"contendo <strong><span class=\"darkred\">%(searchtitle)s</span></strong></p>"
 
 #: forum/skins/default/templates/questions.html:185
 #, python-format
@@ -2330,8 +2341,8 @@ msgid_plural ""
 "                    "
 msgstr[0] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>questões sem uma "
-"resposta aceita</p>"
+"<div class=\"questions-count\">%(q_num)s</div><p>questões sem uma resposta "
+"aceita</p>"
 msgstr[1] ""
 "\n"
 "<div class=\"questions-count\">%(q_num)s</div><p>questões sem uma reposta "
@@ -2364,7 +2375,8 @@ msgstr "Questões ordenadas pela data da <strong>última modificação</strong>.
 
 #: forum/skins/default/templates/questions.html:206
 msgid "Most recently answered ones are shown first."
-msgstr "<strong>Questões respondidas recentemente</strong> são exibidas primeiro."
+msgstr ""
+"<strong>Questões respondidas recentemente</strong> são exibidas primeiro."
 
 #: forum/skins/default/templates/questions.html:210
 msgid "Questions sorted by <strong>number of responses</strong>."
@@ -2532,11 +2544,12 @@ msgstr "Opções de email"
 #: forum/skins/default/templates/user_email_subscriptions.html:9
 msgid "email subscription settings info"
 msgstr ""
-"<span class='big strong'>Ajuste a frequência das notificações enviadas por email.</span> Receba "
-"novidades sobre questões de seu interesse, <strong><br/>ajude a comunidade</"
-"strong> respondendo questões de outros. Se você não deseja receber emails "
-"- selecione 'não enviar email' em todos os itens abaixo.<br/>Notificações são enviadas "
-"apenas quando houver atividade associada a algum dos itens selecionados."
+"<span class='big strong'>Ajuste a frequência das notificações enviadas por "
+"email.</span> Receba novidades sobre questões de seu interesse, <strong><br/"
+">ajude a comunidade</strong> respondendo questões de outros. Se você não "
+"deseja receber emails - selecione 'não enviar email' em todos os itens "
+"abaixo.<br/>Notificações são enviadas apenas quando houver atividade "
+"associada a algum dos itens selecionados."
 
 #: forum/skins/default/templates/user_email_subscriptions.html:21
 msgid "Stop sending email"
@@ -2847,14 +2860,15 @@ msgstr "Desculpe, parece que encontramos alguns problemas:"
 #: forum/skins/default/templates/auth/complete.html:47
 #: forum/skins/default/templates/authopenid/complete.html:82
 msgid "Screen name label"
-msgstr "<strong>Nome de usuário</strong> (<i>será exibido a outras pessoas</i>)"
+msgstr ""
+"<strong>Nome de usuário</strong> (<i>será exibido a outras pessoas</i>)"
 
 #: forum/skins/default/templates/auth/complete.html:54
 #: forum/skins/default/templates/authopenid/complete.html:89
 msgid "Email address label"
 msgstr ""
-"<strong>Endereço de email</strong> (<i><strong>não</strong> será compartilhado "
-"com terceiros, precisa ser válido</i>)"
+"<strong>Endereço de email</strong> (<i><strong>não</strong> será "
+"compartilhado com terceiros, precisa ser válido</i>)"
 
 #: forum/skins/default/templates/auth/complete.html:60
 #: forum/skins/default/templates/auth/signup.html:18
@@ -2862,11 +2876,12 @@ msgstr ""
 #: forum/skins/default/templates/authopenid/signup.html:18
 msgid "receive updates motivational blurb"
 msgstr ""
-"<strong>Receba notificações de novidades por emais</strong> - isto ajuda nossa "
-"comunidade a crescer e se tornar cada vez mais útil.<br/>Em geral, fóruns de <span "
-"class='orange'>Perguntas &amp; Respostas</span> enviam até <strong>um email com a compilação "
-"das novidades da semana</strong>  - e apenas quando há algo novo.<br/>Se voce quiser, pode ajustar "
-"agora (ou depois) a frequência das notificações, acessando a sua conta de usuário."
+"<strong>Receba notificações de novidades por emais</strong> - isto ajuda "
+"nossa comunidade a crescer e se tornar cada vez mais útil.<br/>Em geral, "
+"fóruns de <span class='orange'>Perguntas &amp; Respostas</span> enviam até "
+"<strong>um email com a compilação das novidades da semana</strong>  - e "
+"apenas quando há algo novo.<br/>Se voce quiser, pode ajustar agora (ou "
+"depois) a frequência das notificações, acessando a sua conta de usuário."
 
 #: forum/skins/default/templates/auth/complete.html:64
 #: forum/skins/default/templates/auth/signup.html:22
@@ -2878,7 +2893,9 @@ msgstr "por favor selecione alguma das opções acima"
 #: forum/skins/default/templates/auth/complete.html:67
 #: forum/skins/default/templates/authopenid/complete.html:102
 msgid "Tag filter tool will be your right panel, once you log in."
-msgstr "Um filtro de palavras-chave está no painel à direita, quando você entra no site."
+msgstr ""
+"Um filtro de palavras-chave está no painel à direita, quando você entra no "
+"site."
 
 #: forum/skins/default/templates/auth/complete.html:68
 #: forum/skins/default/templates/authopenid/complete.html:103
@@ -2921,18 +2938,18 @@ msgstr "Login de usuário"
 #: forum/skins/default/templates/authopenid/signin.html:42
 msgid "Click to sign in through any of these services."
 msgstr ""
-"<p><span class=\"big strong\">Por favor escolha o seu método preferido para entrar no site."
-"</span></p><p><font color=\"gray\">Serviços externos usam a tecnologia <a href="
-"\"http://openid.net\"><b>OpenID</b></a>, na qual a sua senha permanece sempre secreta "
-"entre você e o seu provedor, e você não precisa lembrar mais uma senha "
-"a opção CNPROG requer que você escreva aqui seu nome de usuário (login) e senha.</font></p>"
+"<p><span class=\"big strong\">Por favor escolha o seu método preferido para "
+"entrar no site.</span></p><p><font color=\"gray\">Serviços externos usam a "
+"tecnologia <a href=\"http://openid.net\"><b>OpenID</b></a>, na qual a sua "
+"senha permanece sempre secreta entre você e o seu provedor, e você não "
+"precisa lembrar mais uma senha a opção CNPROG requer que você escreva aqui "
+"seu nome de usuário (login) e senha.</font></p>"
 
 #: forum/skins/default/templates/auth/signin.html:34
 msgid ""
 "Take the opurtunity to validate my email next to the external provider I "
 "choose."
-msgstr ""
-"Aproveite para confirmar seu email."
+msgstr "Aproveite para confirmar seu email."
 
 #: forum/skins/default/templates/auth/signin.html:84
 msgid "Enter your "
@@ -2951,14 +2968,16 @@ msgstr "Com o OpenID não é preciso criar um nome de usuário (login) e senha."
 #: forum/skins/default/templates/auth/signin.html:146
 #: forum/skins/default/templates/authopenid/signin.html:166
 msgid "reuse openid"
-msgstr "Você pode reutilizar com segurança o mesmo login para todos os sites com OpenID habilitado."
+msgstr ""
+"Você pode reutilizar com segurança o mesmo login para todos os sites com "
+"OpenID habilitado."
 
 #: forum/skins/default/templates/auth/signin.html:149
 #: forum/skins/default/templates/authopenid/signin.html:169
 msgid "openid is widely adopted"
 msgstr ""
-"Existem mais de 160 milhões de contas OpenID em uso. Mais de 10 mil  páginas possuem OpenID "
-"habilitado."
+"Existem mais de 160 milhões de contas OpenID em uso. Mais de 10 mil  páginas "
+"possuem OpenID habilitado."
 
 #: forum/skins/default/templates/auth/signin.html:152
 #: forum/skins/default/templates/authopenid/signin.html:172
@@ -2989,11 +3008,12 @@ msgstr "Criar um nome de usuário (login) e senha"
 #: forum/skins/default/templates/authopenid/signup.html:10
 msgid "Traditional signup info"
 msgstr ""
-"<span class='strong big'>Se você preferrir, escolha seu nome de usuário (login) "
-"e senha aqui. Contudo</span>, por favor tenha em mente que nos também apoiamos "
-"o método de autenticação por <strong>OpenID</strong>. Com o  <strong>OpenID</strong> você pode "
-"simplemente reutilizar seu nome de usuário (login) externo  (por exemplo, Gmail or AOL) sem precisar "
-"jamais compartilhar os detalhes do seu ou ter que memorizar mais senhas."
+"<span class='strong big'>Se você preferrir, escolha seu nome de usuário "
+"(login) e senha aqui. Contudo</span>, por favor tenha em mente que nos "
+"também apoiamos o método de autenticação por <strong>OpenID</strong>. Com o  "
+"<strong>OpenID</strong> você pode simplemente reutilizar seu nome de usuário "
+"(login) externo  (por exemplo, Gmail or AOL) sem precisar jamais "
+"compartilhar os detalhes do seu ou ter que memorizar mais senhas."
 
 #: forum/skins/default/templates/auth/signup.html:25
 #: forum/skins/default/templates/authopenid/signup.html:25
@@ -3001,8 +3021,8 @@ msgid ""
 "Please read and type in the two words below to help us prevent automated "
 "account creation."
 msgstr ""
-"Por gentileza leia e escreva as duas palavras abaixo para nos ajudar a impedir criação "
-"automatizada de contas de usuário."
+"Por gentileza leia e escreva as duas palavras abaixo para nos ajudar a "
+"impedir criação automatizada de contas de usuário."
 
 #: forum/skins/default/templates/auth/signup.html:27
 #: forum/skins/default/templates/authopenid/signup.html:27
@@ -3027,32 +3047,35 @@ msgstr "Salvar seu endereço de email"
 #, python-format
 msgid "change %(email)s info"
 msgstr ""
-"<span class=\"strong big\">Escreva seu endereço de email na caixa abaixo</span> se "
-"você gostaria de usar algum outro email para <strong>receber notificações</strong>."
-"<br>Atualmente você está usando <strong>%(email)s</strong>"
+"<span class=\"strong big\">Escreva seu endereço de email na caixa abaixo</"
+"span> se você gostaria de usar algum outro email para <strong>receber "
+"notificações</strong>.<br>Atualmente você está usando <strong>%(email)s</"
+"strong>"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:18
 #, python-format
 msgid "here is why email is required, see %(gravatar_faq_url)s"
 msgstr ""
-"<span class='strong big'>Por gentileza escreva seu endereço de email na caixa abaixo.</"
-"span> Previsamos de um email válido par este fórum de Perguntas &amp; Respostas. "
-"Se você quiser, você pode <strong>receber notificações</strong> sobre questões de "
-" seu interesse, ou sobre a atividade geral do fórum, por email. "
-"Além disso, seu email é usado para criar uma imagem <a href='%(gravatar_faq_url)s'><strong>"
-"gravatar</strong></a> única para sua conta de usuário. "
-"Afora isso, endereços de email nunca são exibidos ou compartilhados com terceiros."
+"<span class='strong big'>Por gentileza escreva seu endereço de email na "
+"caixa abaixo.</span> Previsamos de um email válido par este fórum de "
+"Perguntas &amp; Respostas. Se você quiser, você pode <strong>receber "
+"notificações</strong> sobre questões de  seu interesse, ou sobre a atividade "
+"geral do fórum, por email. Além disso, seu email é usado para criar uma "
+"imagem <a href='%(gravatar_faq_url)s'><strong>gravatar</strong></a> única "
+"para sua conta de usuário. Afora isso, endereços de email nunca são exibidos "
+"ou compartilhados com terceiros."
 
 #: forum/skins/default/templates/authopenid/changeemail.html:31
 msgid "Your new Email"
 msgstr ""
-"<strong>Seu novo email:</strong> (<strong>não</strong> será exibido para ninguém, "
-"e precisa ser válido)"
+"<strong>Seu novo email:</strong> (<strong>não</strong> será exibido para "
+"ninguém, e precisa ser válido)"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:31
 msgid "Your Email"
 msgstr ""
-"<strong>Seu email</strong> (<i>precisa ser válido, não é exibido a terceiros</i>)"
+"<strong>Seu email</strong> (<i>precisa ser válido, não é exibido a "
+"terceiros</i>)"
 
 #: forum/skins/default/templates/authopenid/changeemail.html:38
 msgid "Save Email"
@@ -3066,12 +3089,13 @@ msgstr "Confirmar email"
 #, python-format
 msgid "validate %(email)s info or go to %(change_email_url)s"
 msgstr ""
-"<span class=\"strong big\">Um email com um link de confirmação foi enviado para %"
-"(email)s.</span> Por gentileza <strong>siga o link contido no email</strong> usando o seu "
-"navegador web. Confirmação do email é necessária para garantir o uso adequado do email "
-"no <span class=\"orange\">Perguntas &amp; Respostas</span>. Se você gostaria de usar "
-"<strong>outro email</strong>, por gentileza <a href='%(change_email_url)"
-"s'><strong>altere-o novamente</strong></a>."
+"<span class=\"strong big\">Um email com um link de confirmação foi enviado "
+"para %(email)s.</span> Por gentileza <strong>siga o link contido no email</"
+"strong> usando o seu navegador web. Confirmação do email é necessária para "
+"garantir o uso adequado do email no <span class=\"orange\">Perguntas &amp; "
+"Respostas</span>. Se você gostaria de usar <strong>outro email</strong>, por "
+"gentileza <a href='%(change_email_url)s'><strong>altere-o novamente</"
+"strong></a>."
 
 #: forum/skins/default/templates/authopenid/changeemail.html:57
 msgid "Email not changed"
@@ -3082,9 +3106,10 @@ msgstr "O email não foi alterado"
 msgid "old %(email)s kept, if you like go to %(change_email_url)s"
 msgstr ""
 "<span class=\"strong big\">Seu endereço de email %(email)s não foi alterado."
-"</span> Se você decidir alterar o email depois - você pode sempre fazê-lo "
-"na página do seu perfil, ou usando o <a href='%(change_email_url)"
-"s'><strong>formulário anterior</strong></a> novamente."
+"</span> Se você decidir alterar o email depois - você pode sempre fazê-lo na "
+"página do seu perfil, ou usando o <a "
+"href='%(change_email_url)s'><strong>formulário anterior</strong></a> "
+"novamente."
 
 #: forum/skins/default/templates/authopenid/changeemail.html:65
 msgid "Email changed"
@@ -3094,10 +3119,10 @@ msgstr "Email alterado"
 #, python-format
 msgid "your current %(email)s can be used for this"
 msgstr ""
-"<span class='big strong'>Seu endereço de email está configurado: %(email)s.</span> "
-"Modificações nas questões em que você votou serão enviadas para este endereço. "
-"Notificações por email são enviadas uma vez por dia ou menos frequentemente - apenas quando "
-"notícias."
+"<span class='big strong'>Seu endereço de email está configurado: %(email)s.</"
+"span> Modificações nas questões em que você votou serão enviadas para este "
+"endereço. Notificações por email são enviadas uma vez por dia ou menos "
+"frequentemente - apenas quando notícias."
 
 #: forum/skins/default/templates/authopenid/changeemail.html:73
 msgid "Email verified"
@@ -3106,11 +3131,12 @@ msgstr "Email verificado"
 #: forum/skins/default/templates/authopenid/changeemail.html:76
 msgid "thanks for verifying email"
 msgstr ""
-"<span class=\"big strong\">Obrigado por confirmar seu endereço de email!</span> Agora "
-"você pode <strong>perguntar</strong> e <strong>responder</strong> questões. Além disso, se "
-"se você encontrar uma questão interessante você pode <strong>inscrever-se para notificações</strong>"
-" - então você receberá notícias sobre mudanças nelas (sempre que houver) <strong>até uma vez ao dia</"
-"strong>."
+"<span class=\"big strong\">Obrigado por confirmar seu endereço de email!</"
+"span> Agora você pode <strong>perguntar</strong> e <strong>responder</"
+"strong> questões. Além disso, se se você encontrar uma questão interessante "
+"você pode <strong>inscrever-se para notificações</strong> - então você "
+"receberá notícias sobre mudanças nelas (sempre que houver) <strong>até uma "
+"vez ao dia</strong>."
 
 #: forum/skins/default/templates/authopenid/changeemail.html:81
 msgid "email key not sent"
@@ -3120,9 +3146,9 @@ msgstr "Email de confirmação não foi enviado"
 #, python-format
 msgid "email key not sent %(email)s change email here %(change_link)s"
 msgstr ""
-"<span class='big strong'>Seu endereço de email atual %(email)s foi confirmado "
-"antes</span> então a nova chave não foi enviada. Você pode <a href='%"
-"(change_link)s'>alterar</a> o email usado para notificações se quiser."
+"<span class='big strong'>Seu endereço de email atual %(email)s foi "
+"confirmado antes</span> então a nova chave não foi enviada. Você pode <a "
+"href='%(change_link)s'>alterar</a> o email usado para notificações se quiser."
 
 #: forum/skins/default/templates/authopenid/changeopenid.html:8
 msgid "Account: change OpenID URL"
@@ -3132,7 +3158,8 @@ msgstr "Conta: alterar endereço URL do OpenID"
 msgid ""
 "This is where you can change your OpenID URL. Make sure you remember it!"
 msgstr ""
-"É aqui que você pode alterar seu endereço URL de OpenID. Make sure you remember it!"
+"É aqui que você pode alterar seu endereço URL de OpenID. Make sure you "
+"remember it!"
 
 #: forum/skins/default/templates/authopenid/changeopenid.html:14
 #: forum/skins/default/templates/authopenid/delete.html:14
@@ -3148,55 +3175,58 @@ msgstr "endereço URL do OpenID"
 #, python-format
 msgid "register new %(provider)s account info, see %(gravatar_faq_url)s"
 msgstr ""
-"<p><span class=\"big strong\">Você está aqui pela primeira vez via seu login %"
-"(provider)s.</span> Por favor crie seu <strong>nome de usuário</strong> "
-"e salve seu endereço de <strong>email</strong>. Endereços de email salvos permitem a "
-"você <strong>inscrever-se para receber notificações</strong> sobre as questões mais  "
-"interessantes e será usado para criar e recuperar sua imagem (avatar) - "
-"<a href='%(gravatar_faq_url)s'><strong>gravatar</strong></a>.</p>"
+"<p><span class=\"big strong\">Você está aqui pela primeira vez via seu login "
+"%(provider)s.</span> Por favor crie seu <strong>nome de usuário</strong> e "
+"salve seu endereço de <strong>email</strong>. Endereços de email salvos "
+"permitem a você <strong>inscrever-se para receber notificações</strong> "
+"sobre as questões mais  interessantes e será usado para criar e recuperar "
+"sua imagem (avatar) - <a href='%(gravatar_faq_url)s'><strong>gravatar</"
+"strong></a>.</p>"
 
 #: forum/skins/default/templates/authopenid/complete.html:31
 #, python-format
 msgid ""
 "%(username)s already exists, choose another name for \n"
-"                            %(provider)s. Email is required too, see %"
-"(gravatar_faq_url)s\n"
+"                            %(provider)s. Email is required too, see "
+"%(gravatar_faq_url)s\n"
 "                        "
 msgstr ""
-"<p><span class='strong big'>Oops... parece que o nome de usuário %(username)s já "
-"está em uso por alguém.</span></p><p>Por favor escolha outro nome "
-"para usar com o login de %(provider)s. Além disso, um endereço de email válido "
-"é necessário para este fórum de <span class='orange'>Perguntas &amp; Respostas</span>. "
-"Seu email é usado para criar uma única imagem <a href='%(gravatar_faq_url)s'><strong>gravatar</"
-"strong></a> para sua conta de usuário. Se você quiser, você pode <strong>receber "
-"notificações</strong> sobre questões interessantes, ou sobre as atividades do fórum em geral "
-"por email. Os endereços de email nunca são exibidos ou de outra forma compartilhados com "
-"terceiros.</p>"
+"<p><span class='strong big'>Oops... parece que o nome de usuário "
+"%(username)s já está em uso por alguém.</span></p><p>Por favor escolha outro "
+"nome para usar com o login de %(provider)s. Além disso, um endereço de email "
+"válido é necessário para este fórum de <span class='orange'>Perguntas &amp; "
+"Respostas</span>. Seu email é usado para criar uma única imagem <a "
+"href='%(gravatar_faq_url)s'><strong>gravatar</strong></a> para sua conta de "
+"usuário. Se você quiser, você pode <strong>receber notificações</strong> "
+"sobre questões interessantes, ou sobre as atividades do fórum em geral por "
+"email. Os endereços de email nunca são exibidos ou de outra forma "
+"compartilhados com terceiros.</p>"
 
 #: forum/skins/default/templates/authopenid/complete.html:35
 #, python-format
 msgid ""
 "register new external %(provider)s account info, see %(gravatar_faq_url)s"
 msgstr ""
-"<p><span class=\"big strong\">Você está aqui pela primeira vez como seu login %"
-"(provider)s.</span></p><p>Você pode manter seu  <strong>nome de tela "
-"</strong> como está no login %(provider)s ou escolher algum outro apelido.</p>"
-"<p>Por favor escolha um <strong>endereço de email</strong> válido. "
-"Com o email você pode <strong>inscrever-se para receber notificações</strong> sobre "
-"as questões mais interessantes. O endereço de email também é usado para criar e "
-"recuperar sua imagem (avatar) -  <a href='%(gravatar_faq_url)"
-"s'><strong>gravatar</strong></a>.</p>"
+"<p><span class=\"big strong\">Você está aqui pela primeira vez como seu "
+"login %(provider)s.</span></p><p>Você pode manter seu  <strong>nome de tela "
+"</strong> como está no login %(provider)s ou escolher algum outro apelido.</"
+"p><p>Por favor escolha um <strong>endereço de email</strong> válido. Com o "
+"email você pode <strong>inscrever-se para receber notificações</strong> "
+"sobre as questões mais interessantes. O endereço de email também é usado "
+"para criar e recuperar sua imagem (avatar) -  <a "
+"href='%(gravatar_faq_url)s'><strong>gravatar</strong></a>.</p>"
 
 #: forum/skins/default/templates/authopenid/complete.html:38
 #, python-format
 msgid "register new Facebook connect account info, see %(gravatar_faq_url)s"
 msgstr ""
-"<p><span class=\"big strong\">Você está aqui pela primeira vez com sua "
-"conta do Facebook.</span> Por favor crie seu <strong>nome de tela</strong> e "
-"escolha seu <strong>endereço de email</strong>. O email escolhid vai permitir que "
-"você <strong>inscreva-se para receber notificações</strong> sobre as questões mais interessantes "
-"é usado para criar e recuperar sua imagem (avatar) -  <a href='%(gravatar_faq_url)"
-"s'><strong>gravatar</strong></a>.</p>"
+"<p><span class=\"big strong\">Você está aqui pela primeira vez com sua conta "
+"do Facebook.</span> Por favor crie seu <strong>nome de tela</strong> e "
+"escolha seu <strong>endereço de email</strong>. O email escolhid vai "
+"permitir que você <strong>inscreva-se para receber notificações</strong> "
+"sobre as questões mais interessantes é usado para criar e recuperar sua "
+"imagem (avatar) -  <a href='%(gravatar_faq_url)s'><strong>gravatar</strong></"
+"a>.</p>"
 
 #: forum/skins/default/templates/authopenid/confirm_email.txt:2
 msgid "Thank you for registering at our Q&A forum!"
@@ -3271,7 +3301,8 @@ msgstr "Para usar o fórum, por favor siga o link a seguir:"
 
 #: forum/skins/default/templates/authopenid/email_validation.txt:8
 msgid "Following the link above will help us verify your email address."
-msgstr "Seguindo o link acima você nos ajuda a confirmar o seu endereço de email"
+msgstr ""
+"Seguindo o link acima você nos ajuda a confirmar o seu endereço de email"
 
 #: forum/skins/default/templates/authopenid/email_validation.txt:10
 msgid ""
@@ -3280,8 +3311,10 @@ msgid ""
 "for any inconvenience"
 msgstr ""
 "Se você acredita que esta mensagem foi enviada por engano - \n"
-"nenhuma outra ação é necessária. Apenas ignore este email, pedimos desculpas\n"
+"nenhuma outra ação é necessária. Apenas ignore este email, pedimos "
+"desculpas\n"
 "por qualquer inconveniente que esta mensagem possa ter causado"
+
 #: forum/skins/default/templates/authopenid/external_legacy_login_info.html:4
 #: forum/skins/default/templates/authopenid/external_legacy_login_info.html:7
 msgid "Traditional login information"
@@ -3290,11 +3323,9 @@ msgstr "Informação tradicional de login"
 #: forum/skins/default/templates/authopenid/external_legacy_login_info.html:12
 #, python-format
 msgid ""
-"how to login with password through external login website or use %"
-"(feedback_url)s"
-msgstr ""
-"como acessar com a senha de algu outro site ou usar %"
-"(feedback_url)s"
+"how to login with password through external login website or use "
+"%(feedback_url)s"
+msgstr "como acessar com a senha de algu outro site ou usar %(feedback_url)s"
 
 #: forum/skins/default/templates/authopenid/sendpw.html:4
 #: forum/skins/default/templates/authopenid/sendpw.html:7
@@ -3304,12 +3335,12 @@ msgstr "Recuperar a senha"
 #: forum/skins/default/templates/authopenid/sendpw.html:10
 msgid "password recovery information"
 msgstr ""
-"<span class='big strong'>Esqueceu sua senha? Sem problemas - obtenha uma nova "
-"senha!</span><br/>Por favor siga os passos a seguir:<br/>&bull; escreva seu nome "
-"de usuário abaixo e verifique seu email<br/>&bull; <strong>siga o link de  "
-"ativação</strong> para a nova senha - enviado por email e "
-"acesse o site com a senha sugerida<br/>&bull; neste ponto você pode querer mudar "
-"sua senha para algo que seja mais fácil de lembrar"
+"<span class='big strong'>Esqueceu sua senha? Sem problemas - obtenha uma "
+"nova senha!</span><br/>Por favor siga os passos a seguir:<br/>&bull; escreva "
+"seu nome de usuário abaixo e verifique seu email<br/>&bull; <strong>siga o "
+"link de  ativação</strong> para a nova senha - enviado por email e acesse o "
+"site com a senha sugerida<br/>&bull; neste ponto você pode querer mudar sua "
+"senha para algo que seja mais fácil de lembrar"
 
 #: forum/skins/default/templates/authopenid/sendpw.html:21
 msgid "Reset password"
@@ -3349,8 +3380,8 @@ msgid ""
 msgstr ""
 "\n"
 "<span class=\"strong big\">Sua resposta para </span> <i>\"<strong>%(title)s</"
-"strong> %(summary)s...\"</i> <span class=\"strong big\">foi gravada e será postada "
-"quando você entrar no site (acessar usando login).</span>"
+"strong> %(summary)s...\"</i> <span class=\"strong big\">foi gravada e será "
+"postada quando você entrar no site (acessar usando login).</span>"
 
 #: forum/skins/default/templates/authopenid/signin.html:35
 #, python-format
@@ -3360,8 +3391,8 @@ msgid ""
 "                "
 msgstr ""
 "<span class=\"strong big\">Sua questão</span> <i>\"<strong>%(title)s</"
-"strong> %(summary)s...\"</i> <span class=\"strong big\">está gravada e será postada "
-"quando você se conectar ao site.</span>"
+"strong> %(summary)s...\"</i> <span class=\"strong big\">está gravada e será "
+"postada quando você se conectar ao site.</span>"
 
 #: forum/skins/default/templates/authopenid/signin.html:128
 msgid "Enter your <span id=\"enter_your_what\">Provider user name</span>"
@@ -3375,8 +3406,8 @@ msgid ""
 "Enter your <a class=\"openid_logo\" href=\"http://openid.net\">OpenID</a> "
 "web address"
 msgstr ""
-"<span class=\"big strong\">Entre seu endereço <a class=\"openid_logo\" href=\"http://"
-"openid.net\">OpenID</a> </span><br/><span class='grey'>(ou escolha "
+"<span class=\"big strong\">Entre seu endereço <a class=\"openid_logo\" href="
+"\"http://openid.net\">OpenID</a> </span><br/><span class='grey'>(ou escolha "
 "outro dos métodos de login acima)</span>"
 
 #: forum/skins/default/templates/authopenid/signin.html:137
@@ -3387,8 +3418,8 @@ msgstr "Conectar-se"
 #: forum/skins/default/templates/authopenid/signin.html:140
 msgid "Enter your login name and password"
 msgstr ""
-"<span class='big strong'>Entre seu login CNPROG e senha</span><br/"
-"><span class='grey'>(ou selecione seu provedor de OpenID acima)</span>"
+"<span class='big strong'>Entre seu login CNPROG e senha</span><br/><span "
+"class='grey'>(ou selecione seu provedor de OpenID acima)</span>"
 
 #: forum/skins/default/templates/authopenid/signin.html:144
 msgid "Login name"
@@ -3451,7 +3482,9 @@ msgstr "você precisa preencher o nome de usuário"
 
 #: forum/utils/forms.py:48
 msgid "sorry, this name is taken, please choose another"
-msgstr "desculpe, este nome de usuário já foi escolhido por alguém, por favor escolha outro"
+msgstr ""
+"desculpe, este nome de usuário já foi escolhido por alguém, por favor "
+"escolha outro"
 
 #: forum/utils/forms.py:49
 msgid "sorry, this name is not allowed, please choose another"
@@ -3463,11 +3496,14 @@ msgstr "desculpe, não existe usuário com este nome"
 
 #: forum/utils/forms.py:51
 msgid "sorry, we have a serious error - user name is taken by several users"
-msgstr "desculpe, temos um erro sério - um nome de usuário usado por mais de uma pessoa"
+msgstr ""
+"desculpe, temos um erro sério - um nome de usuário usado por mais de uma "
+"pessoa"
 
 #: forum/utils/forms.py:52
 msgid "user name can only consist of letters, empty space and underscore"
-msgstr "um nome de usuário só pode conter letras, espaços em branco e underscores "
+msgstr ""
+"um nome de usuário só pode conter letras, espaços em branco e underscores "
 
 #: forum/utils/forms.py:100
 msgid "your email address"
@@ -3510,8 +3546,8 @@ msgid ""
 "Sorry, these login credentials belong to anoother user. Plese terminate your "
 "current session and try again."
 msgstr ""
-"Desculpe, essas credenciais pertencem a outro usuário. Por favor termine sua seção atual "
-"e tent novamente."
+"Desculpe, essas credenciais pertencem a outro usuário. Por favor termine sua "
+"seção atual e tent novamente."
 
 #: forum/views/auth.py:96
 msgid "You are already logged in with that user."
@@ -3529,8 +3565,8 @@ msgstr "Estas novas credenciais estão agora associadas com a sua conta."
 #, python-format
 msgid "subscription saved, %(email)s needs validation, see %(details_url)s"
 msgstr ""
-"Sua inscrição está gravada, mas o endereço de email precisa ser validado, "
-"por favor veja <a href='%(details_url)s'>mais detalhes aqui</a>"
+"Sua inscrição está gravada, mas o endereço de email %(email)s precisa ser "
+"validado, por favor veja <a href='%(details_url)s'>mais detalhes aqui</a>"
 
 #: forum/views/commands.py:225
 msgid "email update frequency has been set to daily"
@@ -3614,7 +3650,8 @@ msgstr "desculpe, enviar arquivos requer carma >60"
 
 #: forum/views/writers.py:76
 msgid "allowed file types are 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'"
-msgstr "tipos de arquivo permitidos são 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'"
+msgstr ""
+"tipos de arquivo permitidos são 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'"
 
 #: forum/views/writers.py:78
 #, python-format
@@ -3626,7 +3663,8 @@ msgstr "tamanho máximo para arquivos enviados é %sK"
 msgid ""
 "Error uploading file. Please contact the site administrator. Thank you. %s"
 msgstr ""
-"Problemas ao enviar o arquivo. Por favor avise algum dos administradores do site. Obrigado. %s"
+"Problemas ao enviar o arquivo. Por favor avise algum dos administradores do "
+"site. Obrigado. %s"
 
 #: forum_modules/books/urls.py:7 forum_modules/books/urls.py:8
 #: forum_modules/books/urls.py:9
@@ -3641,15 +3679,16 @@ msgstr "Desculpe, sua seção do Facebook expirou, por favor tente novamente"
 msgid ""
 "The authentication with Facebook connect failed due to an invalid signature"
 msgstr ""
-"A autenticação com a conta do Facebook falhou por causa de uma assinatura incorreta"
+"A autenticação com a conta do Facebook falhou por causa de uma assinatura "
+"incorreta"
 
 #: forum_modules/facebookauth/authentication.py:33
 msgid ""
 "The authentication with Facebook connect failed, cannot find authentication "
 "tokens"
 msgstr ""
-"A autenticação com a conta do Facebook falhou, não consigo encontrar autenticação "
-"tokens"
+"A autenticação com a conta do Facebook falhou, não consigo encontrar "
+"autenticação tokens"
 
 #: forum_modules/localauth/forms.py:59
 msgid "Please enter valid username and password (both are case-sensitive)."
