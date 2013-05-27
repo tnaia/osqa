@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.5\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 "Language: pt_BR\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -289,7 +289,7 @@ msgstr "Nome na tela"
 
 #: forum/forms.py:209
 msgid "Real name"
-msgstr "Nome rel"
+msgstr "Nome real"
 
 #: forum/forms.py:210
 msgid "Website"
@@ -526,7 +526,7 @@ msgstr "certo, vamos tentar!"
 
 #: forum/authentication/forms.py:18
 msgid "no OSQA community email please, thanks"
-msgstr ""
+msgstr "não desejo receber emails da comunidade, obrigado"
 
 #: forum/authentication/forms.py:21
 msgid "please choose one of the options above"
@@ -556,8 +556,8 @@ msgstr "nova questão"
 msgid "There is also one question which was recently "
 msgid_plural ""
 "There are also %(num)d more questions which were recently updated "
-msgstr[0] "Há ainda uma questão que foi recentemente"
-msgstr[1] "Há ainda %(num)d outras questões atualizadas recentemente "
+msgstr[0] "Há ainda uma questão que foi alterada recentemente"
+msgstr[1] "Há ainda %(num)d outras questões alteradas recentemente "
 
 #: forum/management/commands/send_email_alerts.py:184
 msgid ""
@@ -1014,25 +1014,25 @@ msgstr "Tipos de condecoração"
 #: forum/skins/default/templates/badges.html:56
 msgid "gold badge description"
 msgstr ""
-"Insígnia de ouro é a maior condecoração nesta comunidade. Para obtê-la é "
+"Condecoração de ouro é a de maior valor para esta comunidade. Para obtê-la é "
 "preciso demonstrar profundo conhecimento e habilidade, além  de participação "
 "ativa."
 
 #: forum/skins/default/templates/badges.html:64
 msgid "silver badge description"
 msgstr ""
-"Obter uma insígnia de prata requer paciência significativa. Se você obteve "
-"uma, isso significa que você contribuiu enormemente para a comunidade."
+"Obter uma condecoração de prata requer paciência significativa. Se você "
+"obteve uma, isso significa que você contribuiu enormemente para a comunidade."
 
 #: forum/skins/default/templates/badges.html:67
 msgid "bronze badge: often given as a special honor"
-msgstr "insígnia de bronze: geralmente uma honra especial"
+msgstr "Condercoração de bronze: geralmente uma honra especial"
 
 #: forum/skins/default/templates/badges.html:71
 msgid "bronze badge description"
 msgstr ""
 "Se você é um participante ativo desta comunidade, você será reconhecido com "
-"esta insígnia."
+"esta condecoração."
 
 #: forum/skins/default/templates/book.html:7
 msgid "reading channel"
@@ -1123,7 +1123,7 @@ msgstr "a resposta foi aceita como correta"
 #: forum/skins/default/templates/questions.html:81
 #: forum/skins/default/templates/users_questions.html:40
 msgid "views"
-msgstr "visualizações"
+msgstr "acessos"
 
 #: forum/skins/default/templates/book.html:125
 #: forum/skins/default/templates/index.html:63
@@ -2341,11 +2341,11 @@ msgid_plural ""
 "                    "
 msgstr[0] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>questões sem uma resposta "
+"<div class=\"questions-count\">%(q_num)s</div><p>questões sem resposta "
 "aceita</p>"
 msgstr[1] ""
 "\n"
-"<div class=\"questions-count\">%(q_num)s</div><p>questões sem uma reposta "
+"<div class=\"questions-count\">%(q_num)s</div><p>questões sem reposta "
 "aceita</p>"
 
 #: forum/skins/default/templates/questions.html:191
