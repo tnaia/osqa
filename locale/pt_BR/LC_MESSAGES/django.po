@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: OSQA\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Tássio Naia <tassio.naia@gmail.com>\n"
 "Language-Team: PoliGNU <contato@polignu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -860,8 +860,7 @@ msgstr "Dicas"
 
 #: forum/skins/default/templates/answer_edit_tips.html:7
 msgid "please make your answer relevant to this community"
-msgstr ""
-"por favor faça sua resposta de modo que seja relevante para esta comunidade"
+msgstr "por favor deixe uma resposta útil para a comunidade"
 
 #: forum/skins/default/templates/answer_edit_tips.html:10
 msgid "try to give an answer, rather than engage into a discussion"
